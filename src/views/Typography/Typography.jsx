@@ -20,7 +20,7 @@ const style = {
     position: "relative"
   },
   note: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Josefin Sans", "Helvetica", "Arial", sans-serif',
     bottom: "10px",
     color: "#c0c1c2",
     display: "block",
@@ -44,7 +44,7 @@ const style = {
     marginTop: "0px",
     minHeight: "auto",
     fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    fontFamily: "'Josefin Sans', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none"
   }

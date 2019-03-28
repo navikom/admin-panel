@@ -49,7 +49,7 @@ const container = {
 };
 
 const defaultFont = {
-  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fontFamily: '"Josefin Sans", "Helvetica", "Arial", sans-serif',
   fontWeight: "300",
   lineHeight: "1.5em"
 };
@@ -76,6 +76,8 @@ const grayColor = [
 ];
 const blackColor = "#000";
 const whiteColor = "#FFF";
+const blackOpacity = opacity => `rgba(0,0,0,${opacity})`;
+const whiteOpacity = opacity => `rgba(255,255,255,${opacity})`;
 
 const boxShadow = {
   boxShadow:
@@ -215,7 +217,7 @@ const title = {
   marginTop: "30px",
   marginBottom: "25px",
   minHeight: "32px",
-  fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+  fontFamily: "'Josefin Sans', 'Helvetica', 'Arial', sans-serif",
   "& small": {
     color: grayColor[1],
     fontWeight: "400",
@@ -281,5 +283,7 @@ export {
   title,
   cardTitle,
   cardSubtitle,
-  cardLink
+  cardLink,
+  blackOpacity,
+  whiteOpacity
 };

@@ -34,6 +34,13 @@ const footerStyle = {
     padding: "15px 0",
     ...defaultFont
   },
+  mainFooter: {
+    position: "absolute",
+    width: "98%",
+    bottom: "0",
+    color: "#fff",
+    ...defaultFont
+  },
   container,
   a: {
     color: primaryColor,

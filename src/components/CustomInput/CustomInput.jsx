@@ -6,6 +6,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
+import Icon from '@material-ui/core/Icon';
 // @material-ui/icons
 import Clear from "@material-ui/icons/Clear";
 import Check from "@material-ui/icons/Check";
@@ -21,7 +22,8 @@ function CustomInput({ ...props }) {
     labelProps,
     inputProps,
     error,
-    success
+    success,
+    icon
   } = props;
 
   const labelClasses = classNames({
@@ -64,6 +66,7 @@ function CustomInput({ ...props }) {
       ) : success ? (
         <Check className={classes.feedback + " " + classes.labelRootSuccess} />
       ) : null}
+      {icon && <Icon className={classes.feedback}>{icon}</Icon>}
     </FormControl>
   );
 }
