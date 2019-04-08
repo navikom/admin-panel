@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import {observer} from "mobx-react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 // @material-ui/core components
@@ -10,6 +11,9 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
+
+// models
+import { User } from "models";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
@@ -21,13 +25,13 @@ const Sidebar = ({...props}) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-
-  const {classes, color, logo, image, logoText, routes} = props;
+  const {classes, color, logo, image, logoText, routes, history} = props;
   const links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
         let listItemClasses;
         if (!prop.path) return null;
+        if(prop.auth && !User.authorized) return null
 
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.layout + prop.path)
@@ -35,6 +39,7 @@ const Sidebar = ({...props}) => {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
+
         return (
           <NavLink
             to={prop.layout + prop.path}
@@ -109,7 +114,8 @@ const Sidebar = ({...props}) => {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks/> : <AdminNavbarLinks/>}
+            {props.rtlActive ? <RTLNavbarLinks history={history}/>
+            : <AdminNavbarLinks history={history}/>}
             {links}
           </div>
           {image !== undefined ? (
@@ -149,4 +155,4 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(sidebarStyle)(Sidebar);
+export default withStyles(sidebarStyle)(observer(Sidebar));

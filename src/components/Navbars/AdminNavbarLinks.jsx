@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { observer } from "mobx-react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -14,6 +15,13 @@ import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
+
+// models
+import { User } from "models";
+
+// api
+import { Firebase } from "api";
+
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -22,23 +30,28 @@ import headerLinksStyle from "assets/jss/material-dashboard-react/components/hea
 
 class HeaderLinks extends React.Component {
   state = {
-    open: false
+    open: false,
+    personOpen: false
   };
-  handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
+  handleToggle(key) {
+    this.setState(state => ({[key]: !state[key]}));
+  }
 
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
+  handleClose(event, key, prop) {
+    if (this[key].contains(event.target)) {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({[prop]: false});
   };
 
+  logout() {
+    Firebase.auth.signOut();
+  }
+
   render() {
-    const { classes } = this.props;
-    const { open } = this.state;
+    const {classes, history} = this.props;
+    const {open, personOpen} = this.state;
     return (
       <div>
         <div className={classes.searchWrapper}>
@@ -54,7 +67,7 @@ class HeaderLinks extends React.Component {
             }}
           />
           <Button color="white" aria-label="edit" justIcon round>
-            <Search />
+            <Search/>
           </Button>
         </div>
         <Button
@@ -64,7 +77,7 @@ class HeaderLinks extends React.Component {
           aria-label="Dashboard"
           className={classes.buttonLink}
         >
-          <Dashboard className={classes.icons} />
+          <Dashboard className={classes.icons}/>
           <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Dashboard</p>
           </Hidden>
@@ -79,10 +92,10 @@ class HeaderLinks extends React.Component {
             simple={!(window.innerWidth > 959)}
             aria-owns={open ? "menu-list-grow" : null}
             aria-haspopup="true"
-            onClick={this.handleToggle}
+            onClick={() => this.handleToggle("open")}
             className={classes.buttonLink}
           >
-            <Notifications className={classes.icons} />
+            <Notifications className={classes.icons}/>
             <span className={classes.notifications}>5</span>
             <Hidden mdUp implementation="css">
               <p onClick={this.handleClick} className={classes.linkText}>
@@ -96,12 +109,12 @@ class HeaderLinks extends React.Component {
             transition
             disablePortal
             className={
-              classNames({ [classes.popperClose]: !open }) +
+              classNames({[classes.popperClose]: !open}) +
               " " +
               classes.pooperNav
             }
           >
-            {({ TransitionProps, placement }) => (
+            {({TransitionProps, placement}) => (
               <Grow
                 {...TransitionProps}
                 id="menu-list-grow"
@@ -111,34 +124,34 @@ class HeaderLinks extends React.Component {
                 }}
               >
                 <Paper>
-                  <ClickAwayListener onClickAway={this.handleClose}>
+                  <ClickAwayListener onClickAway={e => this.handleClose(e, "anchorEl", "open")}>
                     <MenuList role="menu">
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         Mike John responded to your email
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         You have 5 new tasks
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         You're now friend with Andrew
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         Another Notification
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         Another One
@@ -150,21 +163,67 @@ class HeaderLinks extends React.Component {
             )}
           </Poppers>
         </div>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Person"
-          className={classes.buttonLink}
-        >
-          <Person className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
-          </Hidden>
-        </Button>
+        <div className={classes.manager}>
+          <Button
+            buttonRef={ref => this.personAnchor = ref}
+            color={window.innerWidth > 959 ? "transparent" : "white"}
+            justIcon={window.innerWidth > 959}
+            simple={!(window.innerWidth > 959)}
+            aria-label="Person"
+            className={classes.buttonLink}
+            onClick={() => this.handleToggle("personOpen")}
+          >
+            <Person className={classes.icons}/>
+            <Hidden mdUp implementation="css">
+              <p className={classes.linkText}>Profile</p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={personOpen}
+            anchorEl={this.personAnchor}
+            transition
+            disablePortal
+            className={
+              classNames({[classes.popperClose]: !personOpen}) +
+              " " +
+              classes.pooperNav
+            }
+          >
+            {({TransitionProps, placement}) => (
+              <Grow
+                {...TransitionProps}
+                id="menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom"
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={e => this.handleClose(e, "personAnchor", "personOpen")}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={e => {
+                          this.handleClose(e, "personAnchor", "personOpen");
+                          if(User.authorized) {
+                            this.logout();
+                            return;
+                          }
+                          history.push("/login");
+                        }}
+                        className={classes.dropdownItem}
+                      >
+                        {User.authorized ? "Logout" : "Login"}
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
       </div>
     );
   }
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+export default withStyles(headerLinksStyle)(observer(HeaderLinks));

@@ -6,14 +6,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
-import Icon from '@material-ui/core/Icon';
+import Icon from "@material-ui/core/Icon";
+import FormHelperText from "@material-ui/core/FormHelperText";
 // @material-ui/icons
 import Clear from "@material-ui/icons/Clear";
 import Check from "@material-ui/icons/Check";
 // core components
 import customInputStyle from "assets/jss/material-dashboard-react/components/customInputStyle.jsx";
 
-function CustomInput({ ...props }) {
+function CustomInput({...props}) {
   const {
     classes,
     formControlProps,
@@ -23,7 +24,8 @@ function CustomInput({ ...props }) {
     inputProps,
     error,
     success,
-    icon
+    icon,
+    helperText
   } = props;
 
   const labelClasses = classNames({
@@ -62,11 +64,12 @@ function CustomInput({ ...props }) {
         {...inputProps}
       />
       {error ? (
-        <Clear className={classes.feedback + " " + classes.labelRootError} />
+        <Clear className={classes.feedback + " " + classes.labelRootError}/>
       ) : success ? (
-        <Check className={classes.feedback + " " + classes.labelRootSuccess} />
+        <Check className={classes.feedback + " " + classes.labelRootSuccess}/>
       ) : null}
       {icon && <Icon className={classes.feedback}>{icon}</Icon>}
+      {helperText && <FormHelperText id="component-error-text">{helperText}</FormHelperText>}
     </FormControl>
   );
 }

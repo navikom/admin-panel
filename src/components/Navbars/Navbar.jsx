@@ -18,7 +18,7 @@ import headerStyle from "assets/jss/material-dashboard-react/components/headerSt
 
 function Header({ ...props }) {
   function makeBrand() {
-    var name;
+    let name = "Page didn't find.";
     props.routes.map((prop, key) => {
       if (prop.layout + prop.path === props.location.pathname) {
         name = props.rtlActive ? prop.rtlName : prop.name;
@@ -27,7 +27,7 @@ function Header({ ...props }) {
     });
     return name;
   }
-  const { classes, color } = props;
+  const { classes, color, history } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
@@ -36,12 +36,13 @@ function Header({ ...props }) {
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
+
           <Button color="transparent" href="#" className={classes.title}>
             {makeBrand()}
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+          {props.rtlActive ? <RTLNavbarLinks history={history}/> : <AdminNavbarLinks history={history}/>}
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton

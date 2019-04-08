@@ -147,7 +147,7 @@ const sidebarStyle = theme => ({
     }
   },
   itemLink: {
-    width: "auto",
+    width: "100%",
     transition: "all 300ms linear",
     margin: "10px 15px 0",
     borderRadius: "3px",

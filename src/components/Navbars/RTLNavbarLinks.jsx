@@ -20,25 +20,36 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import rtlHeaderLinksStyle from "assets/jss/material-dashboard-react/components/rtlHeaderLinksStyle.jsx";
 
+// models
+import { User } from "models";
+
+// api
+import { Firebase } from "api";
+
 class HeaderLinks extends React.Component {
   state = {
-    open: false
+    open: false,
+    personOpen: false
   };
-  handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
+  handleToggle(key) {
+    this.setState(state => ({[key]: !state[key]}));
+  }
 
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
+  handleClose(event, key, prop) {
+    if (this[key].contains(event.target)) {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({[prop]: false});
   };
 
+  logout() {
+    Firebase.auth.signOut();
+  }
+
   render() {
-    const { classes } = this.props;
-    const { open } = this.state;
+    const { classes, history } = this.props;
+    const { open, personOpen } = this.state;
     return (
       <div>
         <div className={classes.searchWrapper}>
@@ -79,7 +90,7 @@ class HeaderLinks extends React.Component {
             simple={!(window.innerWidth > 959)}
             aria-owns={open ? "menu-list-grow" : null}
             aria-haspopup="true"
-            onClick={this.handleToggle}
+            onClick={e => this.handleToggle("anchorEl")}
             className={classes.buttonLink}
           >
             <Notifications className={classes.icons} />
@@ -111,34 +122,34 @@ class HeaderLinks extends React.Component {
                 }}
               >
                 <Paper>
-                  <ClickAwayListener onClickAway={this.handleClose}>
+                  <ClickAwayListener onClickAway={e => this.handleClose(e, "anchorEl", "open")}>
                     <MenuList role="menu">
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         محمدرضا به ایمیل شما پاسخ داد
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         شما ۵ وظیفه جدید دارید
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         از حالا شما با علیرضا دوست هستید
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         اعلان دیگر
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={e => this.handleClose(e, "anchorEl", "open")}
                         className={classes.dropdownItem}
                       >
                         اعلان دیگر
@@ -150,18 +161,64 @@ class HeaderLinks extends React.Component {
             )}
           </Poppers>
         </div>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-label="Person"
-          className={classes.buttonLink}
-        >
-          <Person className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>حساب کاربری</p>
-          </Hidden>
-        </Button>
+        <div className={classes.manager}>
+          <Button
+            buttonRef={ref => this.personAnchor = ref}
+            color={window.innerWidth > 959 ? "transparent" : "white"}
+            justIcon={window.innerWidth > 959}
+            simple={!(window.innerWidth > 959)}
+            aria-label="Person"
+            className={classes.buttonLink}
+            onClick={() => this.handleToggle("personOpen")}
+          >
+            <Person className={classes.icons}/>
+            <Hidden mdUp implementation="css">
+              <p className={classes.linkText}>حساب کاربری</p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={personOpen}
+            anchorEl={this.personAnchor}
+            transition
+            disablePortal
+            className={
+              classNames({[classes.popperClose]: !personOpen}) +
+              " " +
+              classes.pooperNav
+            }
+          >
+            {({TransitionProps, placement}) => (
+              <Grow
+                {...TransitionProps}
+                id="menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom"
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={e => this.handleClose(e, "personAnchor", "personOpen")}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={e => {
+                          this.handleClose(e, "personAnchor", "personOpen");
+                          if(User.authorized) {
+                            this.logout();
+                            return;
+                          }
+                          history.push("/login");
+                        }}
+                        className={classes.dropdownItem}
+                      >
+                        {User.authorized ? "الخروج" : "تسجيل الدخول"}
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
       </div>
     );
   }

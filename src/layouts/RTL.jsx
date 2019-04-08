@@ -20,6 +20,9 @@ import rtlStyle from "assets/jss/material-dashboard-react/layouts/rtlStyle.jsx";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
+// core containers
+import ScrollContainer from "containers/ScrollContainer/ScrollContainer.jsx";
+
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
@@ -72,14 +75,10 @@ class RTL extends React.Component {
     }
   };
   componentDidMount() {
-    if (navigator.platform.indexOf("Win") > -1) {
-      const ps = new PerfectScrollbar(this.refs.mainPanel);
-    }
     window.addEventListener("resize", this.resizeFunction);
   }
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {
-      this.refs.mainPanel.scrollTop = 0;
       if (this.state.mobileOpen) {
         this.setState({ mobileOpen: false });
       }
@@ -103,7 +102,7 @@ class RTL extends React.Component {
           rtlActive
           {...rest}
         />
-        <div className={classes.mainPanel} ref="mainPanel">
+        <ScrollContainer rtl={true}>
           <Navbar
             routes={routes}
             handleDrawerToggle={this.handleDrawerToggle}
@@ -128,7 +127,7 @@ class RTL extends React.Component {
             fixedClasses={this.state.fixedClasses}
             rtlActive
           />
-        </div>
+        </ScrollContainer>
       </div>
     );
   }

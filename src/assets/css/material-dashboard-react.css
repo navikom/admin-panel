@@ -143,6 +143,10 @@ a:focus {
   text-decoration: none;
 }
 
+p {
+  font-size: 1.2em;;
+}
+
 legend {
   border-bottom: 0;
 }
@@ -218,11 +222,18 @@ footer ul li a:hover {
   text-decoration: none;
 }
 
+code {
+  font-size: 1.3em;
+  font-weight: bold;
+
+}
+
 @media (max-width: 991px) {
   body,
   html {
     position: relative;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   #bodyClick {
