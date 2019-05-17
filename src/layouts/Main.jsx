@@ -1,22 +1,24 @@
 /* eslint-disable */
-import React from "react";
+import React, { Suspense } from "react";
 import PropTypes from "prop-types";
+import { Route, Switch } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+//utils
+import { lazy } from "../utils";
 
 // core components
-import Nav from "components/Navbars/MainNav.jsx";
-import Footer from "components/Footer/MainFooter.jsx";
+const Nav = lazy(() => import("components/Navbars/MainNav.jsx"));
+const Footer = lazy(() => import("components/Footer/MainFooter.jsx"));
 
 import routes from "routes.js";
 
 import mainStyle from "assets/jss/material-dashboard-react/layouts/mainStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
-import { Route, Switch } from "react-router-dom";
 
 const switchRoutes = (
   <Switch>
@@ -80,9 +82,11 @@ class Main extends React.Component {
       <div className={classes.wrapper}>
         <div className={classes.fullPage} style={{backgroundImage}}>
           <div className={classes.content}>
-            <Nav routes={routes} {...rest} />
-            <div className={classes.container} style={{marginTop: `${this.wHeight * .15}px`}}>{switchRoutes}</div>
-            <Footer />
+            <Suspense fallback={"Loading"}>
+              <Nav routes={routes} {...rest} />
+              <div className={classes.container} style={{marginTop: `${this.wHeight * .15}px`}}>{switchRoutes}</div>
+              <Footer/>
+            </Suspense>
           </div>
         </div>
       </div>

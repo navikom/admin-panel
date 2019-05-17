@@ -36,5 +36,16 @@
   "guide20": "Run IOS application",
   "guide21": "To run the same application in an Android Emulator or device (if connected), you can use the command",
   "guide22": "You will be prompted with a success message and in a new terminal window, Metro Bundler (developed by Facebook) will be running until the application closes.",
-  "guide23": "Press the button to fill the database"
+  "guide23": "Press the button to fill the database",
+  "guide6_1": "Google map API",
+  "guide6_2": "Follow",
+  "guide6_3": "to create Google API key",
+  "guide6_4": "Follow",
+  "guide6_5": "and replace",
+  "on": "on",
+  "runServer": "Run server, please",
+  "build": "Build",
+  "setUpApp": "Set up mobile application",
+  "appName": "Application name",
+  "canOnlyContain": "$ can only contain a-z and A-Z"
 }

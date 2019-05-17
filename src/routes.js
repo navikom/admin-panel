@@ -7,7 +7,8 @@ import {
   LocationOn,
   Notifications,
   Language,
-  CastForEducation
+  CastForEducation,
+  Build as BuildIcon
 } from "@material-ui/icons";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
@@ -19,6 +20,7 @@ import Maps from "views/Maps/Maps.jsx";
 import Login from "views/Login/Login.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Guide from "views/Guide/Guide.jsx";
+import Build from "views/Build/Build.jsx";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.jsx";
 
@@ -29,6 +31,14 @@ const dashboardRoutes = [
     rtlName: "يرشد",
     icon: CastForEducation,
     component: Guide,
+    layout: "/admin"
+  },
+  {
+    path: "/build",
+    name: "Build",
+    rtlName: "يرشد",
+    icon: BuildIcon,
+    component: Build,
     layout: "/admin"
   },
   {
