@@ -15,16 +15,16 @@ import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import CustomInput from "components/CustomInput/CustomInput.tsx";
+import Button from "components/CustomButtons/Button.tsx";
 
 import rtlHeaderLinksStyle from "assets/jss/material-dashboard-react/components/rtlHeaderLinksStyle.jsx";
 
 // models
-import { User } from "models";
+import { App } from "models/App";
+import { Auth } from "models/Auth/Auth";
 
 // api
-import { Firebase } from "api";
 
 class HeaderLinks extends React.Component {
   state = {
@@ -44,7 +44,7 @@ class HeaderLinks extends React.Component {
   };
 
   logout() {
-    Firebase.auth.signOut();
+    Auth.logout();
   }
 
   render() {
@@ -202,15 +202,14 @@ class HeaderLinks extends React.Component {
                       <MenuItem
                         onClick={e => {
                           this.handleClose(e, "personAnchor", "personOpen");
-                          if(User.authorized) {
+                          if(App.loggedIn) {
                             this.logout();
-                            return;
                           }
                           history.push("/login");
                         }}
                         className={classes.dropdownItem}
                       >
-                        {User.authorized ? "الخروج" : "تسجيل الدخول"}
+                        {App.loggedIn ? "الخروج" : "تسجيل الدخول"}
                       </MenuItem>
                     </MenuList>
                   </ClickAwayListener>

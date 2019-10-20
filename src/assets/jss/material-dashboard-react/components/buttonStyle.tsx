@@ -10,8 +10,9 @@ import {
   blackColor,
   hexToRgb
 } from "assets/jss/material-dashboard-react.jsx";
+import { createStyles } from "@material-ui/core";
 
-const buttonStyle = {
+const buttonStyle = createStyles({
   button: {
     minHeight: "auto",
     minWidth: "auto",
@@ -31,7 +32,7 @@ const buttonStyle = {
     padding: "12px 30px",
     margin: ".3125rem 1px",
     fontSize: "12px",
-    fontWeight: "400",
+    fontWeight: 400,
     textTransform: "uppercase",
     letterSpacing: "0",
     willChange: "box-shadow, transform",
@@ -271,7 +272,7 @@ const buttonStyle = {
     }
   },
   disabled: {
-    opacity: "0.65",
+    opacity: 0.65,
     pointerEvents: "none"
   },
   lg: {
@@ -285,6 +286,12 @@ const buttonStyle = {
     fontSize: "0.6875rem",
     lineHeight: "1.5",
     borderRadius: "0.2rem"
+  },
+  superSm: {
+    padding: "0.60625rem 1.0rem",
+    fontSize: "0.2875rem",
+    lineHeight: ".7",
+    borderRadius: "0.1rem"
   },
   round: {
     borderRadius: "30px"
@@ -337,6 +344,6 @@ const buttonStyle = {
       }
     }
   }
-};
+});
 
 export default buttonStyle;

@@ -8,16 +8,21 @@ import {
   Notifications,
   Language,
   CastForEducation,
+  People,
+  Image,
   Build as BuildIcon
 } from "@material-ui/icons";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import UsersPage from "views/Users/Users.jsx";
+import PicturesPage from "views/Pictures/Pictures.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
-import Login from "views/Login/Login.jsx";
+import Login from "views/Login/Login.tsx";
+import StartPage from "views/StartPage/StartPage.tsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Guide from "views/Guide/Guide.jsx";
 import Build from "views/Build/Build.jsx";
@@ -31,7 +36,8 @@ const dashboardRoutes = [
     rtlName: "يرشد",
     icon: CastForEducation,
     component: Guide,
-    layout: "/admin"
+    layout: "/admin",
+    auth: true
   },
   {
     path: "/build",
@@ -39,7 +45,8 @@ const dashboardRoutes = [
     rtlName: "يرشد",
     icon: BuildIcon,
     component: Build,
-    layout: "/admin"
+    layout: "/admin",
+    auth: true
   },
   {
     path: "/dashboard",
@@ -51,11 +58,29 @@ const dashboardRoutes = [
     auth: true
   },
   {
-    path: "/user",
+    path: "/users",
+    name: "Users",
+    rtlName: "لوحة القيادة",
+    icon: People,
+    component: UsersPage,
+    layout: "/admin",
+    auth: true
+  },
+  {
+    path: "/profile_user",
     name: "User Profile",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
+    layout: "/admin",
+    auth: true
+  },
+  {
+    path: "/pictures",
+    name: "Pictures",
+    rtlName: "لوحة القيادة",
+    icon: Image,
+    component: PicturesPage,
     layout: "/admin",
     auth: true
   },
@@ -109,7 +134,14 @@ const dashboardRoutes = [
     name: "Admin panel",
     rtlName: "لوحة الادارة",
     component: Login,
-    layout: "/main"
+    layout: "/main",
+  },
+  {
+    url: "/start-page",
+    name: "Start Page",
+    rtlName: "لوحة الادارة",
+    component: StartPage,
+    layout: "/main",
   },
   {
     path: "/rtl-page",
@@ -117,7 +149,8 @@ const dashboardRoutes = [
     rtlName: "پشتیبانی از راست به چپ",
     icon: Language,
     component: RTLPage,
-    layout: "/rtl"
+    layout: "/rtl",
+    auth: true
   }
 ];
 

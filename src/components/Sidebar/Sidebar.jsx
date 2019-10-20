@@ -13,7 +13,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 
 // models
-import { User } from "models";
+import { App } from "models/App";
+
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
@@ -31,7 +32,7 @@ const Sidebar = ({...props}) => {
       {routes.map((prop, key) => {
         let listItemClasses;
         if (!prop.path) return null;
-        if(prop.auth && !User.authorized) return null
+        if(prop.auth && !App.loggedIn) return null;
 
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.layout + prop.path)
@@ -39,7 +40,6 @@ const Sidebar = ({...props}) => {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
         });
-
         return (
           <NavLink
             to={prop.layout + prop.path}
@@ -83,7 +83,7 @@ const Sidebar = ({...props}) => {
   const brand = (
     <div className={classes.logo}>
       <a
-        href="https://www.creative-tim.com"
+        href="/"
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive
         })}

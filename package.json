@@ -5,6 +5,7 @@
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
+    "@craco/craco": "^5.5.0",
     "@material-ui/core": "3.9.2",
     "@material-ui/icons": "3.0.2",
     "chartist": "0.10.1",
@@ -13,7 +14,6 @@
     "history": "4.7.2",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
-    "mobx-state-tree": "^3.12.2",
     "perfect-scrollbar": "1.4.0",
     "prettier": "1.16.4",
     "prop-types": "15.7.1",
@@ -25,14 +25,13 @@
     "react-router-dom": "4.3.1",
     "react-scripts": "2.1.5",
     "react-swipeable-views": "0.13.1",
-    "shelljs": "^0.8.3",
+    "typescript": "^3.6.4",
     "validate.js": "^0.12.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "server": "node server/server.js",
-    "test": "react-scripts test --env=jsdom",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --env=jsdom",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "lint:check": "eslint . --ext=js,jsx;  exit 0",
@@ -58,6 +57,13 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "@types/history": "^4.7.3",
+    "@types/jest": "^24.0.19",
+    "@types/node": "^12.11.1",
+    "@types/react": "^16.9.7",
+    "@types/react-dom": "^16.9.2",
+    "@types/react-router-dom": "^5.1.0",
     "eslint-config-prettier": "4.0.0",
     "eslint-plugin-prettier": "3.0.1"
   }

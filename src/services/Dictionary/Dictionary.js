@@ -1,8 +1,18 @@
 import {settings} from './settings';
 
-class DictionaryService {
+export class DictionaryService {
   constructor(locale) {
     this.data = settings[locale];
+
+    this.reversed = {};
+    for(let key in DictionaryService.keys) {
+      this.reversed[DictionaryService.keys[key]] = key;
+    }
+  }
+
+  defValue(value, values) {
+    const key = this.reversed[value];
+    return this.value(key, values);
   }
 
   value(key, values) {
@@ -23,5 +33,6 @@ class DictionaryService {
     return this.data[key] !== undefined;
   }
 }
+DictionaryService.keys = require('../i18n/en.json');
 
 export const Dictionary = new DictionaryService("en");

@@ -92,7 +92,7 @@ material-dashboard-react
 │   ├── index.html
 │   └── manifest.json
 └── src
-    ├── index.js
+    ├── index.tsx
     ├── logo.svg
     ├── routes.js
     ├── assets
@@ -115,9 +115,9 @@ material-dashboard-react
     │   │   ├── CardHeader.jsx
     │   │   └── CardIcon.jsx
     │   ├── CustomButtons
-    │   │   └── Button.jsx
+    │   │   └── Button.tsx
     │   ├── CustomInput
-    │   │   └── CustomInput.jsx
+    │   │   └── CustomInput.tsx
     │   ├── CustomTabs
     │   │   └── CustomTabs.jsx
     │   ├── FixedPlugin
@@ -149,7 +149,7 @@ material-dashboard-react
     │       ├── Success.jsx
     │       └── Warning.jsx
     ├── layouts
-    │   ├── Admin.jsx
+    │   ├── Admin.tsx
     │   └── RTL.jsx
     ├── variables
     │   ├── charts.jsx

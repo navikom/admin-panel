@@ -3,8 +3,10 @@ import {
   container,
   blackColor
 } from "assets/jss/material-dashboard-react.jsx";
+import { Theme } from "@material-ui/core";
+import { createStyles } from '@material-ui/core';
 
-const appStyle = theme => ({
+const appStyle = (theme) => createStyles({
   content: {
     padding: "30px 15px",
     minHeight: "calc(100vh - 60px)",
@@ -33,7 +35,7 @@ const appStyle = theme => ({
       content: "\"\"",
       display: "block",
       background: blackColor,
-      opacity: ".8"
+      opacity: .8
     }
   },
   container

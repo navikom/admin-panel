@@ -1,8 +1,8 @@
 {
-  "auth/argument-error": "First argument \"email\" must be a valid string.",
-  "auth/wrong-password": "The password is invalid or the user does not have a password.",
-  "auth/user-not-found": "There is no user record corresponding to this identifier. The user may have been deleted.",
-  "auth/invalid-email": "The email address is badly formatted.",
+  "auth:wrong-password": "The password is invalid or the user does not have a password.",
+  "auth:user-not-found": "There is no user record corresponding to this identifier.",
+  "auth:invalid-email": "The email address is badly formatted.",
+  "auth:user-exists": "User already exists with that email.",
   "cantBeEmpty": "$ can't be empty",
   "cantBeLessThan": "%0 can't be less than %1 chars",
   "guide1": "Get Started",
@@ -47,5 +47,13 @@
   "build": "Build",
   "setUpApp": "Set up mobile application",
   "appName": "Application name",
-  "canOnlyContain": "$ can only contain a-z and A-Z"
+  "canOnlyContain": "$ can only contain a-z and A-Z",
+  "users": "Users",
+  "usersDashboard": "Users Dashboard",
+  "pictures": "Pictures",
+  "picturesDashboard": "Pictures Dashboard",
+  "login": "Login",
+  "LogIn": "Log in",
+  "doNotHaveAccount": "Don't have an account? Sign Up",
+  "forgotPassword": "Forgot Password?"
 }

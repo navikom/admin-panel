@@ -1,12 +1,12 @@
 /* eslint-disable */
 import React, { Suspense } from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, RouteComponentProps } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles, { StyledComponentProps, StyleRulesCallback, WithStyles } from "@material-ui/core/styles/withStyles";
 // utils
 import { lazy } from "utils";
 
@@ -21,7 +21,7 @@ import ScrollContainer from "containers/ScrollContainer/ScrollContainer.jsx";
 
 import routes from "routes.js";
 
-import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
+import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
@@ -42,8 +42,18 @@ const switchRoutes = (
   </Switch>
 );
 
-class Dashboard extends React.Component {
-  constructor(props) {
+interface DashboardProps extends RouteComponentProps, WithStyles<typeof dashboardStyle> {}
+type DashboardState = {
+  image: any,
+  color: String,
+  hasImage: boolean,
+  fixedClasses: string,
+  mobileOpen: boolean
+}
+
+class Dashboard extends React.Component<DashboardProps, DashboardState> {
+
+  constructor(props: DashboardProps) {
     super(props);
     this.state = {
       image: image,
@@ -54,10 +64,10 @@ class Dashboard extends React.Component {
     };
   }
 
-  handleImageClick = image => {
+  handleImageClick = (image: any) => {
     this.setState({image: image});
   };
-  handleColorClick = color => {
+  handleColorClick = (color: String) => {
     this.setState({color: color});
   };
   handleFixedClick = () => {
@@ -85,7 +95,7 @@ class Dashboard extends React.Component {
     window.addEventListener("resize", this.resizeFunction);
   }
 
-  componentDidUpdate(e) {
+  componentDidUpdate(e: RouteComponentProps) {
     if (e.history.location.pathname !== e.location.pathname) {
       if (this.state.mobileOpen) {
         this.setState({mobileOpen: false});
@@ -141,9 +151,5 @@ class Dashboard extends React.Component {
     );
   }
 }
-
-Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(dashboardStyle)(Dashboard);

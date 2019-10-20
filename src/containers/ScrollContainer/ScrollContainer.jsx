@@ -8,7 +8,7 @@ import {
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "components/CustomButtons/Button.jsx";
+import Button from "components/CustomButtons/Button.tsx";
 import Icon from "@material-ui/core/Icon";
 import RootRef from "@material-ui/core/RootRef";
 import PerfectScrollbar from "../../layouts/Admin";

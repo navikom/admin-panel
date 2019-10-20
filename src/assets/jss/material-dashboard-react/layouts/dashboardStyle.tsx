@@ -3,8 +3,9 @@ import {
   transition,
   container
 } from "assets/jss/material-dashboard-react.jsx";
+import { Theme, createStyles } from "@material-ui/core";
 
-const appStyle = theme => ({
+const appStyle = (theme: Theme) => createStyles({
   wrapper: {
     position: "relative",
     top: "0",

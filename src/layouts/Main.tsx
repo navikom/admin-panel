@@ -1,12 +1,12 @@
 /* eslint-disable */
-import React, { Suspense } from "react";
+import React, { Suspense, ReactDOM, createRef } from "react";
 import PropTypes from "prop-types";
-import { Route, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Switch } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 //utils
 import { lazy } from "../utils";
 
@@ -36,8 +36,24 @@ const switchRoutes = (
   </Switch>
 );
 
-class Main extends React.Component {
-  constructor(props) {
+interface MainProps extends RouteComponentProps, WithStyles<typeof mainStyle> {}
+
+type MainState = {
+  image: any,
+  color: string,
+  hasImage: boolean,
+  mobileOpen: boolean
+}
+
+type Ref = {
+  [key: string]: HTMLElement,
+  // mainPanel: HTMLElement
+}
+
+class Main extends React.Component<MainProps, MainState> {
+  private wHeight: number;
+
+  constructor(props: MainProps) {
     super(props);
     this.state = {
       image: image,
@@ -57,14 +73,14 @@ class Main extends React.Component {
 
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
-      const ps = new PerfectScrollbar(this.refs.mainPanel);
+      // const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
     window.addEventListener("resize", this.resizeFunction);
   }
 
-  componentDidUpdate(e) {
+  componentDidUpdate(e: MainProps) {
     if (e.history.location.pathname !== e.location.pathname) {
-      this.refs.mainPanel.scrollTop = 0;
+      // this.refs.mainPanel.scrollTop = 0;
       if (this.state.mobileOpen) {
         this.setState({mobileOpen: false});
       }
@@ -93,9 +109,5 @@ class Main extends React.Component {
     );
   }
 }
-
-Main.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(mainStyle)(Main);

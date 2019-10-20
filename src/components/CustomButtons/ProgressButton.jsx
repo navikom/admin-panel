@@ -8,8 +8,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // core components
-import Button from "components/CustomButtons/Button.jsx";
-import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.jsx";
+import Button from "components/CustomButtons/Button.tsx";
+import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.tsx";
 
 const style = {
   wrapper: {

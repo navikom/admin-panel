@@ -11,7 +11,7 @@
 - Almost all styles have been changed due to new components, solved issues or [the prettier command](https://prettier.io/docs/en/install.html)
 ### Major components changes
 - Changes caused by running [the prettier command](https://prettier.io/docs/en/install.html) for *.jsx*, *.js*, *.html* and *.css* files
-- **src/index.js**
+- **src/index.tsx**
 - **src/components/CustomTabs/CustomTabs.jsx**
 - **src/components/Header/Header.jsx**
 - **src/components/Sidebar/Sidebar.jsx**
@@ -22,7 +22,7 @@
 ### New components
 - **src/components/FixedPlugin/FixedPlugin.jsx**(Left menu used by us for customization - due to this, we've had to add a link for the fonts awesome cdn)
 - **src/components/Header/RTLHeaderLinks.jsx**
-- **src/layouts/Admin.jsx** (instead of Dashboard)
+- **src/layouts/Admin.tsx** (instead of Dashboard)
 - **src/layouts/RTL.jsx**
 - **src/views/RTLPage/RTLPage.jsx**
 ### Deleted components
@@ -106,8 +106,8 @@
   - https://github.com/creativetimofficial/material-dashboard-react/issues/47 (read the [./README.md](./README.md) file)
 ### Major style changes
 - Added styles for `svg`'s, **font-awesome** classes and `.material-icons` class inside
-  - `src/assets/jss/material-dashboard-react/views/dashboardStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/components/buttonStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/views/dashboardStyle.tsx`
+  - `src/assets/jss/material-dashboard-react/components/buttonStyle.tsx`
   - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.jsx`
   - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.jsx`
   - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.jsx`
@@ -134,7 +134,7 @@
 ## [1.3.0] 2018-06-15
 ### Bug Fixing
 - Changed import from `material-ui` to `@material-ui/core`
-- Droped `src/components/index.js`, and changed all the imports to separate ones
+- Droped `src/components/index.tsx`, and changed all the imports to separate ones
 - Renamed `ItemGrid` to `GridItem`
 ### Major style changes
 - Moved the styles of `src/components/` inside `src/assets/jss/material-dashboard-react/components/`
@@ -142,7 +142,7 @@
 - Moved the styles of `src/views/` inside `src/assets/jss/material-dashboard-react/views/`
 - Almost all styles have been changed more or less
 ### Dropped components
-- `src/components/CustomButtons/IconButton.jsx` (instead use `src/components/CustomButtons/Button.jsx` with `justIcon` prop)
+- `src/components/CustomButtons/IconButton.jsx` (instead use `src/components/CustomButtons/Button.tsx` with `justIcon` prop)
 - Some components from `src/components/Typography` (instead of these we've added some css to style the normal HTML tags)
   - `src/components/Typography/A.jsx`
   - `src/components/Typography/P.jsx`

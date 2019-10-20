@@ -7,7 +7,6 @@ import { lazy } from "utils";
 // services
 import { Dictionary } from "services";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { ServerApi } from "../../api/Server/Server";
 
 // core components
 const GridContainer = lazy(() => import("components/Grid/GridContainer.jsx"));
@@ -15,7 +14,7 @@ const GridItem = lazy(() => import("components/Grid/GridItem.jsx"));
 const Card = lazy(() => import("components/Card/Card.jsx"));
 const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
 const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
-const Button = lazy(() => import("components/CustomButtons/Button.jsx"));
+const Button = lazy(() => import("components/CustomButtons/Button.tsx"));
 
 
 // images
@@ -94,21 +93,7 @@ class Guide extends React.Component {
   }
 
   onBuild = () => {
-    this.npmInstall();
   };
-
-  async npmInstall() {
-    try {
-      const res = await new ServerApi().callShell({command: "cd .. && ls"});
-      const folder = res.result[0].split('\n').filter(e => e.length && e !== 'server')[0];
-      // await new ServerApi().callShell({command: `cd ../${folder} && npm install`});
-      const res2 = await new ServerApi().callShell({command: `cd ../${folder} && npm run android`});
-      console.log(res2);
-    } catch (e) {
-      console.log("error", e);
-      alert(e.message);
-    }
-  }
 
   render() {
     const {classes} = this.props;

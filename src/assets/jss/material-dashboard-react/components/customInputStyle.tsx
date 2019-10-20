@@ -5,8 +5,9 @@ import {
   grayColor,
   defaultFont
 } from "assets/jss/material-dashboard-react.jsx";
+import { createStyles } from "@material-ui/core";
 
-const customInputStyle = {
+const customInputStyle = createStyles({
   disabled: {
     "&:before": {
       backgroundColor: "transparent !important"
@@ -34,7 +35,7 @@ const customInputStyle = {
   labelRoot: {
     ...defaultFont,
     color: grayColor[3] + " !important",
-    fontWeight: "400",
+    fontWeight: 400,
     fontSize: "14px",
     lineHeight: "1.42857"
   },
@@ -48,7 +49,7 @@ const customInputStyle = {
     position: "absolute",
     top: "18px",
     right: "0",
-    zIndex: "2",
+    zIndex: 2,
     display: "block",
     width: "24px",
     height: "24px",
@@ -64,6 +65,6 @@ const customInputStyle = {
     position: "relative",
     verticalAlign: "unset"
   }
-};
+});
 
 export default customInputStyle;

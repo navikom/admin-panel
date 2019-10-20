@@ -7,17 +7,13 @@ import { lazy } from "utils";
 
 // services
 import { Dictionary } from "services";
-import { ServerApi } from "../../api/Server/Server";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // core components
-const GridContainer = lazy(() => import("components/Grid/GridContainer.jsx"));
-const GridItem = lazy(() => import("components/Grid/GridItem.jsx"));
 const Card = lazy(() => import("components/Card/Card.jsx"));
 const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
 const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
 const ProgressButton = lazy(() => import("components/CustomButtons/ProgressButton.jsx"));
-const CustomInput = lazy(() => import("components/CustomInput/CustomInput.jsx"));
+const CustomInput = lazy(() => import("components/CustomInput/CustomInput.tsx"));
 
 const style = {
   typo: {

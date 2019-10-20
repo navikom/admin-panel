@@ -1,10 +1,12 @@
-export async function request(method, url, body, allHeaders = {}, debug = true) {
+import { Headers, Body } from "interfaces/Request.tsx";
+import { ErrorHandler } from "utils/ErrorHandler";
+
+export async function request(method: string, url: string, allHeaders: Headers = {}, body?: Body, debug = true) {
   let headers = Object.assign({}, allHeaders, {
     "Accept": "application/json",
     "Content-Type": "application/json"
   });
-
-  const object = {method, headers};
+  const object: RequestInit = { method, headers };
   body && (object.body = JSON.stringify(body));
   if (debug) {
     console.log("REQUEST", url, method, body, headers);
@@ -13,12 +15,13 @@ export async function request(method, url, body, allHeaders = {}, debug = true) 
   if (debug) {
     console.log("RESPONSE", url, response);
   }
-  if (!response.ok) {
-    throw new Error("HTTP Error");
-  }
   const json = await response.json();
+
   if (debug) {
     console.log("RESPONSE BODY", url, json);
   }
-  return json;
+  if (!response.ok) {
+    throw new ErrorHandler(json.error ? json.error : "HTTP Error");
+  }
+  return json.data;
 }

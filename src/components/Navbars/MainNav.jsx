@@ -7,7 +7,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 // @material-ui/icons
 // core components
-import Button from "components/CustomButtons/Button.jsx";
+import Button from "components/CustomButtons/Button.tsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
