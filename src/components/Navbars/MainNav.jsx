@@ -13,13 +13,13 @@ import headerStyle from "assets/jss/material-dashboard-react/components/headerSt
 
 function Header({ ...props }) {
   function makeBrand() {
-    let name = 'Admin Panel';
-    props.routes.map((prop, key) => {
-      if (prop.url === props.location.pathname) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
-      }
-      return null;
-    });
+    let name = 'Webinsolut';
+    // props.routes.map((prop, key) => {
+    //   if (prop.url === props.location.pathname) {
+    //     name = props.rtlActive ? prop.rtlName : prop.name;
+    //   }
+    //   return null;
+    // });
     return name;
   }
   const { classes, color, history } = props;

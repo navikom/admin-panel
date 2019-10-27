@@ -19,6 +19,15 @@ class User extends HttpBase {
     super(`${settings.pixelArtApi}/users`, token);
   }
 
+  signup(email: string, password: string): Promise<LoginResultModel> {
+    const body = {
+      email: email,
+      password: password,
+      grantType: 'password'
+    };
+    return this.fetchData('post', 'sign-up', body);
+  }
+
   login(email: string, password: string): Promise<LoginResultModel> {
     const body = {
       email: email,
@@ -28,10 +37,14 @@ class User extends HttpBase {
     return this.fetchData('post', 'login', body);
   }
 
+  logout(): Promise<null> {
+    return this.fetchData('get', 'logout');
+  }
+
   refresh(refreshToken: string): Promise<LoginResultModel> {
     const body = {
-      Token: refreshToken,
-      GrantType: 'refresh_token'
+      token: refreshToken,
+      grantType: 'refresh_token'
     };
     return this.fetchData('post', 'login', body)
   }

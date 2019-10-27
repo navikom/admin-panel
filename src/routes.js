@@ -10,6 +10,7 @@ import {
   CastForEducation,
   People,
   Image,
+  Apps,
   Build as BuildIcon
 } from "@material-ui/icons";
 // core components/views for Admin layout
@@ -18,10 +19,12 @@ import UsersPage from "views/Users/Users.jsx";
 import PicturesPage from "views/Pictures/Pictures.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
+import AppsList from "views/AppsList/AppsList.tsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import Login from "views/Login/Login.tsx";
+import SignUp from "views/SignUp/SignUp.tsx";
 import StartPage from "views/StartPage/StartPage.tsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Guide from "views/Guide/Guide.jsx";
@@ -63,6 +66,15 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: People,
     component: UsersPage,
+    layout: "/admin",
+    auth: true
+  },
+  {
+    path: "/apps",
+    name: "Applications",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Apps,
+    component: AppsList,
     layout: "/admin",
     auth: true
   },
@@ -131,9 +143,16 @@ const dashboardRoutes = [
   },
   {
     url: "/login",
-    name: "Admin panel",
+    name: "Login",
     rtlName: "لوحة الادارة",
     component: Login,
+    layout: "/main",
+  },
+  {
+    url: "/sign-up",
+    name: "Sign up",
+    rtlName: "لوحة الادارة",
+    component: SignUp,
     layout: "/main",
   },
   {

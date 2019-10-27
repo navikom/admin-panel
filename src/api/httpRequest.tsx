@@ -4,7 +4,7 @@ import { ErrorHandler } from "utils/ErrorHandler";
 export async function request(method: string, url: string, allHeaders: Headers = {}, body?: Body, debug = true) {
   let headers = Object.assign({}, allHeaders, {
     "Accept": "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   });
   const object: RequestInit = { method, headers };
   body && (object.body = JSON.stringify(body));

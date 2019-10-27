@@ -27,6 +27,7 @@ ReactDOM.render(
       <Route path={Constants.ADMIN_ROUTE} component={Admin}/>
       <Route path="/rtl" component={RTL}/>
       <Route path={Constants.LOGIN_ROUTE} component={Main}/>
+      <Route path={Constants.SIGN_UP_ROUTE} component={Main}/>
       <Route path={Constants.START_PAGE_ROUTE} component={Main}/>
       <Redirect from={Constants.ROOT_ROUTE} to={Constants.START_PAGE_ROUTE}/>
       <Route path="*" component={Admin}/>

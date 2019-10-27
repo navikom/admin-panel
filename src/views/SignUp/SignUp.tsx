@@ -7,12 +7,9 @@ import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
 import Fade from "@material-ui/core/Fade";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import Checkbox from "@material-ui/core/Checkbox";
-import { FormControlLabel } from "@material-ui/core";
 
 // models
 import { Auth } from "models/Auth/Auth";
-import * as Constants from "models/Constants";
 
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
@@ -40,39 +37,41 @@ interface PropsInterface {
   id: string;
 }
 
-interface LoginProps extends RouteComponentProps, WithStyles<typeof styles> {
+interface SignUpProps extends RouteComponentProps, WithStyles<typeof styles> {
 }
 
-type LoginState = {
+type SignUpState = {
   errors: any,
   formCompleted: boolean
 }
 
-type InputTypes = "email" | "password";
+type InputsTypes = "email" | "password" | "confirmPassword";
 
 @observer
-class Login extends React.Component<LoginProps, LoginState> {
+class SignUp extends React.Component<SignUpProps, SignUpState> {
   @observable email: string = "";
   @observable password: string = "";
+  @observable confirmPassword: string = "";
 
-  state: Readonly<LoginState> = {
+  state: Readonly<SignUpState> = {
     errors: null,
     formCompleted: false
   };
 
-  onInput = (key: InputTypes, e: React.ChangeEvent<HTMLInputElement>) => {
+  onInput = (key: InputsTypes, e: React.ChangeEvent<HTMLInputElement>) => {
     this[key] = e.target.value;
     const errors = Auth.onInput(
-      Object.assign({ email: this.email, password: this.password }, { [key]: e.target.value }), true
+      Object.assign({ email: this.email, password: this.password, confirmPassword: this.confirmPassword }, { [key]: e.target.value })
     );
+
     this.setState({ errors, formCompleted: errors == null });
   };
 
   onSubmit = async () => {
-    Auth.login(this.email, this.password);
+    Auth.signup(this.email, this.password);
   };
 
-  input(key: InputTypes, labelText: string, id: string, icon: string, inputProps = {}) {
+  input(key: InputsTypes, labelText: string, id: string, icon: string, inputProps = {}) {
     const props: PropsInterface = { labelText, id };
     const formControlProps: FormControlInterface = {};
     let helperText = null;
@@ -114,7 +113,7 @@ class Login extends React.Component<LoginProps, LoginState> {
               <Fade in={true}>
                 <Card>
                   <CardHeader color="primary" style={{ textAlign: "center" }}>
-                    <h4 className={classes.cardTitleWhite}>{Dictionary.defValue(DictionaryService.keys.login)}</h4>
+                    <h4 className={classes.cardTitleWhite}>{Dictionary.defValue(DictionaryService.keys.SignUp)}</h4>
                   </CardHeader>
                   <CardBody>
                     <GridContainer justify="center">
@@ -125,6 +124,11 @@ class Login extends React.Component<LoginProps, LoginState> {
                     <GridContainer justify="center">
                       <GridItem xs={12} sm={10} md={10}>
                         {this.input("password", Dictionary.defValue(DictionaryService.keys.password), "password", "lock", { type: "password" })}
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer justify="center">
+                      <GridItem xs={12} sm={10} md={10}>
+                        {this.input("confirmPassword", Dictionary.defValue(DictionaryService.keys.confirmPassword), "confirmPassword", "lock", { type: "password" })}
                       </GridItem>
                     </GridContainer>
                     {Auth.hasError && (
@@ -138,33 +142,18 @@ class Login extends React.Component<LoginProps, LoginState> {
                         </GridItem>
                       </GridContainer>
                     )}
-                    <GridContainer justify="center">
-                      <GridItem xs={12} sm={10} md={4}>
-                        <Button onClick={() => {
-                        }} link size="sm">
-                          {Dictionary.defValue(DictionaryService.keys.forgotPassword)}
-                        </Button>
-                      </GridItem>
-                      <GridItem xs={12} sm={10} md={7}>
-                        <Button onClick={() => this.props.history.push(Constants.SIGN_UP_ROUTE)} link size="sm">
-                          {Dictionary.defValue(DictionaryService.keys.doNotHaveAccount)}
-                        </Button>
-                      </GridItem>
-                    </GridContainer>
-                    <GridContainer justify="center">
+                    <GridContainer justify="flex-end">
                       <GridItem xs={12} sm={10} md={10}>
-                        <FormControlLabel
-                          control={<Checkbox value="remember" color="primary" checked={Auth.rememberMe}
-                                             onChange={() => Auth.switchRememberMe()}/>}
-                          label={Dictionary.defValue(DictionaryService.keys.rememberMe)}
-                        />
+                        <Button onClick={() => this.props.history.goBack()} link size="sm">
+                          {Dictionary.defValue(DictionaryService.keys.doYouHaveAccount)}
+                        </Button>
                       </GridItem>
                     </GridContainer>
                   </CardBody>
 
                   <CardFooter justify="center" style={{ justifyContent: "center" }}>
                     <Button color="primary" disabled={!this.state.formCompleted} onClick={this.onSubmit}>
-                      {Dictionary.defValue(DictionaryService.keys.LogIn)}
+                      {Dictionary.defValue(DictionaryService.keys.SignUp)}
                     </Button>
                   </CardFooter>
                 </Card>
@@ -177,4 +166,4 @@ class Login extends React.Component<LoginProps, LoginState> {
   }
 }
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(SignUp);

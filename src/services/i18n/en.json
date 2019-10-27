@@ -1,6 +1,6 @@
 {
   "auth:wrong-password": "The password is invalid or the user does not have a password.",
-  "auth:user-not-found": "There is no user record corresponding to this identifier.",
+  "auth:user-not-found": "User with that credentials is not exists.",
   "auth:invalid-email": "The email address is badly formatted.",
   "auth:user-exists": "User already exists with that email.",
   "cantBeEmpty": "$ can't be empty",
@@ -54,6 +54,14 @@
   "picturesDashboard": "Pictures Dashboard",
   "login": "Login",
   "LogIn": "Log in",
+  "SignUp": "Sign up",
   "doNotHaveAccount": "Don't have an account? Sign Up",
-  "forgotPassword": "Forgot Password?"
+  "doYouHaveAccount": "Do you already have an account? Log in",
+  "forgotPassword": "Forgot Password?",
+  "rememberMe": "Remember Me",
+  "repeatPasswordNotEqual": "Confirm Password is not equal Password",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "applicationsList": "Applications List",
+  "availableApplications": "Available Applications"
 }

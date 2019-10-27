@@ -2,11 +2,18 @@
 export type UserModel = {
   userId?: number;
   email: string;
-  password?: string;
   firstName?: string;
   lastName?: string;
   createdOn?: number;
   lastLogin?: number;
+  phone?: string;
+  birthday?: Date;
+  device?: any;
+  gender?: 'male' | 'female';
+  notificationEmail?: boolean;
+  notificationSms?: boolean;
+  subscription?: boolean;
+  referrer?: number;
 }
 
 export type PictureModel = {

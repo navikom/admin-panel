@@ -73,7 +73,7 @@ class Users extends React.Component {
           </CardHeader>
           <CardBody>
             <div className={classes.typo}>
-              <h1>Users activity list</h1>
+              <h1>Users list</h1>
             </div>
 
           </CardBody>
