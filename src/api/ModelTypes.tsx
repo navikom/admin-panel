@@ -1,15 +1,17 @@
 
 export type UserModel = {
   userId?: number;
-  email: string;
+  email?: string;
   firstName?: string;
   lastName?: string;
   createdOn?: number;
   lastLogin?: number;
-  phone?: string;
+  phone?: number;
   birthday?: Date;
-  device?: any;
   gender?: 'male' | 'female';
+  anonymous: boolean;
+  emailVerified: boolean;
+  phoneVerified: boolean;
   notificationEmail?: boolean;
   notificationSms?: boolean;
   subscription?: boolean;

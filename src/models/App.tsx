@@ -9,27 +9,31 @@ import * as Constants from "models/Constants";
 
 export class AppStore implements Flow {
   @observable roles: RolesStore = new RolesStore();
-  @observable user?: UserStore | null;
+  @observable user?: UserStore;
   navigationHistory?: History;
   userDisposer: IReactionDisposer;
 
   constructor() {
     this.userDisposer = reaction(() => this.user,
-      (user: UserStore | null | undefined) => this.ifUserChanged());
+      (user: UserStore | undefined) => this.ifUserChanged());
   }
 
   @computed get loggedIn(): boolean {
-    return this.user !== null && this.user !== undefined;
+    return this.user !== undefined && !this.user.anonymous;
   }
 
   @action
   start(): void {
     Auth.start();
-    this.setUser(null);
   }
 
-  @action setUser(model: UserModel | null) {
-    this.user = model === null ? null : UserStore.from(model);
+  @action setUser(model: UserModel) {
+    if(!this.user) {
+      this.user = UserStore.from(model);
+    } else {
+      this.user.update(model);
+    }
+
   }
 
   stop(): void {
@@ -38,10 +42,10 @@ export class AppStore implements Flow {
   }
 
   ifUserChanged() {
-    if(!this.navigationHistory) {
+    if(!this.navigationHistory || !this.user) {
       return;
     }
-    if(this.user === null) {
+    if(this.user.anonymous) {
       this.navigationHistory.push(Constants.LOGIN_ROUTE);
     } else {
       this.navigationHistory.push(Constants.ADMIN_ROUTE);

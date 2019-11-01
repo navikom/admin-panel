@@ -28,6 +28,10 @@ class User extends HttpBase {
     return this.fetchData('post', 'sign-up', body);
   }
 
+  anonymous(): Promise<LoginResultModel> {
+    return this.fetchData('post', 'anonymous');
+  }
+
   login(email: string, password: string): Promise<LoginResultModel> {
     const body = {
       email: email,

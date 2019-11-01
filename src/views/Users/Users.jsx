@@ -6,6 +6,7 @@ import { lazy } from "utils";
 
 // services
 import { Dictionary, DictionaryService } from "services";
+import Table from "components/Table/Table";
 
 // core components
 const Card = lazy(() => import("components/Card/Card.jsx"));
@@ -75,7 +76,18 @@ class Users extends React.Component {
             <div className={classes.typo}>
               <h1>Users list</h1>
             </div>
-
+            <Table
+              tableHeaderColor="primary"
+              tableHead={["Name", "Category", "Details"]}
+              tableData={[
+                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
+                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
+                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
+                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
+                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
+                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
+              ]}
+            />
           </CardBody>
         </Card>
       </Suspense>

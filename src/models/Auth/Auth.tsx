@@ -59,14 +59,18 @@ export class AuthStore extends Errors implements Flow {
 
   @action checkLocalStorage() {
     this.refreshToken = localStorage.getItem(AuthStore.REFRESH_TOKEN_KEY);
-    this.rememberMe = this.refreshToken !== null;
-    this.rememberMe && (this.shouldFirstRefresh = true);
+    if(this.refreshToken === null) {
+      this.anonymous();
+    } else {
+      this.rememberMe = true;
+      this.shouldFirstRefresh = true
+    }
   }
 
   @action
   async signup(email: string, password: string) {
     try {
-      this.update(await nonAuthorizedApi(Apis.Pixelart).user().signup(email, password));
+      this.update(await api(Apis.Pixelart).user().signup(email, password));
     } catch (err) {
       this.setError(Dictionary.value(err.message));
     }
@@ -75,7 +79,16 @@ export class AuthStore extends Errors implements Flow {
   @action
   async login(email: string, password: string) {
     try {
-      this.update(await nonAuthorizedApi(Apis.Pixelart).user().login(email, password));
+      this.update(await api(Apis.Pixelart).user().login(email, password));
+    } catch (err) {
+      this.setError(Dictionary.value(err.message));
+    }
+  }
+
+  @action
+  async anonymous() {
+    try {
+      this.update(await nonAuthorizedApi(Apis.Pixelart).user().anonymous());
     } catch (err) {
       this.setError(Dictionary.value(err.message));
     }
@@ -111,9 +124,8 @@ export class AuthStore extends Errors implements Flow {
   async logout() {
     try {
       await api(Apis.Pixelart).user().logout();
-      this.token = null;
       localStorage.removeItem(AuthStore.REFRESH_TOKEN_KEY);
-      App.setUser(null);
+      App.user && App.user.setAnonymous(true);
     } catch (err) {
       console.log("Logout Error", err.message);
     }
