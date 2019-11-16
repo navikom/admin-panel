@@ -1,20 +1,18 @@
 /* eslint-disable */
-import React, { Suspense, ReactDOM, createRef } from "react";
-import PropTypes from "prop-types";
+import React, { Suspense } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 // creates a beautiful scrollbar
-import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 //utils
-import { lazy } from "../utils";
+import { lazy } from "utils";
 
 // core components
-const Nav = lazy(() => import("components/Navbars/MainNav.jsx"));
-const Footer = lazy(() => import("components/Footer/MainFooter.jsx"));
+const Nav = lazy(() => import("components/Navbars/MainNav"));
+const Footer = lazy(() => import("components/Footer/MainFooter"));
 
-import routes from "routes.js";
+import routes from "routes.ts";
 
 import mainStyle from "assets/jss/material-dashboard-react/layouts/mainStyle.jsx";
 
@@ -26,7 +24,7 @@ const switchRoutes = (
       if (prop.layout === "/main") {
         return (
           <Route
-            path={prop.url}
+            path={prop.path}
             component={prop.component}
             key={key}
           />
@@ -43,11 +41,6 @@ type MainState = {
   color: string,
   hasImage: boolean,
   mobileOpen: boolean
-}
-
-type Ref = {
-  [key: string]: HTMLElement,
-  // mainPanel: HTMLElement
 }
 
 class Main extends React.Component<MainProps, MainState> {
@@ -91,6 +84,10 @@ class Main extends React.Component<MainProps, MainState> {
     window.removeEventListener("resize", this.resizeFunction);
   }
 
+  handleDrawerToggle = () => {
+    this.setState({mobileOpen: !this.state.mobileOpen});
+  };
+
   render() {
     const {classes, ...rest} = this.props;
     const backgroundImage = `url(${image})`;
@@ -99,7 +96,7 @@ class Main extends React.Component<MainProps, MainState> {
         <div className={classes.fullPage} style={{backgroundImage}}>
           <div className={classes.content}>
             <Suspense fallback={"Loading"}>
-              <Nav routes={routes} {...rest} />
+              <Nav routes={routes} handleDrawerToggle={this.handleDrawerToggle} {...rest} />
               <div className={classes.container} style={{marginTop: `${this.wHeight * .15}px`}}>{switchRoutes}</div>
               <Footer/>
             </Suspense>

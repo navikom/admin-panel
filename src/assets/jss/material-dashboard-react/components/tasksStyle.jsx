@@ -3,7 +3,7 @@ import {
   primaryColor,
   dangerColor,
   grayColor
-} from "assets/jss/material-dashboard-react.jsx";
+} from "assets/jss/material-dashboard-react.ts";
 import tooltipStyle from "assets/jss/material-dashboard-react/tooltipStyle.jsx";
 import checkboxAdnRadioStyle from "assets/jss/material-dashboard-react/checkboxAndRadioStyle.jsx";
 const tasksStyle = {

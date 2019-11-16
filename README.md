@@ -92,9 +92,9 @@ material-dashboard-react
 │   ├── index.html
 │   └── manifest.json
 └── src
-    ├── index.tsx
+    ├── index.ts
     ├── logo.svg
-    ├── routes.js
+    ├── routes.ts
     ├── assets
     │   ├── css
     │   ├── github
@@ -105,7 +105,7 @@ material-dashboard-react
     │       │   ├── components
     │       │   ├── layouts
     │       │   └── views
-    │       └── material-dashboard-react.jsx
+    │       └── material-dashboard-react.ts
     ├── components
     │   ├── Card
     │   │   ├── Card.jsx
@@ -137,7 +137,7 @@ material-dashboard-react
     │   │   ├── Snackbar.jsx
     │   │   └── SnackbarContent.jsx
     │   ├── Table
-    │   │   └── Table.jsx
+    │   │   └── Table.tsx
     │   ├── Tasks
     │   │   └── Tasks.jsx
     │   └── Typography

@@ -4,7 +4,7 @@ import {
   successColor,
   grayColor,
   defaultFont
-} from "assets/jss/material-dashboard-react.jsx";
+} from "assets/jss/material-dashboard-react.ts";
 import { createStyles } from "@material-ui/core";
 
 const customInputStyle = createStyles({

@@ -21,8 +21,8 @@ import Button from "components/CustomButtons/Button.tsx";
 import rtlHeaderLinksStyle from "assets/jss/material-dashboard-react/components/rtlHeaderLinksStyle.jsx";
 
 // models
-import { App } from "models/App";
-import { Auth } from "models/Auth/Auth";
+import { App } from "models/App.ts";
+import { Auth } from "models/Auth/Auth.ts";
 
 // api
 

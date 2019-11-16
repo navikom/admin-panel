@@ -16,7 +16,7 @@ const Footer = lazy(() => import("components/Footer/Footer.jsx"));
 const Sidebar = lazy(() => import("components/Sidebar/Sidebar.jsx"));
 const FixedPlugin = lazy(() => import("components/FixedPlugin/FixedPlugin.jsx"));
 
-import routes from "routes.js";
+import routes from "routes.ts";
 
 import rtlStyle from "assets/jss/material-dashboard-react/layouts/rtlStyle.jsx";
 
@@ -24,7 +24,7 @@ import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 // core containers
-const ScrollContainer = lazy(() => import("containers/ScrollContainer/ScrollContainer.jsx"));
+const ScrollContainer = lazy(() => import("containers/ScrollContainer/ScrollContainer.tsx"));
 
 const switchRoutes = (
   <Switch>

@@ -11,7 +11,7 @@
 - Almost all styles have been changed due to new components, solved issues or [the prettier command](https://prettier.io/docs/en/install.html)
 ### Major components changes
 - Changes caused by running [the prettier command](https://prettier.io/docs/en/install.html) for *.jsx*, *.js*, *.html* and *.css* files
-- **src/index.tsx**
+- **src/index.ts**
 - **src/components/CustomTabs/CustomTabs.jsx**
 - **src/components/Header/Header.jsx**
 - **src/components/Sidebar/Sidebar.jsx**
@@ -83,8 +83,8 @@
   - `https://github.com/creativetimofficial/material-dashboard-react/issues/58`
 - Changed the `GridContainer` component
 ### Major style changes
-- `src/assets/jss/material-dashboard-react/components/footerStyle.jsx`
-- `src/assets/jss/material-dashboard-react/components/headerStyle.jsx`
+- `src/assets/jss/material-dashboard-react/components/footerStyle.ts`
+- `src/assets/jss/material-dashboard-react/components/headerStyle.ts`
 ### Added dependencies
 - `@babel/runtime v7.0.0-beta.55`
 ### Update dependencies
@@ -134,7 +134,7 @@
 ## [1.3.0] 2018-06-15
 ### Bug Fixing
 - Changed import from `material-ui` to `@material-ui/core`
-- Droped `src/components/index.tsx`, and changed all the imports to separate ones
+- Droped `src/components/index.ts`, and changed all the imports to separate ones
 - Renamed `ItemGrid` to `GridItem`
 ### Major style changes
 - Moved the styles of `src/components/` inside `src/assets/jss/material-dashboard-react/components/`
@@ -183,7 +183,7 @@
 ## [1.2.0] 2018-04-16
 ### Bug Fixing
 - Renamed `src/containers/App/App.jsx` to `src/layouts/Dashboard/Dashboard.jsx`
-- Renamed `src/variables/styles.jsx` to `src/assets/jss/material-dashboard-react.jsx`
+- Renamed `src/variables/styles.jsx` to `src/assets/jss/material-dashboard-react.ts`
 - Moved all the files from `src/variables/styles/` to `src/assets/jss/material-dashboard-react/`
 - Changes caused by the upgrade of `material-ui`
 - Small bug fixing

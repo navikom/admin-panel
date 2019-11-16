@@ -4,13 +4,13 @@ import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
+import Table from "components/Table/Table";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import { createStyles } from "@material-ui/core";
 import { RouteComponentProps } from "react-router";
-import { Dictionary, DictionaryService } from "services";
+import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 const styles = createStyles({
   cardCategoryWhite: {

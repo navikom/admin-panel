@@ -9,7 +9,7 @@ import {
   whiteColor,
   blackColor,
   hexToRgb
-} from "assets/jss/material-dashboard-react.jsx";
+} from "assets/jss/material-dashboard-react.ts";
 import { createStyles } from "@material-ui/core";
 
 const buttonStyle = createStyles({

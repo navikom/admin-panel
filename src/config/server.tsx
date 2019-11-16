@@ -1,3 +1,3 @@
 export default {
-  pixelArtApi: "http://localhost:3001/v1"
+  mainApi: "http://localhost:3001/v1"
 }

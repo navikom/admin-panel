@@ -14,7 +14,7 @@ import AdminNavbarLinks from "./AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "./RTLNavbarLinks.jsx";
 import Button from "components/CustomButtons/Button.tsx";
 
-import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
+import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle";
 
 function Header({ ...props }) {
   function makeBrand() {
@@ -37,7 +37,7 @@ function Header({ ...props }) {
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
 
-          <Button color="transparent" href="#" className={classes.title}>
+          <Button color="transparent" href="#" className={classes.adminTitle}>
             {makeBrand()}
           </Button>
         </div>

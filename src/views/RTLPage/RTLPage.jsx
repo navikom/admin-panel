@@ -22,7 +22,7 @@ import Cloud from "@material-ui/icons/Cloud";
 import Button from "components/CustomButtons/Button.tsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
+import Table from "components/Table/Table.tsx";
 import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
 import Danger from "components/Typography/Danger.jsx";

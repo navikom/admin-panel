@@ -26,7 +26,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import { RouteComponentProps } from "react-router";
 
 import styles from "assets/jss/material-dashboard-react/views/singlePageStyle.tsx";
-import { Dictionary, DictionaryService } from "services";
+import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 interface FormControlInterface {
   error?: boolean;

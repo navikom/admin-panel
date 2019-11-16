@@ -14,7 +14,7 @@ import styles from "assets/jss/material-dashboard-react/views/singlePageStyle.ts
 interface StartPageProps extends RouteComponentProps, WithStyles<typeof styles> {
 }
 class StartPage extends React.Component<StartPageProps> {
-  render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+  render() {
     const { classes } = this.props;
     return (
       <div>

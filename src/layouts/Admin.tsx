@@ -17,9 +17,9 @@ const Sidebar = lazy(() => import("components/Sidebar/Sidebar.jsx"));
 const FixedPlugin = lazy(() => import("components/FixedPlugin/FixedPlugin.jsx"));
 
 // core containers
-import ScrollContainer from "containers/ScrollContainer/ScrollContainer.jsx";
+import ScrollContainer from "containers/ScrollContainer/ScrollContainer";
 
-import routes from "routes.js";
+import routes from "routes";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle";
 
@@ -42,7 +42,9 @@ const switchRoutes = (
   </Switch>
 );
 
-interface DashboardProps extends RouteComponentProps, WithStyles<typeof dashboardStyle> {}
+interface DashboardProps extends RouteComponentProps, WithStyles<typeof dashboardStyle> {
+}
+
 type DashboardState = {
   image: any,
   color: String,
@@ -65,20 +67,20 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
   }
 
   handleImageClick = (image: any) => {
-    this.setState({image: image});
+    this.setState({ image: image });
   };
   handleColorClick = (color: String) => {
-    this.setState({color: color});
+    this.setState({ color: color });
   };
   handleFixedClick = () => {
     if (this.state.fixedClasses === "dropdown") {
-      this.setState({fixedClasses: "dropdown show"});
+      this.setState({ fixedClasses: "dropdown show" });
     } else {
-      this.setState({fixedClasses: "dropdown"});
+      this.setState({ fixedClasses: "dropdown" });
     }
   };
   handleDrawerToggle = () => {
-    this.setState({mobileOpen: !this.state.mobileOpen});
+    this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
   getRoute() {
@@ -87,18 +89,19 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
   resizeFunction = () => {
     if (window.innerWidth >= 960) {
-      this.setState({mobileOpen: false});
+      this.setState({ mobileOpen: false });
     }
   };
 
   componentDidMount() {
     window.addEventListener("resize", this.resizeFunction);
+
   }
 
   componentDidUpdate(e: RouteComponentProps) {
     if (e.history.location.pathname !== e.location.pathname) {
       if (this.state.mobileOpen) {
-        this.setState({mobileOpen: false});
+        this.setState({ mobileOpen: false });
       }
     }
   }
@@ -108,7 +111,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
   }
 
   render() {
-    const {classes, ...rest} = this.props;
+    const { classes, ...rest } = this.props;
+
     return (
       <div className={classes.wrapper}>
         <Suspense fallback={"Loading..."}>
@@ -123,28 +127,28 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             {...rest}
           />
           <ScrollContainer>
-            <Navbar
-              routes={routes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              {...rest}
-            />
-            {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-            {this.getRoute() ? (
-              <div className={classes.content}>
-                <div className={classes.container}>{switchRoutes}</div>
-              </div>
-            ) : (
-              <div className={classes.map}>{switchRoutes}</div>
-            )}
-            {this.getRoute() ? <Footer/> : null}
-            <FixedPlugin
-              handleImageClick={this.handleImageClick}
-              handleColorClick={this.handleColorClick}
-              bgColor={this.state["color"]}
-              bgImage={this.state["image"]}
-              handleFixedClick={this.handleFixedClick}
-              fixedClasses={this.state.fixedClasses}
-            />
+              <Navbar
+                routes={routes}
+                handleDrawerToggle={this.handleDrawerToggle}
+                {...rest}
+              />
+              {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
+              {this.getRoute() ? (
+                <div className={classes.content}>
+                  <div className={classes.container}>{switchRoutes}</div>
+                </div>
+              ) : (
+                <div className={classes.map}>{switchRoutes}</div>
+              )}
+              {this.getRoute() ? <Footer/> : null}
+              <FixedPlugin
+                handleImageClick={this.handleImageClick}
+                handleColorClick={this.handleColorClick}
+                bgColor={this.state["color"]}
+                bgImage={this.state["image"]}
+                handleFixedClick={this.handleFixedClick}
+                fixedClasses={this.state.fixedClasses}
+              />
           </ScrollContainer>
         </Suspense>
       </div>

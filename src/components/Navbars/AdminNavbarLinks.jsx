@@ -17,8 +17,8 @@ import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
 
 // models
-import { App } from "models/App";
-import { Auth } from "models/Auth/Auth";
+import { App } from "models/App.ts";
+import { Auth } from "models/Auth/Auth.ts";
 
 // core components
 import CustomInput from "components/CustomInput/CustomInput.tsx";

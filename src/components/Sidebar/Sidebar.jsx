@@ -13,7 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 
 // models
-import { App } from "models/App";
+import { App } from "models/App.ts";
 
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
@@ -31,9 +31,8 @@ const Sidebar = ({...props}) => {
     <List className={classes.list}>
       {routes.map((prop, key) => {
         let listItemClasses;
-        if (!prop.path) return null;
+        if (!prop.path || !prop.auth) return null;
         if(prop.auth && !App.loggedIn) return null;
-
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.layout + prop.path)
         });

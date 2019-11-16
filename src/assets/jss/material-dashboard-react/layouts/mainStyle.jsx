@@ -2,8 +2,7 @@ import {
   transition,
   container,
   blackColor
-} from "assets/jss/material-dashboard-react.jsx";
-import { Theme } from "@material-ui/core";
+} from "assets/jss/material-dashboard-react.ts";
 import { createStyles } from '@material-ui/core';
 
 const appStyle = (theme) => createStyles({

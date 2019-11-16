@@ -5,7 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { lazy } from "utils";
 
 // services
-import { Dictionary } from "services";
+import { Dictionary } from "services/Dictionary/Dictionary";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // core components
