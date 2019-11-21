@@ -9,9 +9,9 @@ import { Dictionary } from "services/Dictionary/Dictionary";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // core components
-const GridContainer = lazy(() => import("components/Grid/GridContainer.jsx"));
-const GridItem = lazy(() => import("components/Grid/GridItem.jsx"));
-const Card = lazy(() => import("components/Card/Card.jsx"));
+const GridContainer = lazy(() => import("components/Grid/GridContainer.tsx"));
+const GridItem = lazy(() => import("components/Grid/GridItem.tsx"));
+const Card = lazy(() => import("components/Card/Card.tsx"));
 const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
 const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
 const Button = lazy(() => import("components/CustomButtons/Button.tsx"));

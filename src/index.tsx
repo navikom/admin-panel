@@ -12,6 +12,7 @@ import "assets/css/material-dashboard-react.css?v=1.6.0";
 // core components
 import Admin from "layouts/Admin";
 import Main from "layouts/Main.tsx";
+import WaitingComponent from "hocs/WaitingComponent";
 
 const hist = createBrowserHistory();
 
@@ -21,12 +22,12 @@ App.start();
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path={Constants.ADMIN_ROUTE} component={Admin}/>
-      <Route path={Constants.LOGIN_ROUTE} component={Main}/>
-      <Route path={Constants.SIGN_UP_ROUTE} component={Main}/>
-      <Route path={Constants.ROOT_ROUTE} component={Main}/>
+      <Route path={Constants.ADMIN_ROUTE} component={WaitingComponent(Admin)}/>
+      <Route path={Constants.LOGIN_ROUTE} component={WaitingComponent(Main)}/>
+      <Route path={Constants.SIGN_UP_ROUTE} component={WaitingComponent(Main)}/>
+      <Route path={Constants.ROOT_ROUTE} component={WaitingComponent(Main)}/>
       <Redirect to={Constants.START_PAGE_ROUTE}/>
-      <Route path="*" component={Admin}/>
+      <Route path="*" component={WaitingComponent(Admin)}/>
     </Switch>
   </Router>,
   document.getElementById("root")

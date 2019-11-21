@@ -17,15 +17,17 @@ import routes from "routes.ts";
 import mainStyle from "assets/jss/material-dashboard-react/layouts/mainStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
+import { IRoute } from "interfaces/IRoute";
+import WaitingComponent from "hocs/WaitingComponent";
 
 const switchRoutes = (
   <Switch>
-    {routes.map((prop, key) => {
+    {routes.map((prop: IRoute, key) => {
       if (prop.layout === "/main") {
         return (
           <Route
             path={prop.path}
-            component={prop.component}
+            component={WaitingComponent(prop.component)}
             key={key}
           />
         );
@@ -95,11 +97,9 @@ class Main extends React.Component<MainProps, MainState> {
       <div className={classes.wrapper}>
         <div className={classes.fullPage} style={{backgroundImage}}>
           <div className={classes.content}>
-            <Suspense fallback={"Loading"}>
               <Nav routes={routes} handleDrawerToggle={this.handleDrawerToggle} {...rest} />
               <div className={classes.container} style={{marginTop: `${this.wHeight * .15}px`}}>{switchRoutes}</div>
               <Footer/>
-            </Suspense>
           </div>
         </div>
       </div>

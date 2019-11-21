@@ -22,12 +22,29 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
   @observable items: T[];
   @observable count: number = 0;
 
+  // table pagination
+  @observable viewRowsPerPage: number = 5;
+  @observable viewPage: number = 0;
+  rowsPerPageOptions: number[];
+
   @computed get isAllFetched(): boolean {
     return this.allFetched;
   }
 
   @computed get size() {
     return this.items.length;
+  }
+
+  tableData(cb: Function) {
+    return computed(() => {
+      const items = [];
+      const start = this.viewPage * this.viewRowsPerPage;
+      for (let i = start; i < Math.min(start + this.viewRowsPerPage, this.size); i++) {
+
+        items.push(cb(this.items[i]));
+      }
+      return items;
+    }).get();
   }
 
   getById(id: number): T | undefined {
@@ -39,13 +56,15 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
   }
 
   constructor(pKey: string, apiMethod: ApiMethodsInterface, size: number,
-              requestMethod: RequestTypesInterface = "pagination", additionalParams?: any) {
+              requestMethod: RequestTypesInterface = "pagination", rowsPerPageOption: number[] = [5, 10, 25, 50],
+              additionalParams?: any) {
     super();
     this.pk = pKey;
     this.apiMethod = apiMethod;
     this.pageSize = size;
     this.requestMethod = requestMethod;
     this.additionalParams = additionalParams;
+    this.rowsPerPageOptions = rowsPerPageOption;
     this.items = new Array<T>();
   }
 
@@ -102,16 +121,33 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
     if (this.fetching) return;
     let paddingToBottom = 15;
     if (top >= height - paddingToBottom) {
-      if (!this.fetching) {
-        this.setFetching();
-        try {
-          await this.getNext();
-        } catch (e) {
-          this.setError(e.message);
-        }
-        this.setFetching(false);
-      }
+      this.tryGetNext();
     }
+  };
+
+  @action async tryGetNext() {
+    if (!this.fetching) {
+      this.setFetching();
+      try {
+        await this.getNext();
+      } catch (e) {
+        this.setError(e.message);
+      }
+      this.setFetching(false);
+    }
+  }
+
+  @action handleChangePageInView = async (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    if(newPage * this.viewRowsPerPage >= this.size) {
+      await this.tryGetNext();
+    }
+    this.viewPage = newPage;
+
+  };
+
+  @action handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    this.viewRowsPerPage = Number(event.target.value);
+    this.viewPage = 0;
   };
 
   @action

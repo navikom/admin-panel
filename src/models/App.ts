@@ -1,30 +1,34 @@
 import { action, computed, IReactionDisposer, observable, reaction, when } from "mobx";
 import { History } from "history";
 import { IFlow } from "interfaces/IFlow";
-import { RolesStore } from "models/Role/Role.ts";
+import { RoleStore } from "models/Role/RoleStore.ts";
 import { UserStore } from "models/User/UserStore.ts";
 import { Auth } from "models/Auth/Auth.ts";
 import * as Constants from "models/Constants.ts";
 import { IUser } from "interfaces/IUser";
+import { Events } from "models/Event/EventsStore";
+import { IRole } from "interfaces/IRole";
 
 export class AppStore implements IFlow {
-  @observable roles: RolesStore = new RolesStore();
-  @observable user?: UserStore;
+  @observable role: IRole = new RoleStore();
+  @observable user?: IUser;
   @observable navigationHistory?: History;
   userDisposer: IReactionDisposer;
   anonymousDisposer: IReactionDisposer;
+
+  @computed get loggedIn(): boolean {
+    return this.user !== undefined && !this.user.anonymous;
+  }
+
+  @computed get tokenIsReady(): boolean {
+    return Auth.token !== null;
+  }
 
   constructor() {
     this.userDisposer = reaction(() => this.user,
       (user: IUser | undefined) => this.ifUserChanged());
     this.anonymousDisposer = reaction(() => this.loggedIn, (loggedIn: boolean) => this.ifUserChanged());
-    when(() => this.navigationHistory !== undefined,
-      () => this.navigationHistory && this.navigationHistory.push(Constants.START_PAGE_ROUTE)
-    );
-  }
 
-  @computed get loggedIn(): boolean {
-    return this.user !== undefined && !this.user.anonymous;
   }
 
   @action
@@ -54,7 +58,9 @@ export class AppStore implements IFlow {
     if (this.user.anonymous) {
       this.navigationHistory.push(Constants.ROOT_ROUTE);
     } else {
-      this.navigationHistory.push(Constants.EVENTS_USERS_LIST_ROUTE);
+      if(!this.navigationHistory.location.pathname.includes(Constants.ADMIN_ROUTE)) {
+        this.navigationHistory.push(Constants.EVENTS_USERS_LIST_ROUTE);
+      }
     }
 
   }

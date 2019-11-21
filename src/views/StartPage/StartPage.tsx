@@ -20,8 +20,8 @@ class StartPage extends React.Component<StartPageProps> {
       <div>
         <GridContainer justify="center">
           <GridItem xs={6} sm={6} md={4}>
-            <Slide direction="down" in={true}>
-              <Fade in={true}>
+            <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+              <Fade in={true} mountOnEnter unmountOnExit>
                 <h1 className={`${classes.cardTitleWhite} ${classes.titleWhite}`}>Admin Panel</h1>
               </Fade>
             </Slide>

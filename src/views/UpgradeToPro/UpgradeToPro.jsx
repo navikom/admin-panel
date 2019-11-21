@@ -5,12 +5,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Close from "@material-ui/icons/Close";
 import Check from "@material-ui/icons/Check";
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer.tsx";
 import Danger from "components/Typography/Danger.jsx";
 import Success from "components/Typography/Success.jsx";
 import Button from "Button.tsx";
-import Card from "components/Card/Card.jsx";
+import Card from "components/Card/Card.tsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 

@@ -1,12 +1,10 @@
 /* eslint-disable */
 import React, { Suspense } from "react";
-import PropTypes from "prop-types";
 import { Switch, Route, RouteComponentProps } from "react-router-dom";
 // creates a beautiful scrollbar
-import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
-import withStyles, { StyledComponentProps, StyleRulesCallback, WithStyles } from "@material-ui/core/styles/withStyles";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 // utils
 import { lazy } from "utils";
 
@@ -14,7 +12,6 @@ import { lazy } from "utils";
 const Navbar = lazy(() => import("components/Navbars/Navbar.jsx"));
 const Footer = lazy(() => import("components/Footer/Footer.jsx"));
 const Sidebar = lazy(() => import("components/Sidebar/Sidebar.jsx"));
-const FixedPlugin = lazy(() => import("components/FixedPlugin/FixedPlugin.jsx"));
 
 // core containers
 import ScrollContainer from "containers/ScrollContainer/ScrollContainer";
@@ -25,15 +22,18 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
+import { IRoute } from "interfaces/IRoute";
+import WaitingComponent from "hocs/WaitingComponent";
 
 const switchRoutes = (
   <Switch>
-    {routes.map((prop, key) => {
+    {routes.map((prop: IRoute, key: number) => {
       if (prop.layout === "/admin") {
         return (
           <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
+            exact
+            path={prop.layout + (prop.path || prop.url) + (prop.params ? prop.params : "")}
+            component={WaitingComponent(prop.component)}
             key={key}
           />
         );
@@ -112,10 +112,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
   render() {
     const { classes, ...rest } = this.props;
-
     return (
       <div className={classes.wrapper}>
-        <Suspense fallback={"Loading..."}>
           <Sidebar
             routes={routes}
             logoText={"WebInSolut"}
@@ -141,16 +139,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 <div className={classes.map}>{switchRoutes}</div>
               )}
               {this.getRoute() ? <Footer/> : null}
-              <FixedPlugin
-                handleImageClick={this.handleImageClick}
-                handleColorClick={this.handleColorClick}
-                bgColor={this.state["color"]}
-                bgImage={this.state["image"]}
-                handleFixedClick={this.handleFixedClick}
-                fixedClasses={this.state.fixedClasses}
-              />
+              {/*<FixedPlugin*/}
+              {/*  handleImageClick={this.handleImageClick}*/}
+              {/*  handleColorClick={this.handleColorClick}*/}
+              {/*  bgColor={this.state["color"]}*/}
+              {/*  bgImage={this.state["image"]}*/}
+              {/*  handleFixedClick={this.handleFixedClick}*/}
+              {/*  fixedClasses={this.state.fixedClasses}*/}
+              {/*/>*/}
           </ScrollContainer>
-        </Suspense>
       </div>
     );
   }

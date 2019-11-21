@@ -12,7 +12,7 @@
 ### Major components changes
 - Changes caused by running [the prettier command](https://prettier.io/docs/en/install.html) for *.jsx*, *.js*, *.html* and *.css* files
 - **src/index.ts**
-- **src/components/CustomTabs/CustomTabs.jsx**
+- **src/components/CustomTabs/CustomTabs.tsx**
 - **src/components/Header/Header.jsx**
 - **src/components/Sidebar/Sidebar.jsx**
 - **src/components/Snackbar/Snackbar.jsx**
@@ -59,7 +59,7 @@
 ### Major style changes
 - `src/assets/jss/material-dashboard-react/components/tasksStyle.jsx`
 - `src/assets/jss/material-dashboard-react/checkboxAdnRadioStyle.jsx`
-- `src/assets/jss/material-dashboard-react/components/customTabsStyle.jsx`
+- `src/assets/jss/material-dashboard-react/components/customTabsStyle.ts`
 - `src/assets/jss/material-dashboard-react/components/snackbarContentStyle.jsx`
 ### Deleted dependencies
 - `@babel/runtime v7.0.0-beta.55`
@@ -111,14 +111,14 @@
   - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.jsx`
   - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.jsx`
   - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/components/customTabsStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/components/customTabsStyle.ts`
 - Others
   - `src/assets/jss/material-dashboard-react/tooltipStyle.jsx`
   - `src/assets/jss/material-dashboard-react/dropdownStyle.jsx`
 ### Dropped components
 - Dropped popper usage in favour of `@material-ui/core/Popper` (Changes in `src/components/Header/HeaderLinks.jsx`)
 ### Added components
-- `src/components/Grid/GridContainer.jsx` (instead of MUI's `<Grid container...` component)
+- `src/components/Grid/GridContainer.tsx` (instead of MUI's `<Grid container...` component)
 ### Deleted dependencies
 ### Added dependencies
 ### Update dependencies
@@ -155,13 +155,13 @@
   - `src/components/Cards/TasksCard.jsx`
 ### Added components
 - New card components (`src/components/Card/*`) instead of `src/components/Cards/*`
-  - `src/components/Card/Card.jsx`
+  - `src/components/Card/Card.tsx`
   - `src/components/Card/CardAvatar.jsx`
   - `src/components/Card/CardBody.jsx`
   - `src/components/Card/CardFooter.jsx`
   - `src/components/Card/CardHeader.jsx`
   - `src/components/Card/CardIcon.jsx`
-- `src/components/CustomTabs/CustomTabs.jsx` (instead of `src/components/Cards/TasksCard.jsx`)
+- `src/components/CustomTabs/CustomTabs.tsx` (instead of `src/components/Cards/TasksCard.jsx`)
 ### Deleted dependencies
 - `material-ui@1.0.0-beta.41`
 ### Added dependencies

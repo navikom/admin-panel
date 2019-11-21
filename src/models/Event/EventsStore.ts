@@ -6,12 +6,13 @@ import { EventStore } from "models/Event/EventStore";
 
 class EventsStore extends Pagination<IEvent> {
 
-  @computed get tableData() {
-    return this.items.map(e =>
-      [e.userId.toString(), e.createdAt, e.title, e.user.email, e.user.anonymousString, e.user.eventsCount.toString()]);
+  @computed get eventTableData() {
+    return this.tableData((e: IEvent) =>
+      [e.userId.toString(), e.createdAt, e.title, e.user.email, e.user.anonymousString, e.user.eventsCount!.toString()]);
   }
   constructor() {
-    super("eventId", "event", 20, "pagination", "?filter=user_group");
+    super("eventId", "event", 20, "pagination", [5, 10, 25, 50],
+      "?filter=user_group");
   }
 
   @action push(data: IEvent[]) {

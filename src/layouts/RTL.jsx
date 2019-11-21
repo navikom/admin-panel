@@ -101,45 +101,43 @@ class RTL extends React.Component {
     const {classes, ...rest} = this.props;
     return (
       <div className={classes.wrapper}>
-        <Suspense fallback={"Loading..."}>
-          <Sidebar
+        <Sidebar
+          routes={routes}
+          logoText={"الإبداعية تيم"}
+          logo={logo}
+          image={this.state.image}
+          handleDrawerToggle={this.handleDrawerToggle}
+          open={this.state.mobileOpen}
+          color={this.state.color}
+          rtlActive
+          {...rest}
+        />
+        <ScrollContainer rtl={true}>
+          <Navbar
             routes={routes}
-            logoText={"الإبداعية تيم"}
-            logo={logo}
-            image={this.state.image}
             handleDrawerToggle={this.handleDrawerToggle}
-            open={this.state.mobileOpen}
-            color={this.state.color}
             rtlActive
             {...rest}
           />
-          <ScrollContainer rtl={true}>
-            <Navbar
-              routes={routes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              rtlActive
-              {...rest}
-            />
-            {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-            {this.getRoute() ? (
-              <div className={classes.content}>
-                <div className={classes.container}>{switchRoutes}</div>
-              </div>
-            ) : (
-              <div className={classes.map}>{switchRoutes}</div>
-            )}
-            {this.getRoute() ? <Footer/> : null}
-            <FixedPlugin
-              handleImageClick={this.handleImageClick}
-              handleColorClick={this.handleColorClick}
-              bgColor={this.state["color"]}
-              bgImage={this.state["image"]}
-              handleFixedClick={this.handleFixedClick}
-              fixedClasses={this.state.fixedClasses}
-              rtlActive
-            />
-          </ScrollContainer>
-        </Suspense>
+          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
+          {this.getRoute() ? (
+            <div className={classes.content}>
+              <div className={classes.container}>{switchRoutes}</div>
+            </div>
+          ) : (
+            <div className={classes.map}>{switchRoutes}</div>
+          )}
+          {this.getRoute() ? <Footer/> : null}
+          <FixedPlugin
+            handleImageClick={this.handleImageClick}
+            handleColorClick={this.handleColorClick}
+            bgColor={this.state["color"]}
+            bgImage={this.state["image"]}
+            handleFixedClick={this.handleFixedClick}
+            fixedClasses={this.state.fixedClasses}
+            rtlActive
+          />
+        </ScrollContainer>
       </div>
     );
   }

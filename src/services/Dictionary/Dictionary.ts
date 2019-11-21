@@ -1,3 +1,4 @@
+import moment from "moment";
 import {settings} from './settings';
 
 type EN = typeof settings.en;
@@ -8,8 +9,18 @@ export class DictionaryService {
   reversed: {[key: string]: string};
   static keys: EN = settings.en;
 
+  get moment() {
+    return moment;
+  }
+
+  timeDateString(date?: Date) {
+    if(!date) return null;
+    return moment(date).format("lll");
+  }
+
   constructor(locale: "en") {
     this.data = settings[locale];
+    moment.updateLocale(locale);
 
     this.reversed = {};
     let key: EN_TYPE;

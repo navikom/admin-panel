@@ -19,8 +19,9 @@ import headerStyle from "assets/jss/material-dashboard-react/components/headerSt
 function Header({ ...props }) {
   function makeBrand() {
     let name = "Page didn't find.";
+
     props.routes.map((prop, key) => {
-      if (prop.layout + prop.path === props.location.pathname) {
+      if (props.location.pathname.includes(prop.layout + prop.url) || props.location.pathname.includes(prop.layout + prop.path)) {
         name = props.rtlActive ? prop.rtlName : prop.name;
       }
       return null;

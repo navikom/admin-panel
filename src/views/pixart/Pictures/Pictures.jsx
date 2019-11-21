@@ -8,7 +8,7 @@ import { lazy } from "utils";
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 // core components
-const Card = lazy(() => import("components/Card/Card.jsx"));
+const Card = lazy(() => import("components/Card/Card.tsx"));
 const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
 const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
 

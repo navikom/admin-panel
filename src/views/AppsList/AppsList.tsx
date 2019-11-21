@@ -2,10 +2,10 @@ import React from "react";
 // @material-ui/core components
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
 import Table from "components/Table/Table";
-import Card from "components/Card/Card.jsx";
+import Card from "components/Card/Card.tsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import { createStyles } from "@material-ui/core";

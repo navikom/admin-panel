@@ -5,12 +5,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 import AddAlert from "@material-ui/icons/AddAlert";
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer.tsx";
 import Button from "components/CustomButtons/Button.tsx";
 import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
-import Card from "components/Card/Card.jsx";
+import Card from "components/Card/Card.tsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 

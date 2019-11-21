@@ -1,6 +1,7 @@
 import { hexToRgb, whiteColor } from "assets/jss/material-dashboard-react.ts";
+import { createStyles } from "@material-ui/core";
 
-const customTabsStyle = {
+const customTabsStyle = createStyles({
   cardTitle: {
     float: "left",
     padding: "10px 10px 10px 0px",
@@ -41,7 +42,7 @@ const customTabsStyle = {
     padding: "0px"
   },
   tabLabel: {
-    fontWeight: "500",
+    fontWeight: 500,
     fontSize: "12px"
   },
   tabSelected: {
@@ -61,6 +62,6 @@ const customTabsStyle = {
       margin: "-1px 5px 0 0"
     }
   }
-};
+});
 
 export default customTabsStyle;

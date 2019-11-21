@@ -26,6 +26,10 @@ class User extends HttpBase {
     return this.fetchData('get', `${page}/${pageSize}${additionalParams ? '/' + additionalParams : ''}`);
   }
 
+  fullData(userId: number) {
+    return this.fetchData('get', userId.toString());
+  }
+
   signup(email: string, password: string): Promise<ILoginResult> {
     const body = {
       email: email,

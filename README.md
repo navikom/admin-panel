@@ -108,7 +108,7 @@ material-dashboard-react
     │       └── material-dashboard-react.ts
     ├── components
     │   ├── Card
-    │   │   ├── Card.jsx
+    │   │   ├── Card.tsx
     │   │   ├── CardAvatar.jsx
     │   │   ├── CardBody.jsx
     │   │   ├── CardFooter.jsx
@@ -119,14 +119,14 @@ material-dashboard-react
     │   ├── CustomInput
     │   │   └── CustomInput.tsx
     │   ├── CustomTabs
-    │   │   └── CustomTabs.jsx
+    │   │   └── CustomTabs.tsx
     │   ├── FixedPlugin
     │   │   └── FixedPlugin.jsx
     │   ├── Footer
     │   │   └── Footer.jsx
     │   ├── Grid
-    │   │   ├── GridContainer.jsx
-    │   │   └── GridItem.jsx
+    │   │   ├── GridContainer.tsx
+    │   │   └── GridItem.tsx
     │   ├── Navbars
     │   │   ├── AdminNavbarLinks.jsx
     │   │   ├── Navbar.jsx
