@@ -1,11 +1,12 @@
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IUser } from "interfaces/IUser";
+import { IEventInfo } from "interfaces/IEventInfo";
 
 export interface IEvent extends WithPrimaryKey {
   eventId: number;
   userId: number;
   user: IUser;
-  info: any;
+  info: IEventInfo;
   title: string;
-  createdAt: string;
+  createdAt: Date;
 }

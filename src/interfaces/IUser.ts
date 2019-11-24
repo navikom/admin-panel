@@ -1,9 +1,9 @@
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IRole } from "interfaces/IRole";
-import { IDevice } from "interfaces/IDevice";
-import { IEvent } from "interfaces/IEvent";
 import { IUsersApps } from "interfaces/IUsersApps";
 import { IUsersRegions } from "interfaces/IUserRegion";
+import { IUserDevice } from "interfaces/IUserDevice";
+import { IUserEvents } from "interfaces/IUserEvents";
 
 export interface IUser extends WithPrimaryKey {
   readonly userId: number;
@@ -27,8 +27,8 @@ export interface IUser extends WithPrimaryKey {
   eventsCount?: number;
   apps?: IUsersApps[];
   roles?: IRole[];
-  devices?: IDevice[];
-  events?: IEvent[];
+  devices?: IUserDevice[];
+  events: IUserEvents;
   regions?: IUsersRegions[];
   location?: IUsersRegions;
   lastEvent?: Date;

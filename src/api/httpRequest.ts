@@ -15,13 +15,23 @@ export async function request(method: string, url: string, allHeaders: Headers =
   if (debug) {
     console.log("RESPONSE", url, response);
   }
-  const json = await response.json();
 
-  if (debug) {
-    console.log("RESPONSE BODY", url, json);
+  if(!response.ok) {
+    throw new ErrorHandler(response.statusText);
   }
-  if (!response.ok) {
-    throw new ErrorHandler(json.error ? json.error : "HTTP Error");
+  try {
+    const json = await response.json();
+
+    if (debug) {
+      console.log("RESPONSE BODY", url, json);
+    }
+    if (!response.ok) {
+      throw new ErrorHandler(json.error ? json.error : "HTTP Error");
+    }
+    return json.data;
+  } catch (err) {
+    console.log('Fetch Error: ', err.message);
+    throw new ErrorHandler(err.message);
   }
-  return json.data;
+
 }

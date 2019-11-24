@@ -12,7 +12,7 @@ import { Dictionary } from "services/Dictionary/Dictionary";
 const Card = lazy(() => import("components/Card/Card.tsx"));
 const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
 const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
-const ProgressButton = lazy(() => import("components/CustomButtons/ProgressButton.jsx"));
+const ProgressButton = lazy(() => import("components/CustomButtons/ProgressButton"));
 const CustomInput = lazy(() => import("components/CustomInput/CustomInput.tsx"));
 
 const style = {

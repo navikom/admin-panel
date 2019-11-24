@@ -3,6 +3,8 @@ import { IUser } from "interfaces/IUser";
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 import { IRegion } from "interfaces/IRegion";
 import convertDate from "utils/convertDate";
+import { IUserEvents } from "interfaces/IUserEvents";
+import { UserEventsStore } from "models/User/UserEventsStore";
 
 /**
  * User model
@@ -23,6 +25,7 @@ export class UserStore implements IUser {
 
   pk: string = "userId";
 
+  @observable events: IUserEvents;
   @observable anonymous: boolean = true;
   @observable eventsCount: number = 1;
   @observable lastLogin!: number;
@@ -49,6 +52,7 @@ export class UserStore implements IUser {
   constructor(model: IUser) {
     model.eventsCount && (model.eventsCount = Number(model.eventsCount));
     Object.assign(this, model);
+    this.events = new UserEventsStore(this.userId);
   }
 
   @action
@@ -66,7 +70,6 @@ export class UserStore implements IUser {
       model.location = model.regions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
     }
     convertDate(model);
-    // console.log(12121122, model);
     Object.assign(this, model);
   }
 

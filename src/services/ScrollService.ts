@@ -1,9 +1,9 @@
 import { IPagination } from "interfaces/IPagination";
 
 export class ScrollHandler {
-  store?: IPagination;
+  store?: IPagination<any>;
 
-  setStore(store?: IPagination) {
+  setStore<T>(store?: IPagination<T>) {
     this.store = store;
   }
 

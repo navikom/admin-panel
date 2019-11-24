@@ -8,7 +8,7 @@ import { IPagination } from "interfaces/IPagination";
 type ApiMethodsInterface = "user" | "event";
 type RequestTypesInterface = "pagination";
 
-export class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination {
+export class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination<T> {
   started: boolean = false;
   page: number = 0;
   pageSize: number = 20;
@@ -16,8 +16,8 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
   requestMethod: RequestTypesInterface;
   additionalParams: any;
   pk: string;
-  fetching: boolean = false;
 
+  @observable fetching: boolean = false;
   @observable allFetched: boolean = false;
   @observable items: T[];
   @observable count: number = 0;

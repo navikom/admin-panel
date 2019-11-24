@@ -98,5 +98,6 @@ export default {
   "lastSeen": "Last Seen",
   "identified": "Identified",
   "totalEvents": "Total Events",
-  "totalTime": "Total Time"
+  "totalTime": "Total Time",
+  "unknown": "Unknown"
 };

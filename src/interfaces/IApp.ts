@@ -6,4 +6,5 @@ export interface IApp {
   updatedAt: Date;
   deletedAt: Date;
   categoryId: number;
+  planeData: string[][];
 }

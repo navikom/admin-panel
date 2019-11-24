@@ -1,5 +1,5 @@
 import React from "react";
-import { action, IReactionDisposer, observable, when } from "mobx";
+import { action, IReactionDisposer, observable, runInAction, when } from "mobx";
 import { api, Apis, nonAuthorizedApi } from "api";
 import { Errors } from "models/Errors";
 import { IFlow } from "interfaces/IFlow";
@@ -44,10 +44,11 @@ const registrConstraints = Object.assign({
 
 export class AuthStore extends Errors implements IFlow {
   static REFRESH_TOKEN_KEY: string = "refreshToken";
+  static ANONYMOUS: string = "anonymous";
+  static REMEMBER_ME: string = "rememberMe";
 
   @observable token: string | null = null;
   @observable refreshToken: string | null = null;
-  @observable shouldFirstRefresh: boolean = false;
   @observable rememberMe: boolean = false;
   @observable expires: number = 0;
 
@@ -60,18 +61,18 @@ export class AuthStore extends Errors implements IFlow {
 
   @action checkLocalStorage() {
     this.refreshToken = localStorage.getItem(AuthStore.REFRESH_TOKEN_KEY);
-    if(this.refreshToken === null) {
+    const anonymous = localStorage.getItem(AuthStore.ANONYMOUS);
+    if(anonymous) {
       this.anonymous();
     } else {
-      this.rememberMe = true;
-      this.shouldFirstRefresh = true
+      this.refresh();
     }
   }
 
   @action
   async signup(email: string, password: string) {
     try {
-      this.update(await api(Apis.Main).user.signup(email, password));
+      this.update(await api(Apis.Main).user.signup(email, password), true);
     } catch (err) {
       this.setError(Dictionary.value(err.message));
     }
@@ -80,7 +81,7 @@ export class AuthStore extends Errors implements IFlow {
   @action
   async login(email: string, password: string) {
     try {
-      this.update(await nonAuthorizedApi(Apis.Main).user.login(email, password));
+      this.update(await nonAuthorizedApi(Apis.Main).user.login(email, password), true);
     } catch (err) {
       this.setError(Dictionary.value(err.message));
     }
@@ -89,7 +90,14 @@ export class AuthStore extends Errors implements IFlow {
   @action
   async anonymous() {
     try {
-      this.update(await nonAuthorizedApi(Apis.Main).user.anonymous());
+      if(this.refreshToken) {
+        runInAction(() => {
+          this.token = `Bearer ${this.refreshToken}`;
+        });
+        this.update(await api(Apis.Main).user.anonymous());
+      } else {
+        this.update(await nonAuthorizedApi(Apis.Main).user.anonymous());
+      }
     } catch (err) {
       this.setError(Dictionary.value(err.message));
     }
@@ -101,7 +109,7 @@ export class AuthStore extends Errors implements IFlow {
       return;
     }
     try {
-      this.update(await nonAuthorizedApi(Apis.Main).user.refresh(this.refreshToken));
+      this.update(await nonAuthorizedApi(Apis.Main).user.refresh(this.refreshToken), true);
     } catch (err) {
       console.log("Refresh Error", err.message);
       this.logout();
@@ -110,13 +118,12 @@ export class AuthStore extends Errors implements IFlow {
   }
 
   @action
-  update(response: ILoginResult) {
+  update(response: ILoginResult, clearAnonymous: boolean = false) {
     this.token = response.token;
     this.expires = response.expires * 1000;
-    if (this.rememberMe) {
-      localStorage.setItem(AuthStore.REFRESH_TOKEN_KEY, response.refreshToken);
-      this.refreshToken = response.refreshToken;
-    }
+    localStorage.setItem(AuthStore.REFRESH_TOKEN_KEY, response.refreshToken);
+    this.refreshToken = response.refreshToken;
+    clearAnonymous && localStorage.removeItem(AuthStore.ANONYMOUS);
     App.setUser(response.user);
     this.checkExpiresTimer();
   }
@@ -125,27 +132,32 @@ export class AuthStore extends Errors implements IFlow {
   async logout() {
     try {
       await api(Apis.Main).user.logout();
-      localStorage.removeItem(AuthStore.REFRESH_TOKEN_KEY);
+      localStorage.setItem(AuthStore.ANONYMOUS, AuthStore.ANONYMOUS);
       App.user && App.user.setAnonymous(true);
     } catch (err) {
       console.log("Logout Error", err.message);
     }
-
   }
 
   @action
   start(): void {
-    when(() => this.shouldFirstRefresh, () => this.refresh());
     this.checkLocalStorage();
   }
 
   @action
   switchRememberMe() {
     this.rememberMe = !this.rememberMe;
+    if(this.rememberMe) {
+      localStorage.setItem(AuthStore.REMEMBER_ME, AuthStore.REMEMBER_ME);
+    } else {
+      localStorage.removeItem(AuthStore.REMEMBER_ME);
+    }
   }
 
   clearStorage() {
     localStorage.removeItem(AuthStore.REFRESH_TOKEN_KEY);
+    localStorage.removeItem(AuthStore.REMEMBER_ME);
+    localStorage.removeItem(AuthStore.ANONYMOUS);
   }
 
   checkExpiresTimer() {

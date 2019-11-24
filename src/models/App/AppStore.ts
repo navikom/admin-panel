@@ -9,6 +9,14 @@ export class AppStore implements IApp {
   title!: string;
   updatedAt!: Date;
 
+  get planeData() {
+    const data = [
+      ["Title", this.title],
+    ];
+    this.description && data.push(["Description", this.description]);
+    return data;
+  }
+
   constructor(model: IApp) {
     Object.assign(this, model);
   }

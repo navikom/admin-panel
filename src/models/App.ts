@@ -6,18 +6,17 @@ import { UserStore } from "models/User/UserStore.ts";
 import { Auth } from "models/Auth/Auth.ts";
 import * as Constants from "models/Constants.ts";
 import { IUser } from "interfaces/IUser";
-import { Events } from "models/Event/EventsStore";
 import { IRole } from "interfaces/IRole";
 
 export class AppStore implements IFlow {
   @observable role: IRole = new RoleStore();
-  @observable user?: IUser;
+  @observable user: IUser | null = null;
   @observable navigationHistory?: History;
-  userDisposer: IReactionDisposer;
+  userDisposer?: IReactionDisposer;
   anonymousDisposer: IReactionDisposer;
 
   @computed get loggedIn(): boolean {
-    return this.user !== undefined && !this.user.anonymous;
+    return this.user !== null && !this.user.anonymous;
   }
 
   @computed get tokenIsReady(): boolean {
@@ -25,9 +24,11 @@ export class AppStore implements IFlow {
   }
 
   constructor() {
-    this.userDisposer = reaction(() => this.user,
-      (user: IUser | undefined) => this.ifUserChanged());
-    this.anonymousDisposer = reaction(() => this.loggedIn, (loggedIn: boolean) => this.ifUserChanged());
+    when(() => this.user !== null, () => this.ifUserChanged());
+    this.anonymousDisposer = reaction(() => {
+      console.log('this.anonymousDisposer', this.user, this.loggedIn);
+      return this.loggedIn;
+    }, (loggedIn: boolean) => this.ifUserChanged());
 
   }
 
@@ -47,18 +48,20 @@ export class AppStore implements IFlow {
 
   stop(): void {
     Auth.stop();
-    this.userDisposer();
+    this.userDisposer && this.userDisposer();
     this.anonymousDisposer();
   }
 
   ifUserChanged() {
+    console.log(2323232323, this.user);
     if (!this.navigationHistory || !this.user) {
       return;
     }
     if (this.user.anonymous) {
       this.navigationHistory.push(Constants.ROOT_ROUTE);
     } else {
-      if(!this.navigationHistory.location.pathname.includes(Constants.ADMIN_ROUTE)) {
+      console.log(2323232323, this.navigationHistory.location.pathname, this.navigationHistory.location.pathname.includes(Constants.ADMIN_ROUTE));
+      if (!this.navigationHistory.location.pathname.includes(Constants.ADMIN_ROUTE)) {
         this.navigationHistory.push(Constants.EVENTS_USERS_LIST_ROUTE);
       }
     }
