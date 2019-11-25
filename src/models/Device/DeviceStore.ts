@@ -5,7 +5,7 @@ export class DeviceStore implements IDevice {
   createdAt: Date;
   info: IDeviceInfo;
 
-  get planeData() {
+  get plainData() {
     const data = [
       ["OS", `${this.info.OS.name}, ${this.info.OS.version}`],
     ];

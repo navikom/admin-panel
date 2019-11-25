@@ -1,9 +1,9 @@
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IRole } from "interfaces/IRole";
 import { IUsersApps } from "interfaces/IUsersApps";
-import { IUsersRegions } from "interfaces/IUserRegion";
-import { IUserDevice } from "interfaces/IUserDevice";
-import { IUserEvents } from "interfaces/IUserEvents";
+import { IUsersRegions } from "interfaces/IUsersRegions";
+import { IUsersDevices } from "interfaces/IUsersDevices";
+import { IUsersEvents } from "interfaces/IUsersEvents";
 
 export interface IUser extends WithPrimaryKey {
   readonly userId: number;
@@ -27,8 +27,8 @@ export interface IUser extends WithPrimaryKey {
   eventsCount?: number;
   apps?: IUsersApps[];
   roles?: IRole[];
-  devices?: IUserDevice[];
-  events: IUserEvents;
+  devices?: IUsersDevices[];
+  events?: IUsersEvents;
   regions?: IUsersRegions[];
   location?: IUsersRegions;
   lastEvent?: Date;
@@ -42,4 +42,5 @@ export interface IUser extends WithPrimaryKey {
   setAnonymous(value: boolean): void;
   setFullDataLoaded(): void;
   totalTime: string;
+  eventsItems: IUsersEvents;
 }

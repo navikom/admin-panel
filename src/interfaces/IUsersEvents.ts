@@ -1,4 +1,4 @@
 import { IPagination } from "interfaces/IPagination";
 import { IEvent } from "interfaces/IEvent";
 
-export interface IUserEvents extends IPagination<IEvent> {}
+export interface IUsersEvents extends IPagination<IEvent> {}

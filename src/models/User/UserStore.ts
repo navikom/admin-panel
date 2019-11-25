@@ -1,10 +1,20 @@
 import { action, computed, observable } from "mobx";
+
+// interfaces
+import { IUsersEvents } from "interfaces/IUsersEvents";
 import { IUser } from "interfaces/IUser";
+import { IUsersDevices } from "interfaces/IUsersDevices";
+
+// services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
-import { IRegion } from "interfaces/IRegion";
-import convertDate from "utils/convertDate";
-import { IUserEvents } from "interfaces/IUserEvents";
+
+// models
 import { UserEventsStore } from "models/User/UserEventsStore";
+
+import convertDate from "utils/convertDate";
+import { IUsersApps } from "interfaces/IUsersApps";
+import { UsersApps } from "models/User/UsersApps";
+import { UsersDevices } from "models/User/UsersDevices";
 
 /**
  * User model
@@ -25,11 +35,18 @@ export class UserStore implements IUser {
 
   pk: string = "userId";
 
-  @observable events: IUserEvents;
+  @observable events?: IUsersEvents;
   @observable anonymous: boolean = true;
   @observable eventsCount: number = 1;
   @observable lastLogin!: number;
   @observable fullDataLoaded: boolean = false;
+  @observable devices?: IUsersDevices[];
+  @observable apps?: IUsersApps[];
+
+  @computed
+  get eventsItems() {
+    return this.events || new UserEventsStore(this.userId);
+  }
 
   @computed
   get fullName(): string {
@@ -49,12 +66,6 @@ export class UserStore implements IUser {
     return [Math.round(diff.asHours()), diff.minutes(), diff.seconds()].join(':');
   }
 
-  constructor(model: IUser) {
-    model.eventsCount && (model.eventsCount = Number(model.eventsCount));
-    Object.assign(this, model);
-    this.events = new UserEventsStore(this.userId);
-  }
-
   @action
   setAnonymous(value: boolean) {
     this.anonymous = value;
@@ -66,15 +77,21 @@ export class UserStore implements IUser {
 
   @action
   update(model: IUser) {
+    model.eventsCount && (model.eventsCount = Number(model.eventsCount));
+    convertDate(model);
+    Object.assign(this, model);
+    !this.events && (this.events = new UserEventsStore(this.userId));
     if(model.regions) {
       model.location = model.regions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
     }
-    convertDate(model);
-    Object.assign(this, model);
+    model.devices && (this.devices = model.devices.map(device => UsersDevices.from(device)));
+    model.apps && (this.apps = model.apps.map(app => UsersApps.from(app)));
   }
 
   static from(model: IUser): UserStore {
-    return new UserStore(model);
+    const user = new UserStore();
+    user.update(model);
+    return user;
   }
 
 }

@@ -1,87 +1,38 @@
 import React, { useState } from "react";
+import { observer } from "mobx-react-lite";
 import classNames from "classnames";
 
 // @material-ui/core components
 import { createStyles, makeStyles, Theme, withStyles } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 import MuiExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import MuiExpansionPanel from "@material-ui/core/ExpansionPanel";
+import Chip from "@material-ui/core/Chip";
+import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
 // @material-ui/icons
 import { Lens } from "@material-ui/icons";
+
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-// services
+// interfaces
 import { IEvent } from "interfaces/IEvent";
-import ProgressButton from "components/CustomButtons/ProgressButton";
+import { IUsersEvents } from "interfaces/IUsersEvents";
+
+// services
 import { Dictionary } from "services/Dictionary/Dictionary";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import GridContainer from "components/Grid/GridContainer";
-import Avatar from "@material-ui/core/Avatar";
-import GridItem from "components/Grid/GridItem";
-import Chip from "@material-ui/core/Chip";
-import Grid from "@material-ui/core/Grid";
-import { observer } from "mobx-react-lite";
-import { IUserEvents } from "interfaces/IUserEvents";
-import { observable } from "mobx";
+
+import ProgressButton from "components/CustomButtons/ProgressButton";
+import { ExpansionDataItems } from "components/ExpansionPanel/ExpansionDataItems";
 
 const useInfoStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       marginBottom: theme.typography.pxToRem(20)
-    },
-    label: {
-      opacity: .4,
-      fontWeight: 600
-    },
-    wrapper: {
-      position: "relative",
-      paddingLeft: theme.spacing(4),
-      marginTop: theme.typography.pxToRem(20)
-    },
-    nested: {
-      "&:after": {
-        content: "''",
-        position: "absolute",
-        left: "15px",
-        top: "-5px",
-        height: "15px",
-        width: "1px",
-        borderLeft: "1px dashed #ccc"
-      },
-      "&:before": {
-        content: "''",
-        position: "absolute",
-        top: "10px",
-        left: "15px",
-        width: "15px",
-        height: "1px",
-        borderBottom: "1px dashed #ccc"
-      }
     }
   })
 );
-
-const SubInfoItems = ({ ...props }) => {
-  const classes = useInfoStyles();
-  return (
-    <Grid container className={classes.wrapper}>
-      <Grid container className={classes.nested} direction="row">
-        <Grid item className={classes.label}>{props.title}:&nbsp;</Grid>
-        <Grid item>{props.data}</Grid>
-      </Grid>
-    </Grid>
-
-  );
-};
 
 const InfoItem = ({ ...props }) => {
   const classes = useInfoStyles();
@@ -90,7 +41,7 @@ const InfoItem = ({ ...props }) => {
       <Grid item xs={12} sm={12} md={12}>
         <Chip label={props.title}/>
       </Grid>
-      {props.data.map((prop: [string, string], key: number) => <SubInfoItems key={key} title={prop[0]}
+      {props.data.map((prop: [string, string], key: number) => <ExpansionDataItems key={key} title={prop[0]}
                                                                              data={prop[1]}/>)}
     </Grid>
   );
@@ -99,9 +50,9 @@ const InfoItem = ({ ...props }) => {
 const EventInfo = ({ ...props }) => {
   return (
     <Grid container>
-      <InfoItem title="Device" data={props.data.device.planeData}/>
-      <InfoItem title="Region" data={props.data.region.planeData}/>
-      {props.data.app && <InfoItem title="App" data={props.data.app.planeData}/>}
+      <InfoItem title="Device" data={props.data.device.plainData}/>
+      <InfoItem title="Region" data={props.data.region.plainData}/>
+      {props.data.app && <InfoItem title="App" data={props.data.app.plainData}/>}
       {
         props.data.data &&
         <InfoItem
@@ -190,7 +141,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const UserEventsTab = observer((props: {events: IUserEvents}) => {
+export const UserEventsTab = observer((props: {events: IUsersEvents}) => {
   const classes = useStyles();
 
   const isMobile = window.outerWidth < 1000;

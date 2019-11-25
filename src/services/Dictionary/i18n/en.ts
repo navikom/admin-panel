@@ -1,3 +1,6 @@
+import Typography from "@material-ui/core/Typography";
+import React from "react";
+
 export default {
   "auth:wrong-password": "The password is invalid or the user does not have a password.",
   "auth:user-not-found": "User with that credentials is not exists.",
@@ -99,5 +102,10 @@ export default {
   "identified": "Identified",
   "totalEvents": "Total Events",
   "totalTime": "Total Time",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "apps": "Apps",
+  "cannotDetectForThatUser": "Cannot detect any $ for that user",
+  "createdAt": "Created at",
+  "subscrExpires": "Subscription expires",
+  "title": "Title"
 };

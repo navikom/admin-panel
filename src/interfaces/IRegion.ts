@@ -7,5 +7,5 @@ export interface IRegion {
   lt: number;
   ip: string;
   timezone: string;
-  planeData: string[][];
+  plainData: string[][];
 }

@@ -1,10 +1,14 @@
 import { action } from "mobx";
-import { IEvent } from "interfaces/IEvent";
+
+// models
 import { Pagination } from "models/Pagination";
 import { EventStore } from "models/Event/EventStore";
-import { IUserEvents } from "interfaces/IUserEvents";
 
-export class UserEventsStore extends Pagination<IEvent> implements IUserEvents {
+// interfaces
+import { IUsersEvents } from "interfaces/IUsersEvents";
+import { IEvent } from "interfaces/IEvent";
+
+export class UserEventsStore extends Pagination<IEvent> implements IUsersEvents {
   constructor(userId: number) {
     super("eventId", "event", 20, "pagination", [5, 10, 25, 50],
       `/user/${userId}`);

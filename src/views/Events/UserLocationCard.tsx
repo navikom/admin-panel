@@ -1,8 +1,13 @@
-import { FormRow } from "components/Grid/FormRow";
-import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 import React from "react";
+import { FormRow } from "components/Grid/FormRow";
+
+// interfaces
+import { IUsersRegions } from "interfaces/IUsersRegions";
+
+// services
+import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
+
 import GridContainer from "components/Grid/GridContainer";
-import { IUsersRegions } from "interfaces/IUserRegion";
 
 export const UserLocationCard = ({...props}) => {
   const location = props.location ? props.location : { region: {} } as IUsersRegions;

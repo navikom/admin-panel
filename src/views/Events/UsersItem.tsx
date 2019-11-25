@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // @material-ui/core components
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import {
-  ReorderOutlined,
+  Apps,
   SubtitlesOutlined,
   Devices,
   InfoOutlined
@@ -29,6 +29,7 @@ import { Users } from "models/User/UsersStore";
 import { UserInfoTab } from "views/Events/UserInfoTab";
 import { UserDevicesTab } from "views/Events/UserDevicesTab";
 import { UserEventsTab } from "views/Events/UserEventsTab";
+import { UserAppsTab } from "views/Events/UserAppsTab";
 
 interface MatchInfo {
   userId: string;
@@ -67,9 +68,14 @@ const UsersItem = (props: UsersItemProps) => {
               tabContent: (<UserDevicesTab devices={user.devices}/>)
             },
             {
+              tabName: Dictionary.defValue(DictionaryService.keys.apps),
+              tabIcon: Apps,
+              tabContent: (<UserAppsTab apps={user.apps}/>)
+            },
+            {
               tabName: Dictionary.defValue(DictionaryService.keys.events),
               tabIcon: SubtitlesOutlined,
-              tabContent: (<UserEventsTab events={user.events}/>)
+              tabContent: (<UserEventsTab events={user.eventsItems}/>)
             }
           ]}
         />

@@ -1,4 +1,6 @@
-export interface IApp {
+import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
+
+export interface IApp extends WithPrimaryKey{
   appId: number;
   title: string;
   description: string;
@@ -6,5 +8,5 @@ export interface IApp {
   updatedAt: Date;
   deletedAt: Date;
   categoryId: number;
-  planeData: string[][];
+  plainData: string[][];
 }

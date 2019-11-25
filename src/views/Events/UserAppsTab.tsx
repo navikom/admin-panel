@@ -11,7 +11,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 // interfaces
-import { IUsersDevices } from "interfaces/IUsersDevices";
+import { IUsersApps } from "interfaces/IUsersApps";
 
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
@@ -31,31 +31,31 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const UserDevicesTab = ({ ...props }) => {
+export const UserAppsTab = ({ ...props }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       {
-        props.devices.length ?
-          props.devices.map((device: IUsersDevices, key: number) => (
+        props.apps.length ?
+          props.apps.map((uApp: IUsersApps, key: number) => (
             <ExpansionPanel key={key}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Chip label={<Typography className={classes.heading}>Device {key + 1}</Typography>}/>
+                <Chip label={<Typography className={classes.heading}>{uApp.app.title}</Typography>}/>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Grid container>
                   {
-                    device.plainData.map((data, key) => <ExpansionDataItems key={key} title={data[0]} data={data[1]}/>)
+                    uApp.plainData.map((data, key) => <ExpansionDataItems key={key} title={data[0]} data={data[1]}/>)
                   }
                 </Grid>
               </ExpansionPanelDetails>
             </ExpansionPanel>
           )) : <Typography variant="h5" gutterBottom>
-            {Dictionary.defValue(DictionaryService.keys.cannotDetectForThatUser, Dictionary.defValue(DictionaryService.keys.devices))}
+            {Dictionary.defValue(DictionaryService.keys.cannotDetectForThatUser, Dictionary.defValue(DictionaryService.keys.apps))}
           </Typography>
       }
 

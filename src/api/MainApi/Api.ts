@@ -15,6 +15,10 @@ export default class Api extends ApiBase {
   get event(): AEvent {
     return new AEvent(this.token);
   }
+
+  get app(): App {
+    return new App(this.token);
+  }
 }
 
 class User extends HttpBase {
@@ -68,6 +72,17 @@ class User extends HttpBase {
 class AEvent extends HttpBase {
   constructor(token?: string) {
     super(`${settings.mainApi}/events`, token);
+  }
+
+  pagination(page: number, pageSize: number, additionalParams?: number) {
+    return this.fetchData('get', `${page}/${pageSize}${additionalParams ? '' + additionalParams : ''}`);
+  }
+
+}
+
+class App extends HttpBase {
+  constructor(token?: string) {
+    super(`${settings.mainApi}/apps`, token);
   }
 
   pagination(page: number, pageSize: number, additionalParams?: number) {

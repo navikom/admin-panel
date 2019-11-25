@@ -11,7 +11,7 @@ export class RegionStore implements IRegion {
   regionId: number;
   timezone: string;
 
-  get planeData() {
+  get plainData() {
     const data = [
       ["City", this.city || Dictionary.defValue(DictionaryService.keys.unknown)],
       ["Country", this.country || Dictionary.defValue(DictionaryService.keys.unknown)],

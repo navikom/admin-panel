@@ -7,4 +7,6 @@ export interface IUsersApps {
   updatedAt: Date;
   deletedAt: Date;
   app: IApp;
+
+  plainData: string[][];
 }

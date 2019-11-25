@@ -9,7 +9,9 @@ export class AppStore implements IApp {
   title!: string;
   updatedAt!: Date;
 
-  get planeData() {
+  pk: string = "appId";
+
+  get plainData() {
     const data = [
       ["Title", this.title],
     ];
