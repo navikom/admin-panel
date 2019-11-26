@@ -1,18 +1,55 @@
 import React from "react";
-// @material-ui/core components
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-// core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import Table from "components/Table/Table";
-import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import { createStyles } from "@material-ui/core";
+import { when } from "mobx";
+import { observer, useDisposable } from "mobx-react-lite";
+
 import { RouteComponentProps } from "react-router";
+// @material-ui/core components
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+
+// models
+import { APPS_LIST_ROUTE } from "models/Constants";
+import { Apps } from "models/App/AppsStore";
+import { App } from "models/App";
+
+// services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
-const styles = createStyles({
+// core components
+import { lazy } from "utils";
+
+const Table = lazy(() => import("components/Table/TablePagination"));
+const GridContainer = lazy(() => import("components/Grid/GridContainer"));
+const GridItem = lazy(() => import("components/Grid/GridItem"));
+const Card = lazy(() => import("components/Card/Card"));
+const CardHeader = lazy(() => import("components/Card/CardHeader"));
+const CardBody = lazy(() => import("components/Card/CardBody"));
+
+const AppTable = observer((props: {handleClick(id: string): void}) => {
+  return (
+  <Table
+    tableProps={{
+      tableHeaderColor: "primary",
+      tableHead: [
+        Dictionary.defValue(DictionaryService.keys.id),
+        Dictionary.defValue(DictionaryService.keys.title),
+        Dictionary.defValue(DictionaryService.keys.createdAt),
+        Dictionary.defValue(DictionaryService.keys.description)],
+      tableData: Apps.appTableData
+    }}
+    paginationProps={{
+      rowsPerPageOptions: Apps.rowsPerPageOptions,
+      count: Apps.count,
+      rowsPerPage: Apps.viewRowsPerPage,
+      page: Apps.viewPage,
+      onChangePage: Apps.handleChangePageInView,
+      onChangeRowsPerPage: Apps.handleChangeRowsPerPage
+    }}
+    onRowClick={(data: string[]) => props.handleClick(data[0])}
+  />
+)});
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
       color: "rgba(255,255,255,.62)",
@@ -41,11 +78,15 @@ const styles = createStyles({
     fontWeight: 400,
     lineHeight: "1"
   }
-});
-interface AppsProps extends RouteComponentProps, WithStyles<typeof styles> {
-}
+}));
+interface AppsProps extends RouteComponentProps {}
+
 function AppList(props: AppsProps) {
-  const { classes } = props;
+  const classes  = useStyles();
+
+  useDisposable(() =>
+    when(() => App.tokenIsReady, () => Apps.fetchItems()));
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -57,17 +98,8 @@ function AppList(props: AppsProps) {
             </p>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Category", "Details"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-              ]}
+            <AppTable
+              handleClick={(appId: string) => props.history.push(APPS_LIST_ROUTE + "/" + appId)}
             />
           </CardBody>
         </Card>
@@ -76,4 +108,4 @@ function AppList(props: AppsProps) {
   );
 }
 
-export default withStyles(styles)(AppList);
+export default AppList;

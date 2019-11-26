@@ -6,6 +6,8 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Grid from "@material-ui/core/Grid";
+import Chip from "@material-ui/core/Chip";
 
 // @material-ui/icons
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -15,9 +17,9 @@ import { IUsersApps } from "interfaces/IUsersApps";
 
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
-import Chip from "@material-ui/core/Chip";
+
+// core components
 import { ExpansionDataItems } from "components/ExpansionPanel/ExpansionDataItems";
-import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const UserAppsTab = ({ ...props }) => {
+const UserAppsTab = ({ ...props }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -62,3 +64,5 @@ export const UserAppsTab = ({ ...props }) => {
     </div>
   );
 };
+
+export default UserAppsTab;

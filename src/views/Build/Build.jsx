@@ -152,7 +152,6 @@ class Build extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <Suspense fallback={"Loading"}>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>{Dictionary.value("build")}</h4>
@@ -168,7 +167,6 @@ class Build extends React.Component {
             <ProgressButton loading={true} text="Save name"/>
           </CardBody>
         </Card>
-      </Suspense>
     );
   }
 

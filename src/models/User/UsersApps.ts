@@ -17,7 +17,7 @@ export class UsersApps implements IUsersApps {
   get plainData() {
     const data = [
       [Dictionary.defValue(DictionaryService.keys.createdAt), Dictionary.timeDateString(this.createdAt) || ''],
-      ...this.app.plainData
+      ...(this.app.plainData || [])
     ];
     this.subscrExpires && [Dictionary.defValue(DictionaryService.keys.subscrExpires), Dictionary.timeDateString(this.subscrExpires)];
     return data;

@@ -42,7 +42,7 @@ const InfoItem = ({ ...props }) => {
         <Chip label={props.title}/>
       </Grid>
       {props.data.map((prop: [string, string], key: number) => <ExpansionDataItems key={key} title={prop[0]}
-                                                                             data={prop[1]}/>)}
+                                                                                   data={prop[1]}/>)}
     </Grid>
   );
 };
@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const UserEventsTab = observer((props: {events: IUsersEvents}) => {
+const UserEventsTab = observer((props: { events: IUsersEvents }) => {
   const classes = useStyles();
 
   const isMobile = window.outerWidth < 1000;
@@ -189,7 +189,12 @@ export const UserEventsTab = observer((props: {events: IUsersEvents}) => {
         ))
       }
       {!isMobile && <div className={classes.line}/>}
-      <ProgressButton onClick={onClick} loading={props.events.fetching} text="Loading more"/>
+      {
+        !props.events.allFetched &&
+        <ProgressButton onClick={onClick} loading={props.events.fetching} text="Loading more"/>
+      }
     </div>
   );
 });
+
+export default UserEventsTab;

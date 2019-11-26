@@ -67,13 +67,13 @@ class Notifications extends React.Component {
     var x = [];
     x[place] = true;
     this.setState(x);
-    this.alertTimeout = setTimeout(
-      function() {
-        x[place] = false;
-        this.setState(x);
-      }.bind(this),
-      6000
-    );
+    // this.alertTimeout = setTimeout(
+    //   function() {
+    //     x[place] = false;
+    //     this.setState(x);
+    //   }.bind(this),
+    //   6000
+    // );
   }
   render() {
     const { classes } = this.props;

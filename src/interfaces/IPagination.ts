@@ -5,6 +5,7 @@ export interface IPagination<T> {
   fetching: boolean;
   count: number;
   viewPage: number;
+  allFetched: boolean;
   viewRowsPerPage: number;
   rowsPerPageOptions: number[];
   fetchItems(): Promise<boolean>;

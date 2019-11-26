@@ -8,6 +8,7 @@ export default {
   "auth:user-exists": "User already exists with that email.",
   "cantBeEmpty": "$ can't be empty",
   "cantBeLessThan": "%0 can't be less than %1 chars",
+  "cantBeMoreThan": "%0 can't be more than %1 chars",
   "guide1": "Get Started",
   "guide2": "Guide",
   "guide3": "Make 3 steps to set up and run the application",
@@ -55,6 +56,7 @@ export default {
   "usersDashboard": "Users Dashboard",
   "eventsDashboard": "Events Dashboard",
   "userEvents": "User Events",
+  "appDetails": "$ Details",
   "pictures": "Pictures",
   "picturesDashboard": "Pictures Dashboard",
   "login": "Login",
@@ -107,5 +109,15 @@ export default {
   "cannotDetectForThatUser": "Cannot detect any $ for that user",
   "createdAt": "Created at",
   "subscrExpires": "Subscription expires",
-  "title": "Title"
+  "title": "Title",
+  "action": "Action",
+  "id": "Id",
+  "description": "Description",
+  "date": "Date",
+  "status": "Status",
+  "screenshots": "Screenshots",
+  "dragAndDrop": "Drag and drop an image file here or click",
+  "upload": "Upload",
+  "save": "Save",
+  "enterDescription": "Enter Description"
 };

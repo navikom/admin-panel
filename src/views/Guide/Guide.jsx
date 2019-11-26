@@ -98,7 +98,6 @@ class Guide extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <Suspense fallback={"Loading"}>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>{Dictionary.value("guide1")}</h4>
@@ -286,7 +285,6 @@ class Guide extends React.Component {
             <h4>{Dictionary.value("guide22")}</h4>
           </CardBody>
         </Card>
-      </Suspense>
     );
   }
 

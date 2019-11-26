@@ -19,17 +19,19 @@ const CustomTablePagination = ({...props}) => {
   return (
     <div className={classes.tableWrapper}>
       <Table stickyHeader aria-label="sticky table" {...props.tableProps} onRowClick={props.onRowClick}/>
-      <TablePagination
-        labelRowsPerPage={`${Dictionary.defValue(DictionaryService.keys.rowsPerPage)}:`}
-        component="div"
-        backIconButtonProps={{
-          'aria-label': 'previous page',
-        }}
-        nextIconButtonProps={{
-          'aria-label': 'next page',
-        }}
-        {...props.paginationProps}
-      />
+      {
+        props.paginationProps.count > 5 && <TablePagination
+          labelRowsPerPage={`${Dictionary.defValue(DictionaryService.keys.rowsPerPage)}:`}
+          component="div"
+          backIconButtonProps={{
+            'aria-label': 'previous page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'next page',
+          }}
+          {...props.paginationProps}
+        />
+      }
     </div>
   );
 };

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { RouteComponentProps } from "react-router";
+import { useDisposable } from "mobx-react-lite";
+import { when } from "mobx";
 
 // @material-ui/core components
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
@@ -11,25 +14,26 @@ import {
 // utils
 import { lazy } from "utils";
 
+// interfaces
+import { IUser } from "interfaces/IUser";
+
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
-import { RouteComponentProps } from "react-router";
+
+// models
+import { App } from "models/App";
+import { Users } from "models/User/UsersStore";
 
 // core components
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));
 const GridItem = lazy(() => import("components/Grid/GridItem"));
+const UserInfoTab = lazy(() => import("views/Events/components/UserInfoTab"));
+const UserDevicesTab = lazy(() => import("views/Events/components/UserDevicesTab"));
+const UserEventsTab = lazy(() => import("views/Events/components/UserEventsTab"));
+const UserAppsTab = lazy(() => import("views/Events/components/UserAppsTab"));
 
 import style from "assets/jss/material-dashboard-react/views/dashboardStyle";
-import { IUser } from "interfaces/IUser";
-import { useDisposable } from "mobx-react-lite";
-import { when } from "mobx";
-import { App } from "models/App";
-import { Users } from "models/User/UsersStore";
-import { UserInfoTab } from "views/Events/UserInfoTab";
-import { UserDevicesTab } from "views/Events/UserDevicesTab";
-import { UserEventsTab } from "views/Events/UserEventsTab";
-import { UserAppsTab } from "views/Events/UserAppsTab";
 
 interface MatchInfo {
   userId: string;

@@ -89,4 +89,8 @@ class App extends HttpBase {
     return this.fetchData('get', `${page}/${pageSize}${additionalParams ? '' + additionalParams : ''}`);
   }
 
+  fullData(appId: number) {
+    return this.fetchData('get', appId.toString());
+  }
+
 }

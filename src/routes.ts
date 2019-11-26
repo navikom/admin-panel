@@ -13,25 +13,7 @@ import {
   Apps,
   Build as BuildIcon
 } from "@material-ui/icons";
-// core components/views for Admin layout
-// import DashboardPage from "views/Dashboard/Dashboard.jsx";
-// import EventsUsersListPage from "views/Events/UsersList";
-// import EventsUserPage from "views/Events/UsersItem";
-// import PicturesPage from "views/pixart/Pictures/Pictures.jsx";
-// import UserProfile from "views/UserProfile/UserProfile.jsx";
-// import TableList from "views/TableList/TableList.jsx";
-// import AppsList from "views/AppsList/AppsList.tsx";
-// import Typography from "views/Typography/Typography.jsx";
-// import Icons from "views/Icons/Icons.jsx";
-// import Maps from "views/Maps/Maps.jsx";
-// import Login from "views/Login/Login.tsx";
-// import SignUp from "views/SignUp/SignUp.tsx";
-// import StartPage from "views/StartPage/StartPage.tsx";
-// import NotificationsPage from "views/Notifications/Notifications.jsx";
-// import Guide from "views/Guide/Guide.jsx";
-// import Build from "views/Build/Build.jsx";
-// core components/views for RTL layout
-// import RTLPage from "views/RTLPage/RTLPage.jsx";
+
 import { lazy } from "utils";
 
 const DashboardPage = lazy(() => import("views/Dashboard/Dashboard"));
@@ -41,6 +23,7 @@ const PicturesPage = lazy(() => import("views/pixart/Pictures/Pictures"));
 const UserProfile = lazy(() => import("views/UserProfile/UserProfile"));
 const TableList = lazy(() => import("views/TableList/TableList"));
 const AppsList = lazy(() => import("views/AppsList/AppsList"));
+const AppsItem = lazy(() => import("views/AppsList/AppsItem"));
 const Typography = lazy(() => import("views/Typography/Typography"));
 const Icons = lazy(() => import("views/Icons/Icons"));
 const Maps = lazy(() => import("views/Maps/Maps"));
@@ -107,6 +90,16 @@ const dashboardRoutesMap = {
     rtlName: "ملف تعريفي للمستخدم",
     icon: Apps,
     component: AppsList,
+    layout: "/admin",
+    auth: true
+  },
+  app: {
+    url: "/apps",
+    params: "/:appId",
+    name: "Application",
+    rtlName: "لوحة القيادة",
+    icon: Apps,
+    component: AppsItem,
     layout: "/admin",
     auth: true
   },

@@ -27,9 +27,12 @@ const StyledTableCell = withStyles((theme: Theme) =>
 const StyledTableRow = withStyles((theme: Theme) =>
   createStyles({
     root: {
-      '&:nth-of-type(odd)': {
+      "&:nth-of-type(odd)": {
         backgroundColor: theme.palette.background.default,
       },
+      "&:hover": {
+        cursor: "pointer"
+      }
     },
   }),
 )(TableRow);
@@ -56,7 +59,7 @@ function CustomTable({ ...props }) {
           </TableHead>
         ) : null}
         <TableBody>
-          {tableData.map((prop: string[], key: number) => {
+          {(tableData || []).map((prop: string[], key: number) => {
             return (
               <StyledTableRow hover onClick={() => onRowClick(prop)} key={key}>
                 {prop.map((prop: string, key: number) => {

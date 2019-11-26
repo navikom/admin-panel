@@ -54,7 +54,13 @@ const UsersTable = observer((props: UsersTableProps) => (
   <Table
     tableProps={{
       tableHeaderColor: "primary",
-      tableHead: ["User Id", "Date", "Action", "Email", "Status", "Activity"],
+      tableHead: [
+        Dictionary.defValue(DictionaryService.keys.id),
+        Dictionary.defValue(DictionaryService.keys.date),
+        Dictionary.defValue(DictionaryService.keys.action),
+        Dictionary.defValue(DictionaryService.keys.email),
+        Dictionary.defValue(DictionaryService.keys.status),
+        Dictionary.defValue(DictionaryService.keys.activity)],
       tableData: Events.eventTableData
     }}
     paginationProps={{

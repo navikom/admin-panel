@@ -7,6 +7,7 @@ import { Auth } from "models/Auth/Auth.ts";
 import * as Constants from "models/Constants.ts";
 import { IUser } from "interfaces/IUser";
 import { IRole } from "interfaces/IRole";
+import { Apps } from "models/App/AppsStore";
 
 export class AppStore implements IFlow {
   @observable role: IRole = new RoleStore();
@@ -50,6 +51,7 @@ export class AppStore implements IFlow {
     Auth.stop();
     this.userDisposer && this.userDisposer();
     this.anonymousDisposer();
+    Apps.clear();
   }
 
   ifUserChanged() {

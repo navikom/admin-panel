@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const UserDevicesTab = ({ ...props }) => {
+const UserDevicesTab = ({ ...props }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -62,3 +62,5 @@ export const UserDevicesTab = ({ ...props }) => {
     </div>
   );
 };
+
+export default UserDevicesTab;
