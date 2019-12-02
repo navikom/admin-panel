@@ -59,13 +59,13 @@ export class AuthStore extends Errors implements IFlow {
     return Date.now() > this.expires;
   }
 
-  @action checkLocalStorage() {
+  @action async checkLocalStorage() {
     this.refreshToken = localStorage.getItem(AuthStore.REFRESH_TOKEN_KEY);
     const anonymous = localStorage.getItem(AuthStore.ANONYMOUS);
     if(anonymous) {
-      this.anonymous();
+      await this.anonymous();
     } else {
-      this.refresh();
+      await this.refresh();
     }
   }
 
@@ -140,8 +140,8 @@ export class AuthStore extends Errors implements IFlow {
   }
 
   @action
-  start(): void {
-    this.checkLocalStorage();
+  async start() {
+    await this.checkLocalStorage();
   }
 
   @action

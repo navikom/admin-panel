@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { when } from "mobx";
 import { observer, useDisposable } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router";
 
 // @material-ui/icons
-import { InfoOutlined, People } from "@material-ui/icons";
+import { InfoOutlined, People, Clear } from "@material-ui/icons";
 import AddAlert from "@material-ui/icons/AddAlert";
 
 // services
@@ -21,10 +21,12 @@ import { App } from "models/App";
 import { Apps } from "models/App/AppsStore";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Snackbar from "components/Snackbar/Snackbar";
+import { AppDataStore } from "views/AppsList/components/AppData/AppDataStore";
+import WaitingComponent from "hocs/WaitingComponent";
 
 // core components
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
-const AppData = lazy(() => import("views/AppsList/components/AppData"));
+const AppData = lazy(() => import("views/AppsList/components/AppData/AppData"));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,35 +37,49 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Tabs = observer((props: { app: IApp }) => {
-  const app = props.app;
+  AppDataStore.bindApp(props.app);
   const classes = useStyles();
+
+  useEffect(() => {
+    return () => {
+      console.log('clear app');
+      AppDataStore.bindApp(null);
+    }
+  }, []);
+
+  const tabs = [{
+      tabName: Dictionary.defValue(DictionaryService.keys.basicInfo),
+      tabIcon: InfoOutlined,
+      tabContent: (<div className={classes.root}><AppData/></div>)
+    },
+    ...(AppDataStore.tabs || []).map(e => ({...e, tabContent: WaitingComponent(e.tabContent)}))
+  ];
+
   return (
     <div>
       <CustomTabs
-        title={`${Dictionary.defValue(DictionaryService.keys.appDetails, app.title)}:`}
+        title={`${Dictionary.defValue(DictionaryService.keys.appDetails, AppDataStore.app!.title)}:`}
         headerColor="primary"
-        tabs={[
-          {
-            tabName: Dictionary.defValue(DictionaryService.keys.basicInfo),
-            tabIcon: InfoOutlined,
-            tabContent: (<div className={classes.root}><AppData app={app}/></div>)
-          },
-          {
-            tabName: Dictionary.defValue(DictionaryService.keys.users),
-            tabIcon: People,
-            tabContent: (<div className={classes.root}></div>)
-          }
-        ]}
+        tabs={tabs}
       />
         <Snackbar
           place="br"
           color="info"
           icon={AddAlert}
-          message="App data saved successfully"
-          open={Apps.appSaved}
-          closeNotification={() => Apps.setAppSaved(false)}
+          message={Dictionary.defValue(DictionaryService.keys.dataSavedSuccessfully, AppDataStore.app!.title)}
+          open={AppDataStore.appSaved}
+          closeNotification={() => AppDataStore.setAppSaved(false)}
           close
         />
+      <Snackbar
+        place="br"
+        color="danger"
+        icon={Clear}
+        message={Dictionary.defValue(DictionaryService.keys.dataSaveError, [AppDataStore.app!.title || "", AppDataStore.error || ""])}
+        open={AppDataStore.hasError}
+        closeNotification={() => AppDataStore.setError(null)}
+        close
+      />
     </div>
   );
 });

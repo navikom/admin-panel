@@ -10,6 +10,7 @@ import Button from "components/CustomButtons/Button.tsx";
 import buttonStyle from "assets/jss/material-dashboard-react/components/buttonStyle.tsx";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
+import { primaryColor } from "assets/jss/material-dashboard-react";
 
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -20,7 +21,7 @@ const useStyle = makeStyles((theme: Theme) =>
       textAlign: "center"
     },
     progress: {
-      color: green[500],
+      color: primaryColor[0],
       position: "absolute",
       top: "50%",
       left: "50%",
@@ -28,9 +29,9 @@ const useStyle = makeStyles((theme: Theme) =>
       marginLeft: "-16px"
     },
     success: {
-      backgroundColor: green[500],
+      backgroundColor: primaryColor[0],
       "&:hover": {
-        backgroundColor: green[700]
+        backgroundColor: primaryColor[2]
       }
     }
   }));
@@ -44,7 +45,7 @@ const ProgressButton = ({...props}) => {
   return (
     <div className={classes.wrapper}>
       <Button
-        color="success"
+        color="primary"
         disabled={loading}
         className={btnClasses}
         {...rest}

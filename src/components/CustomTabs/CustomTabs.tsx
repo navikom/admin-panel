@@ -39,6 +39,7 @@ const CustomTabs = ({ ...props }: CustomTabsProps) => {
     [classes.cardTitle]: true,
     [classes.cardTitleRTL]: rtlActive
   });
+
   return (
     <Card plain={plainTabs}>
       <CardHeader color={headerColor} plain={plainTabs}>
@@ -83,7 +84,7 @@ const CustomTabs = ({ ...props }: CustomTabsProps) => {
       <CardBody>
         {tabs.map((prop: any, key: number) => {
           if (key === value) {
-            return <div key={key}>{prop.tabContent}</div>;
+            return <div key={key}>{React.isValidElement(prop.tabContent) ? prop.tabContent : <prop.tabContent />}</div>;
           }
           return null;
         })}

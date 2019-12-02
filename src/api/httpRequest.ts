@@ -1,13 +1,19 @@
 import { Headers, Body } from "interfaces/Request";
 import { ErrorHandler } from "utils/ErrorHandler";
+import { instanceOf } from "prop-types";
 
-export async function request(method: string, url: string, allHeaders: Headers = {}, body?: Body, debug = true) {
-  let headers = Object.assign({}, allHeaders, {
+export async function request(method: string, url: string, allHeaders: Headers = {}, body?: Body, excludeHeaders?: string[], debug = true) {
+  let headers = Object.assign({
     "Accept": "application/json",
     "Content-Type": "application/json",
-  });
+  }, allHeaders);
+  if(excludeHeaders) {
+    excludeHeaders.forEach((key) => {
+      headers[key] && delete headers[key];
+    })
+  }
   const object: RequestInit = { method, headers };
-  body && (object.body = JSON.stringify(body));
+  body && (object.body = body instanceof FormData ? body : JSON.stringify(body));
   if (debug) {
     console.log("REQUEST", url, method, body, headers);
   }

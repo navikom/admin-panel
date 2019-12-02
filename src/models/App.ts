@@ -8,6 +8,7 @@ import * as Constants from "models/Constants.ts";
 import { IUser } from "interfaces/IUser";
 import { IRole } from "interfaces/IRole";
 import { Apps } from "models/App/AppsStore";
+import { Settings } from "models/Settings";
 
 export class AppStore implements IFlow {
   @observable role: IRole = new RoleStore();
@@ -34,8 +35,9 @@ export class AppStore implements IFlow {
   }
 
   @action
-  start(): void {
-    Auth.start();
+  async start() {
+    await Auth.start();
+    await Settings.fetch();
   }
 
   @action setUser(model: IUser) {

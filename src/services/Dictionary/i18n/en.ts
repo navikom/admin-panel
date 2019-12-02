@@ -1,5 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import Snackbar from "components/Snackbar/Snackbar";
 
 export default {
   "auth:wrong-password": "The password is invalid or the user does not have a password.",
@@ -117,7 +118,9 @@ export default {
   "status": "Status",
   "screenshots": "Screenshots",
   "dragAndDrop": "Drag and drop an image file here or click",
-  "upload": "Upload",
+  "upload": "Upload More",
   "save": "Save",
-  "enterDescription": "Enter Description"
+  "enterDescription": "Enter Description",
+  "dataSaveError": "%0 data save error: %1",
+  "dataSavedSuccessfully": "$ data saved successfully"
 };
