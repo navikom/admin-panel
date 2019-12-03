@@ -122,5 +122,7 @@ export default {
   "save": "Save",
   "enterDescription": "Enter Description",
   "dataSaveError": "%0 data save error: %1",
-  "dataSavedSuccessfully": "$ data saved successfully"
+  "dataSavedSuccessfully": "$ data saved successfully",
+  "deepLink": "Deep Link",
+  "copied": "Copied"
 };

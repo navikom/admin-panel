@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { sortable } from "react-sortable";
 import { DropzoneDialog } from "material-ui-dropzone/dist";
@@ -13,7 +13,6 @@ import { Card, createStyles, makeStyles, Theme } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
-import IconButton from "@material-ui/core/IconButton";
 import CardActions from "@material-ui/core/CardActions";
 import Divider from "@material-ui/core/Divider";
 
@@ -29,7 +28,10 @@ import CustomInput from "components/CustomInput/CustomInput";
 import ProgressButton from "components/CustomButtons/ProgressButton";
 import Fab from "components/CustomButtons/Fab";
 import { AppDataStore } from "views/AppsList/components/AppData/AppDataStore";
-
+import Popper, { PopperPlacementType } from "@material-ui/core/Popper";
+import Fade from "@material-ui/core/Fade";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
 
 const useCardStyles = makeStyles((theme: Theme) => createStyles({
   card: {
@@ -74,6 +76,10 @@ const useStyles = makeStyles((theme: Theme) =>
     divider: {
       marginTop: theme.typography.pxToRem(10),
       marginBottom: theme.typography.pxToRem(10)
+    },
+    typography: {
+      padding: theme.spacing(1),
+      marginLeft: theme.typography.pxToRem(5)
     }
   })
 );
@@ -110,7 +116,7 @@ const ImageItem = observer((props: ImageItemType) => {
       />
       <CardActions className={classes.actions}>
         <Fab color="primary" aria-label="add" className={classes.button} onClick={props.onDeleteItem}>
-          <Delete />
+          <Delete/>
         </Fab>
       </CardActions>
     </Card>
@@ -118,22 +124,75 @@ const ImageItem = observer((props: ImageItemType) => {
 });
 
 const AppData = observer((props) => {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState<PopperPlacementType>();
 
   const classes = useStyles();
-  const bottomNote = classNames(classes.note, classes.bottom);
+  const centerNote = classNames(classes.note, classes.center);
+  let deepLink: string = "HERE IS A DEEP LINK";
+
+  const handlePopperClick = (newPlacement: PopperPlacementType) => (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    setAnchorEl(event.currentTarget);
+    navigator.clipboard && navigator.clipboard.writeText(deepLink).then(res => {
+      setOpen(prev => placement !== newPlacement || !prev);
+      setPlacement(newPlacement);
+    });
+  };
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    open && (timeoutId = setTimeout(() => {
+      setOpen(false);
+    }, 2000));
+    return () => {
+      timeoutId && clearTimeout(timeoutId);
+    };
+  }, [open]);
+
   return (
     <Grid container>
-      <Grid container item direction="row" className={classes.container}>
-        <Typography variant="subtitle2" className={bottomNote}>
+      <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper>
+              <Typography
+                className={classes.typography}>{Dictionary.defValue(DictionaryService.keys.copied)}.</Typography>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+      <Grid container item direction="row">
+        <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.title)}:
         </Typography>
-        <Typography variant="h5">{AppDataStore.app!.title}</Typography>
+        <InputBase
+          disabled
+          value={AppDataStore.app && AppDataStore.app.title ? AppDataStore.app.title.toUpperCase() : ""}
+        />
       </Grid>
-      <Grid container item direction="row" className={classes.container}>
-        <Typography variant="subtitle2" className={bottomNote}>
+      <Grid container item direction="row">
+        <Typography variant="subtitle2" className={centerNote}>
+          {Dictionary.defValue(DictionaryService.keys.deepLink)}:
+        </Typography>
+        <div onClick={handlePopperClick("right")}>
+          <InputBase
+            disabled
+            value={deepLink}
+          />
+        </div>
+
+      </Grid>
+      <Grid container item direction="row">
+        <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.createdAt)}:
         </Typography>
-        <Typography color="inherit">{Dictionary.timeDateString(AppDataStore.app!.createdAt)}</Typography>
+        <InputBase
+          disabled
+          value={AppDataStore.app && AppDataStore.app.createdAt ? Dictionary.timeDateString(AppDataStore.app.createdAt) : ""}
+        />
       </Grid>
       <Grid container item direction="row" className={classes.container}>
         <Typography variant="subtitle2" className={classes.note}>
@@ -141,8 +200,8 @@ const AppData = observer((props) => {
         </Typography>
         <Grid item sm={10} md={10} xs={12}>
           <CustomInput
-            error={(AppDataStore.errors || {}).description !== undefined}
-            helperText={(AppDataStore.errors || {}).description}
+            error={AppDataStore.errors.description !== undefined}
+            helperText={AppDataStore.errors.description}
             id="description"
             formControlProps={{
               fullWidth: true,

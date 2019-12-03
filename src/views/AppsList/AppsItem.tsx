@@ -67,8 +67,8 @@ const Tabs = observer((props: { app: IApp }) => {
           color="info"
           icon={AddAlert}
           message={Dictionary.defValue(DictionaryService.keys.dataSavedSuccessfully, AppDataStore.app!.title)}
-          open={AppDataStore.appSaved}
-          closeNotification={() => AppDataStore.setAppSaved(false)}
+          open={AppDataStore.successRequest}
+          closeNotification={() => AppDataStore.setSuccessRequest(false)}
           close
         />
       <Snackbar

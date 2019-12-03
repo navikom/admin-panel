@@ -26,13 +26,13 @@ const constraints = {
 };
 
 class AppDataLocalStore extends Errors {
-  @observable appSaved: boolean = false;
+  @observable successRequest: boolean = false;
   @observable fetching: boolean = false;
   @observable open: boolean = false;
   @observable app: IApp | null = null;
   @observable description?: string;
   @observable files: any;
-  @observable errors!: {[k: string]: string};
+  @observable errors: {[k: string]: string} = {};
   tabs!: IAppTab[];
 
   disposer?: IReactionDisposer;
@@ -43,7 +43,7 @@ class AppDataLocalStore extends Errors {
   };
 
   @computed get isDisabled() {
-    return !this.isChanged || (this.errors !== undefined && Object.keys(this.errors).length);
+    return !this.isChanged || Object.keys(this.errors).length;
   }
 
   @action bindApp(app: IApp | null) {
@@ -59,8 +59,8 @@ class AppDataLocalStore extends Errors {
     }
   }
 
-  @action setAppSaved(value: boolean) {
-    this.appSaved = value;
+  @action setSuccessRequest(value: boolean) {
+    this.successRequest = value;
   }
 
   @action setFetching(value: boolean = true) {
@@ -69,7 +69,7 @@ class AppDataLocalStore extends Errors {
 
   @action
   onInput(data: {[key: string]: string}) {
-    this.errors = validate(data, constraints);
+    this.errors = validate(data, constraints) || {};
     this.description = data.description;
   }
 
@@ -82,8 +82,8 @@ class AppDataLocalStore extends Errors {
       (this.files || []).forEach((file: any, key: number) => formData.append("file", file));
       const data = await api(Apis.Main).app.update(this.app!.appId, formData);
       this.app!.update(data);
-      this.setAppSaved(true);
-      this.timeOutId = setTimeout(() => this.setAppSaved(false), 5000);
+      this.setSuccessRequest(true);
+      this.timeOutId = setTimeout(() => this.setSuccessRequest(false), 5000);
     } catch (e) {
       this.setError(e.message);
       this.timeOutId = setTimeout(() => this.setError(null), 10000);
@@ -116,12 +116,11 @@ class AppDataLocalStore extends Errors {
 
   @action deleteAppImage(item: IAppsImages) {
     try {
-      // api(Apis.Main).app.deleteAppImage(this.app!.appId, item.imageId);
+      api(Apis.Main).app.deleteAppImage(this.app!.appId, item.imageId);
       this.app!.images!.splice(this.app!.images!.indexOf(item), 1);
     } catch (e) {
       console.log("Delete App Image error: %s", e.message);
     }
-
   }
 
   @action clear() {
