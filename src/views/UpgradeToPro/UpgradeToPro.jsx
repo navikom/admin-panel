@@ -11,8 +11,8 @@ import Danger from "components/Typography/Danger.jsx";
 import Success from "components/Typography/Success.jsx";
 import Button from "Button.tsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "CardHeader.tsx";
+import CardBody from "CardBody.tsx";
 
 const styles = {
   cardCategoryWhite: {

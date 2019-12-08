@@ -15,6 +15,10 @@ import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardActions from "@material-ui/core/CardActions";
 import Divider from "@material-ui/core/Divider";
+import Popper, { PopperPlacementType } from "@material-ui/core/Popper";
+import Fade from "@material-ui/core/Fade";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
 
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
@@ -27,11 +31,7 @@ import Button from "components/CustomButtons/Button";
 import CustomInput from "components/CustomInput/CustomInput";
 import ProgressButton from "components/CustomButtons/ProgressButton";
 import Fab from "components/CustomButtons/Fab";
-import { AppDataStore } from "views/AppsList/components/AppData/AppDataStore";
-import Popper, { PopperPlacementType } from "@material-ui/core/Popper";
-import Fade from "@material-ui/core/Fade";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
+import { AppDataStore } from "models/App/AppDataStore";
 
 const useCardStyles = makeStyles((theme: Theme) => createStyles({
   card: {

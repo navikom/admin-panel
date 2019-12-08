@@ -11,9 +11,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { lazy } from "utils";
 
 // core components
-const Navbar = lazy(() => import("components/Navbars/Navbar.jsx"));
-const Footer = lazy(() => import("components/Footer/Footer.jsx"));
-const Sidebar = lazy(() => import("components/Sidebar/Sidebar.jsx"));
+const Navbar = lazy(() => import("Navbar.tsx"));
+const Footer = lazy(() => import("Footer.tsx"));
+const Sidebar = lazy(() => import("Sidebar.tsx"));
 const FixedPlugin = lazy(() => import("components/FixedPlugin/FixedPlugin.jsx"));
 
 import routes from "routes.ts";

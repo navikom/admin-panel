@@ -6,8 +6,8 @@ import GridItem from "components/Grid/GridItem.tsx";
 import GridContainer from "components/Grid/GridContainer.tsx";
 import Table from "components/Table/Table";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardBody from "components/Card/CardBody.tsx";
 
 const styles = {
   cardCategoryWhite: {

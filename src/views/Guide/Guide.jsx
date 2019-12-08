@@ -12,8 +12,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 const GridContainer = lazy(() => import("components/Grid/GridContainer.tsx"));
 const GridItem = lazy(() => import("components/Grid/GridItem.tsx"));
 const Card = lazy(() => import("components/Card/Card.tsx"));
-const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
-const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
+const CardHeader = lazy(() => import("components/Card/CardHeader.tsx"));
+const CardBody = lazy(() => import("components/Card/CardBody.tsx"));
 const Button = lazy(() => import("components/CustomButtons/Button.tsx"));
 
 

@@ -38,7 +38,7 @@ function Footer({ ...props }) {
         </div>
         <p className={classes.right}>
           <span>
-            &copy; {1900 + new Date().getYear()}{" "}
+            &copy; {new Date().getFullYear()}{" "}
             <a href="http://webinsolut.com" className={classes.a}>
               WebInSolut
             </a>

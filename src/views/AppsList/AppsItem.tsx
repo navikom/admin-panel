@@ -12,31 +12,33 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 // interfaces
 import { IApp } from "interfaces/IApp";
+import { AppsItemProps } from "interfaces/AppsItemProps";
 
 // utils
 import { lazy } from "utils";
 
+
 // models
 import { App } from "models/App";
 import { Apps } from "models/App/AppsStore";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Snackbar from "components/Snackbar/Snackbar";
-import { AppDataStore } from "views/AppsList/components/AppData/AppDataStore";
+import { AppDataStore } from "models/App/AppDataStore";
 import WaitingComponent from "hocs/WaitingComponent";
 
+
 // core components
+import AppComponents from "views/AppsList/components/AppComponents";
+import useStyles from "assets/jss/material-dashboard-react/views/appsStyle";
+
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
+const GridContainer = lazy(() => import("components/Grid/GridContainer"));
+const GridItem = lazy(() => import("components/Grid/GridItem"));
+const Card = lazy(() => import("components/Card/Card"));
+const CardHeader = lazy(() => import("components/Card/CardHeader.tsx"));
+const CardBody = lazy(() => import("components/Card/CardBody.tsx"));
 const AppData = lazy(() => import("views/AppsList/components/AppData/AppData"));
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingTop: theme.typography.pxToRem(20)
-    }
-  })
-);
-
-const Tabs = observer((props: { app: IApp }) => {
+const Content = observer((props: { app: IApp, children: React.ReactNode }) => {
   AppDataStore.bindApp(props.app);
   const classes = useStyles();
 
@@ -47,7 +49,7 @@ const Tabs = observer((props: { app: IApp }) => {
     }
   }, []);
 
-  const tabs = [{
+  const tabs = AppDataStore.tabs && [{
       tabName: Dictionary.defValue(DictionaryService.keys.basicInfo),
       tabIcon: InfoOutlined,
       tabContent: (<div className={classes.root}><AppData/></div>)
@@ -57,11 +59,30 @@ const Tabs = observer((props: { app: IApp }) => {
 
   return (
     <div>
-      <CustomTabs
-        title={`${Dictionary.defValue(DictionaryService.keys.appDetails, AppDataStore.app!.title)}:`}
-        headerColor="primary"
-        tabs={tabs}
-      />
+      {
+        tabs !== undefined ?
+          <CustomTabs
+            title={`${Dictionary.defValue(DictionaryService.keys.appDetails, AppDataStore.app!.title)}:`}
+            headerColor="primary"
+            tabs={tabs}
+          /> :
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>{Dictionary.defValue(DictionaryService.keys.applicationsList)}</h4>
+                  <p className={classes.cardCategoryWhite}>
+                    {Dictionary.defValue(DictionaryService.keys.availableApplications)}
+                  </p>
+                </CardHeader>
+                <CardBody>
+                  {props.children}
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+      }
+
         <Snackbar
           place="br"
           color="info"
@@ -84,21 +105,25 @@ const Tabs = observer((props: { app: IApp }) => {
   );
 });
 
-interface MatchInfo {
-  appId: string;
-}
-
-interface AppsItemProps extends RouteComponentProps<MatchInfo> {
-}
-
 export const AppsItem = (props: AppsItemProps) => {
   const appId = Number(props.match.params.appId);
+  const pageName = props.match.params.pageName;
+  console.log("AppsItem=========== ", pageName);
   const app = Apps.getOrCreate({ appId } as IApp) as IApp;
-  useDisposable(() =>
+  const dispose = useDisposable(() =>
     when(() => App.tokenIsReady, async () => {
-      await Apps.loadFullData(app);
+      await AppDataStore.loadFullData(app);
     }));
-  return <Tabs app={app}/>;
+
+  useEffect(() => {
+    return () => dispose()
+  }, []);
+
+  const key = pageName && `${pageName}_${appId}`;
+  const ChildComponent = key && AppComponents[key];
+  return <Content app={app}>
+    { ChildComponent ? <ChildComponent/> : <AppData/> }
+  </Content>;
 };
 
 export default AppsItem;

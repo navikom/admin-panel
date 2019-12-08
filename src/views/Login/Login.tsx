@@ -2,6 +2,8 @@
 import React from "react";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
+import { RouteComponentProps } from "react-router";
+
 // @material-ui/core components
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
@@ -19,11 +21,10 @@ import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
 import Button from "components/CustomButtons/Button.tsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardBody from "components/Card/CardBody.tsx";
 import CustomInput from "components/CustomInput/CustomInput.tsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-import { RouteComponentProps } from "react-router";
+import CardFooter from "components/Card/CardFooter.tsx";
 
 import styles from "assets/jss/material-dashboard-react/views/singlePageStyle.tsx";
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";

@@ -21,7 +21,7 @@ const CustomTablePagination = ({...props}) => {
       <Table stickyHeader aria-label="sticky table" {...props.tableProps} onRowClick={props.onRowClick}/>
       {
         props.paginationProps.count > 5 && <TablePagination
-          labelRowsPerPage={`${Dictionary.defValue(DictionaryService.keys.rowsPerPage)}:`}
+          labelRowsPerPage={`${Dictionary.defValue(DictionaryService.keys.rowsPerPage, DictionaryService.keys.rows)}:`}
           component="div"
           backIconButtonProps={{
             'aria-label': 'previous page',

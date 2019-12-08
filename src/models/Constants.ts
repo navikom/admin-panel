@@ -12,3 +12,10 @@ export const USER_ROLE: string = "role";
 export const ADMIN_ROLE: string = "admin";
 export const PARTNER_ROLE: string = "partner";
 export const SUPER_ADMIN_ROLE: string = "superadmin";
+
+//********* Sidebar Categories *********//
+export const SIDEBAR_MAIN = "Main";
+export const SIDEBAR_OTHER = "Other";
+export const SIDEBAR_APPLICATION = "Application";
+export const SIDEBAR_USER = "User";
+export const SIDEBAR_ENGAGE = "Engage";

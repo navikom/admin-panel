@@ -4,14 +4,15 @@ import validate from "validate.js";
 import { IApp } from "interfaces/IApp";
 import { IAppsImages } from "interfaces/IAppsImages";
 import { IAppTab } from "interfaces/IAppTab";
+import { IAppDataLocal } from "interfaces/IAppDataLocal";
+import { IRoute } from "interfaces/IRoute";
 // models
 import { Errors } from "models/Errors";
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 import { api, Apis } from "api";
-import AppTabs from "views/AppsList/components/AppTabs";
-
+import { appRoutes } from "routes";
 
 const constraints = {
   description: {
@@ -25,31 +26,37 @@ const constraints = {
   }
 };
 
-class AppDataLocalStore extends Errors {
-  @observable successRequest: boolean = false;
+class AppDataLocalStore extends Errors implements IAppDataLocal {
+
   @observable fetching: boolean = false;
   @observable open: boolean = false;
   @observable app: IApp | null = null;
   @observable description?: string;
   @observable files: any;
   @observable errors: {[k: string]: string} = {};
+  readonly routes = observable<IRoute>([]);
   tabs!: IAppTab[];
 
+  loading: boolean = false;
+
   disposer?: IReactionDisposer;
-  private timeOutId?: NodeJS.Timeout;
 
   @computed get isChanged() {
     return this.app !== null && this.app.description !== this.description || this.files !== undefined && this.files.length;
   };
 
   @computed get isDisabled() {
-    return !this.isChanged || Object.keys(this.errors).length;
+    return !this.isChanged || Object.keys(this.errors).length > 0 || this.fetching;
   }
 
   @action bindApp(app: IApp | null) {
     if(app) {
+      if(this.app !== app) {
+        this.loading = false;
+      }
       this.app = app;
-      this.tabs = AppTabs[this.app.appId];
+      // this.tabs = AppTabs[this.app.appId];
+      this.routes.replace(appRoutes[app.appId]);
       this.disposer = when(() => app.description !== undefined, () => {
         this.description = app.description;
       });
@@ -57,10 +64,6 @@ class AppDataLocalStore extends Errors {
       this.clear();
 
     }
-  }
-
-  @action setSuccessRequest(value: boolean) {
-    this.successRequest = value;
   }
 
   @action setFetching(value: boolean = true) {
@@ -83,10 +86,10 @@ class AppDataLocalStore extends Errors {
       const data = await api(Apis.Main).app.update(this.app!.appId, formData);
       this.app!.update(data);
       this.setSuccessRequest(true);
-      this.timeOutId = setTimeout(() => this.setSuccessRequest(false), 5000);
+      this.setTimeOut(() => this.setSuccessRequest(false), 5000);
     } catch (e) {
       this.setError(e.message);
-      this.timeOutId = setTimeout(() => this.setError(null), 10000);
+      this.setTimeOut(() => this.setError(null), 10000);
     }
     this.setFetching(false);
   }
@@ -123,13 +126,29 @@ class AppDataLocalStore extends Errors {
     }
   }
 
+  @action async loadFullData(app: IApp) {
+    if(this.loading) return;
+    this.handleLoading();
+    try {
+      await app.update(await api(Apis.Main).app.fullData(app.appId));
+    } catch (err) {
+      this.setError(err.message);
+    }
+  }
+
   @action clear() {
     console.log('AppDataStore clear');
     this.disposer && this.disposer();
     this.description = undefined;
-    this.timeOutId && clearTimeout(this.timeOutId);
     this.files = undefined;
+    super.clear();
   }
+
+  handleLoading() {
+    this.loading = true;
+    setTimeout(() => (this.loading = false), 10000);
+  }
+
 }
 
 export const AppDataStore = new AppDataLocalStore();

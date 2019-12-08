@@ -109,11 +109,11 @@ material-dashboard-react
     ├── components
     │   ├── Card
     │   │   ├── Card.tsx
-    │   │   ├── CardAvatar.jsx
-    │   │   ├── CardBody.jsx
-    │   │   ├── CardFooter.jsx
-    │   │   ├── CardHeader.jsx
-    │   │   └── CardIcon.jsx
+    │   │   ├── CardAvatar.tsx
+    │   │   ├── CardBody.tsx
+    │   │   ├── CardFooter.tsx
+    │   │   ├── CardHeader.tsx
+    │   │   └── CardIcon.tsx
     │   ├── CustomButtons
     │   │   └── Button.tsx
     │   ├── CustomInput
@@ -123,16 +123,16 @@ material-dashboard-react
     │   ├── FixedPlugin
     │   │   └── FixedPlugin.jsx
     │   ├── Footer
-    │   │   └── Footer.jsx
+    │   │   └── Footer.tsx
     │   ├── Grid
     │   │   ├── GridContainer.tsx
     │   │   └── GridItem.tsx
     │   ├── Navbars
     │   │   ├── AdminNavbarLinks.jsx
-    │   │   ├── Navbar.jsx
+    │   │   ├── Navbar.tsx
     │   │   └── RTLNavbarLinks.jsx
     │   ├── Sidebar
-    │   │   └── Sidebar.jsx
+    │   │   └── Sidebar.tsx
     │   ├── Snackbar
     │   │   ├── Snackbar.jsx
     │   │   └── SnackbarContent.jsx
@@ -164,7 +164,7 @@ material-dashboard-react
         ├── Notifications
         │   └── Notifications.jsx
         ├── RTLPage
-        │   └── RTLPage.jsx
+        │   └── RTLPage.tsx
         ├── TableList
         │   └── TableList.jsx
         ├── Typography

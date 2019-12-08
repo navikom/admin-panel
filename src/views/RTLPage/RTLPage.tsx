@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
@@ -27,11 +27,11 @@ import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs";
 import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import CardHeader from "components/Card/CardHeader";
+import CardAvatar from "components/Card/CardAvatar";
+import CardIcon from "components/Card/CardIcon";
+import CardBody from "components/Card/CardBody";
+import CardFooter from "components/Card/CardFooter";
 import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 
 import {
@@ -40,9 +40,10 @@ import {
   completedTasksChart
 } from "variables/charts.jsx";
 
-import rtlStyle from "assets/jss/material-dashboard-react/views/rtlStyle.jsx";
+import rtlStyle from "assets/jss/material-dashboard-react/views/rtlStyle";
 
 import avatar from "assets/img/faces/marc.jpg";
+import { RouteComponentProps } from "react-router-dom";
 
 let bugs = [
   "طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن؟",
@@ -60,15 +61,18 @@ let server = [
   "از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند؟"
 ];
 
-class RTLPage extends React.Component {
+interface RTLPageProps extends RouteComponentProps, WithStyles<typeof rtlStyle> {
+}
+
+class RTLPage extends React.Component<RTLPageProps> {
   state = {
     value: 0
   };
-  handleChange = (event, value) => {
-    this.setState({ value });
+  handleChange = () => {
+    // this.setState({ value });
   };
 
-  handleChangeIndex = index => {
+  handleChangeIndex = (index: number) => {
     this.setState({ value: index });
   };
   render() {
@@ -160,7 +164,7 @@ class RTLPage extends React.Component {
                   data={dailySalesChart.data}
                   type="Line"
                   options={dailySalesChart.options}
-                  listener={dailySalesChart.animation}
+                  // listener={dailySalesChart.animation}
                 />
               </CardHeader>
               <CardBody>
@@ -187,8 +191,8 @@ class RTLPage extends React.Component {
                   data={emailsSubscriptionChart.data}
                   type="Bar"
                   options={emailsSubscriptionChart.options}
-                  responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                  listener={emailsSubscriptionChart.animation}
+                  // responsiveOptions={emailsSubscriptionChart.responsiveOptions}
+                  // listener={emailsSubscriptionChart.animation}
                 />
               </CardHeader>
               <CardBody>
@@ -210,7 +214,7 @@ class RTLPage extends React.Component {
                   data={completedTasksChart.data}
                   type="Line"
                   options={completedTasksChart.options}
-                  listener={completedTasksChart.animation}
+                  // listener={completedTasksChart.animation}
                 />
               </CardHeader>
               <CardBody>
@@ -351,7 +355,7 @@ class RTLPage extends React.Component {
               <CardBody profile>
                 <h6 className={classes.cardCategory}>مدیرعامل / مدیرفنی</h6>
                 <h4 className={classes.cardTitle}>خداداد عزیزی</h4>
-                <p className={classes.description}>
+                <p>
                   طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر
                   کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده
                   استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه
@@ -370,8 +374,5 @@ class RTLPage extends React.Component {
   }
 }
 
-RTLPage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(rtlStyle)(RTLPage);

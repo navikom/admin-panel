@@ -12,8 +12,8 @@ import Table from "components/Table/Table";
 
 // core components
 const Card = lazy(() => import("components/Card/Card.tsx"));
-const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
-const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
+const CardHeader = lazy(() => import("components/Card/CardHeader.tsx"));
+const CardBody = lazy(() => import("components/Card/CardBody.tsx"));
 
 import style from 'assets/jss/material-dashboard-react/components/listStyle';
 import { Users } from "models/User/UsersStore";

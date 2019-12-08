@@ -25,10 +25,10 @@ import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs";
 import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardIcon from "components/Card/CardIcon.tsx";
+import CardBody from "components/Card/CardBody.tsx";
+import CardFooter from "components/Card/CardFooter.tsx";
 
 import { bugs, website, server } from "variables/general.jsx";
 

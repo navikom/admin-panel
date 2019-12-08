@@ -2,7 +2,6 @@ import { ApiBase } from "api/ApiBase";
 import { HttpBase } from "api/HttpBase";
 import settings from "config/server";
 import { ILoginResult } from "interfaces/ILoginResult";
-import { IApp } from "interfaces/IApp";
 
 export default class Api extends ApiBase {
   constructor(token?: string) {
@@ -24,19 +23,15 @@ export default class Api extends ApiBase {
   get setting(): Setting {
     return new Setting(this.token);
   }
+
+  get pixartPicture(): PixartPicture {
+    return new PixartPicture(this.token);
+  }
 }
 
 class User extends HttpBase {
   constructor(token?: string) {
     super(`${settings.mainApi}/users`, token);
-  }
-
-  pagination(page: number, pageSize: number, additionalParams?: number) {
-    return this.fetchData("get", `${page}/${pageSize}${additionalParams ? "/" + additionalParams : ""}`);
-  }
-
-  fullData(userId: number) {
-    return this.fetchData("get", userId.toString());
   }
 
   signup(email: string, password: string): Promise<ILoginResult> {
@@ -78,11 +73,6 @@ class AEvent extends HttpBase {
   constructor(token?: string) {
     super(`${settings.mainApi}/events`, token);
   }
-
-  pagination(page: number, pageSize: number, additionalParams?: number) {
-    return this.fetchData("get", `${page}/${pageSize}${additionalParams ? "" + additionalParams : ""}`);
-  }
-
 }
 
 class App extends HttpBase {
@@ -90,12 +80,8 @@ class App extends HttpBase {
     super(`${settings.mainApi}/apps`, token);
   }
 
-  pagination(page: number, pageSize: number, additionalParams?: number) {
-    return this.fetchData("get", `${page}/${pageSize}${additionalParams ? "" + additionalParams : ""}`);
-  }
-
-  fullData(appId: number) {
-    return this.fetchData("get", appId.toString());
+  add(title: string) {
+    return this.fetchData("post", undefined, {title});
   }
 
   update(appId: number, data: any) {
@@ -118,5 +104,15 @@ class Setting extends HttpBase {
 
   getData() {
     return this.fetchData("get");
+  }
+}
+
+class PixartPicture extends HttpBase {
+  constructor(token?: string) {
+    super(`${settings.mainApi}/pixart-pictures`, token);
+  }
+
+  save(data: any) {
+    return this.fetchData("post", undefined, data, undefined, ["Content-Type", "Accept"]);
   }
 }

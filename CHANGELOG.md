@@ -14,7 +14,7 @@
 - **src/index.ts**
 - **src/components/CustomTabs/CustomTabs.tsx**
 - **src/components/Header/Header.jsx**
-- **src/components/Sidebar/Sidebar.jsx**
+- **src/components/Sidebar/Sidebar.tsx**
 - **src/components/Snackbar/Snackbar.jsx**
 - **src/components/Snackbar/SnackbarContent.jsx**
 - **src/components/Tasks/Tasks.jsx**
@@ -24,7 +24,7 @@
 - **src/components/Header/RTLHeaderLinks.jsx**
 - **src/layouts/Admin.tsx** (instead of Dashboard)
 - **src/layouts/RTL.jsx**
-- **src/views/RTLPage/RTLPage.jsx**
+- **src/views/RTLPage/RTLPage.tsx**
 ### Deleted components
 - **src/layouts/Dashboard/Dashboard.jsx** (renamed to Admin)
 - **src/routes/dashboard.jsx**
@@ -108,8 +108,8 @@
 - Added styles for `svg`'s, **font-awesome** classes and `.material-icons` class inside
   - `src/assets/jss/material-dashboard-react/views/dashboardStyle.tsx`
   - `src/assets/jss/material-dashboard-react/components/buttonStyle.tsx`
-  - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.ts`
+  - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.ts`
   - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.jsx`
   - `src/assets/jss/material-dashboard-react/components/customTabsStyle.ts`
 - Others
@@ -156,11 +156,11 @@
 ### Added components
 - New card components (`src/components/Card/*`) instead of `src/components/Cards/*`
   - `src/components/Card/Card.tsx`
-  - `src/components/Card/CardAvatar.jsx`
-  - `src/components/Card/CardBody.jsx`
-  - `src/components/Card/CardFooter.jsx`
-  - `src/components/Card/CardHeader.jsx`
-  - `src/components/Card/CardIcon.jsx`
+  - `src/components/Card/CardAvatar.tsx`
+  - `src/components/Card/CardBody.tsx`
+  - `src/components/Card/CardFooter.tsx`
+  - `src/components/Card/CardHeader.tsx`
+  - `src/components/Card/CardIcon.tsx`
 - `src/components/CustomTabs/CustomTabs.tsx` (instead of `src/components/Cards/TasksCard.jsx`)
 ### Deleted dependencies
 - `material-ui@1.0.0-beta.41`

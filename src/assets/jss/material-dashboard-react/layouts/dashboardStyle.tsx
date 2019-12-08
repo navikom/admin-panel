@@ -3,9 +3,9 @@ import {
   transition,
   container
 } from "assets/jss/material-dashboard-react.ts";
-import { Theme, createStyles } from "@material-ui/core";
+import { Theme, createStyles, makeStyles } from "@material-ui/core";
 
-const appStyle = (theme: Theme) => createStyles({
+export default makeStyles((theme: Theme) => createStyles({
   wrapper: {
     position: "relative",
     top: "0",
@@ -32,6 +32,4 @@ const appStyle = (theme: Theme) => createStyles({
   map: {
     marginTop: "70px"
   }
-});
-
-export default appStyle;
+}));

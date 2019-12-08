@@ -16,10 +16,10 @@ import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer.tsx";
 import Button from "components/CustomButtons/Button.tsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardBody from "components/Card/CardBody.tsx";
 import CustomInput from "components/CustomInput/CustomInput.tsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import CardFooter from "components/Card/CardFooter.tsx";
 import { RouteComponentProps } from "react-router";
 
 import styles from "assets/jss/material-dashboard-react/views/singlePageStyle.tsx";

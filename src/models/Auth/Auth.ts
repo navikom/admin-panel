@@ -81,7 +81,8 @@ export class AuthStore extends Errors implements IFlow {
   @action
   async login(email: string, password: string) {
     try {
-      this.update(await nonAuthorizedApi(Apis.Main).user.login(email, password), true);
+      const data = await nonAuthorizedApi(Apis.Main).user.login(email, password);
+      this.update(data, true);
     } catch (err) {
       this.setError(Dictionary.value(err.message));
     }
@@ -94,9 +95,11 @@ export class AuthStore extends Errors implements IFlow {
         runInAction(() => {
           this.token = `Bearer ${this.refreshToken}`;
         });
-        this.update(await api(Apis.Main).user.anonymous());
+        const data = await api(Apis.Main).user.anonymous();
+        this.update(data);
       } else {
-        this.update(await nonAuthorizedApi(Apis.Main).user.anonymous());
+        const data = await nonAuthorizedApi(Apis.Main).user.anonymous();
+        this.update(data);
       }
     } catch (err) {
       this.setError(Dictionary.value(err.message));
@@ -109,7 +112,8 @@ export class AuthStore extends Errors implements IFlow {
       return;
     }
     try {
-      this.update(await nonAuthorizedApi(Apis.Main).user.refresh(this.refreshToken), true);
+      const data = await nonAuthorizedApi(Apis.Main).user.refresh(this.refreshToken);
+      this.update(data, true);
     } catch (err) {
       console.log("Refresh Error", err.message);
       this.logout();

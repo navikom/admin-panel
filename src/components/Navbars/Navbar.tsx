@@ -15,12 +15,13 @@ import RTLNavbarLinks from "./RTLNavbarLinks.jsx";
 import Button from "components/CustomButtons/Button.tsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle";
+import { IRoute } from "interfaces/IRoute";
 
 function Header({ ...props }) {
   function makeBrand() {
     let name = "Page didn't find.";
 
-    props.routes.map((prop, key) => {
+    props.routes.map((prop: google.maps.DirectionsRoute & IRoute) => {
       if (props.location.pathname.includes(prop.layout + prop.url) || props.location.pathname.includes(prop.layout + prop.path)) {
         name = props.rtlActive ? prop.rtlName : prop.name;
       }

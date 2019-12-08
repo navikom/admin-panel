@@ -4,8 +4,9 @@ import {
   grayColor,
   hexToRgb
 } from "assets/jss/material-dashboard-react.ts";
+import { createStyles } from "@material-ui/core";
 
-const rtlStyle = {
+const rtlStyle = createStyles({
   successText: {
     color: successColor[0]
   },
@@ -56,7 +57,7 @@ const rtlStyle = {
     color: grayColor[2],
     marginTop: "0px",
     minHeight: "auto",
-    fontWeight: "300",
+    fontWeight: 300,
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none",
@@ -70,7 +71,7 @@ const rtlStyle = {
     color: whiteColor,
     marginTop: "0px",
     minHeight: "auto",
-    fontWeight: "300",
+    fontWeight: 300,
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none",
@@ -80,6 +81,6 @@ const rtlStyle = {
       lineHeight: "1"
     }
   }
-};
+});
 
 export default rtlStyle;

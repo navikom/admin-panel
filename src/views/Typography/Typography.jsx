@@ -10,8 +10,8 @@ import Success from "components/Typography/Success.jsx";
 import Warning from "components/Typography/Warning.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardBody from "components/Card/CardBody.tsx";
 
 const style = {
   typo: {

@@ -7,8 +7,9 @@ import {
   roseCardHeader,
   grayColor
 } from "assets/jss/material-dashboard-react.ts";
+import { createStyles } from "@material-ui/core";
 
-const cardIconStyle = {
+const cardIconStyle = createStyles({
   cardIcon: {
     "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
       borderRadius: "3px",
@@ -25,6 +26,6 @@ const cardIconStyle = {
   infoCardHeader,
   primaryCardHeader,
   roseCardHeader
-};
+});
 
 export default cardIconStyle;

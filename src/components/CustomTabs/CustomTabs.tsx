@@ -8,8 +8,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 // core components
 import Card from "components/Card/Card.tsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
+import CardBody from "components/Card/CardBody.tsx";
+import CardHeader from "components/Card/CardHeader.tsx";
 
 import customTabsStyle from "assets/jss/material-dashboard-react/components/customTabsStyle";
 

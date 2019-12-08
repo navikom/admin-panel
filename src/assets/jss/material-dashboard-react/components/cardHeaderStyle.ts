@@ -7,14 +7,15 @@ import {
   roseCardHeader,
   whiteColor
 } from "assets/jss/material-dashboard-react.ts";
+import { createStyles } from "@material-ui/core";
 
-const cardHeaderStyle = {
+const cardHeaderStyle = createStyles({
   cardHeader: {
     padding: "0.75rem 1.25rem",
     marginBottom: "0",
     borderBottom: "none",
     background: "transparent",
-    zIndex: "3 !important",
+    zIndex: 3,
     "&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
       margin: "0 15px",
       padding: "0",
@@ -119,6 +120,6 @@ const cardHeaderStyle = {
       ...roseCardHeader
     }
   }
-};
+});
 
 export default cardHeaderStyle;

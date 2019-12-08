@@ -8,10 +8,10 @@ import GridContainer from "components/Grid/GridContainer.tsx";
 import CustomInput from "components/CustomInput/CustomInput.tsx";
 import Button from "components/CustomButtons/Button.tsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardAvatar from "components/Card/CardAvatar.tsx";
+import CardBody from "components/Card/CardBody.tsx";
+import CardFooter from "components/Card/CardFooter.tsx";
 
 import avatar from "assets/img/faces/marc.jpg";
 

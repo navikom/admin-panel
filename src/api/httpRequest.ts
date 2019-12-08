@@ -22,9 +22,9 @@ export async function request(method: string, url: string, allHeaders: Headers =
     console.log("RESPONSE", url, response);
   }
 
-  if(!response.ok) {
-    throw new ErrorHandler(response.statusText);
-  }
+  // if(!response.ok) {
+  //   throw new ErrorHandler(response.statusText);
+  // }
   try {
     const json = await response.json();
 

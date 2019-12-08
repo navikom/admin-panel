@@ -1,8 +1,8 @@
 import React from "react";
 import { when } from "mobx";
-import { observer, useDisposable } from "mobx-react-lite";
-
+import { observer, useDisposable, useObserver } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router";
+
 // @material-ui/core components
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
@@ -16,73 +16,56 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 // core components
 import { lazy } from "utils";
+import useStyles from "assets/jss/material-dashboard-react/views/appsStyle";
+import CardFooter from "components/Card/CardFooter";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import ProgressButton from "components/CustomButtons/ProgressButton";
+import CustomInput from "components/CustomInput/CustomInput";
+import Snackbar from "components/Snackbar/Snackbar";
+import { Clear } from "@material-ui/icons";
+import AddAlert from "@material-ui/icons/AddAlert";
+import { AppDataStore } from "models/App/AppDataStore";
 
 const Table = lazy(() => import("components/Table/TablePagination"));
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));
 const GridItem = lazy(() => import("components/Grid/GridItem"));
 const Card = lazy(() => import("components/Card/Card"));
-const CardHeader = lazy(() => import("components/Card/CardHeader"));
-const CardBody = lazy(() => import("components/Card/CardBody"));
+const CardHeader = lazy(() => import("components/Card/CardHeader.tsx"));
+const CardBody = lazy(() => import("components/Card/CardBody.tsx"));
 
-const AppTable = observer((props: {handleClick(id: string): void}) => {
+const AppTable = observer((props: { handleClick(id: string): void }) => {
   return (
-  <Table
-    tableProps={{
-      tableHeaderColor: "primary",
-      tableHead: [
-        Dictionary.defValue(DictionaryService.keys.id),
-        Dictionary.defValue(DictionaryService.keys.title),
-        Dictionary.defValue(DictionaryService.keys.createdAt),
-        Dictionary.defValue(DictionaryService.keys.description)],
-      tableData: Apps.appTableData
-    }}
-    paginationProps={{
-      rowsPerPageOptions: Apps.rowsPerPageOptions,
-      count: Apps.count,
-      rowsPerPage: Apps.viewRowsPerPage,
-      page: Apps.viewPage,
-      onChangePage: Apps.handleChangePageInView,
-      onChangeRowsPerPage: Apps.handleChangeRowsPerPage
-    }}
-    onRowClick={(data: string[]) => props.handleClick(data[0])}
-  />
-)});
+    <Table
+      tableProps={{
+        tableHeaderColor: "primary",
+        tableHead: [
+          Dictionary.defValue(DictionaryService.keys.id),
+          Dictionary.defValue(DictionaryService.keys.title),
+          Dictionary.defValue(DictionaryService.keys.createdAt),
+          Dictionary.defValue(DictionaryService.keys.description)],
+        tableData: Apps.appTableData
+      }}
+      paginationProps={{
+        rowsPerPageOptions: Apps.rowsPerPageOptions,
+        count: Apps.count,
+        rowsPerPage: Apps.viewRowsPerPage,
+        page: Apps.viewPage,
+        onChangePage: Apps.handleChangePageInView,
+        onChangeRowsPerPage: Apps.handleChangeRowsPerPage
+      }}
+      onRowClick={(data: string[]) => props.handleClick(data[0])}
+    />
+  );
+});
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
-    }
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: 300,
-    fontFamily: "'Josefin Sans', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
 
-  },
-  "small": {
-    color: "#777",
-    fontSize: "65%",
-    fontWeight: 400,
-    lineHeight: "1"
-  }
-}));
-interface AppsProps extends RouteComponentProps {}
+interface AppsProps extends RouteComponentProps {
+}
 
 function AppList(props: AppsProps) {
-  const classes  = useStyles();
+  const classes = useStyles();
 
   useDisposable(() =>
     when(() => App.tokenIsReady, () => Apps.fetchItems()));
@@ -102,8 +85,71 @@ function AppList(props: AppsProps) {
               handleClick={(appId: string) => props.history.push(APPS_LIST_ROUTE + "/" + appId)}
             />
           </CardBody>
+          <CardFooter>
+            {
+              useObserver(() => {
+                return (
+                  <Grid container item direction="row" className={classes.center}>
+                    <Grid item lg={1} xs={3}>
+                      <Typography variant="subtitle2">
+                        {Dictionary.defValue(DictionaryService.keys.newApp)}:
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={3} xs={3} className={classes.form}>
+                      <CustomInput
+                        formControlProps={{
+                          margin: "none"
+                        }}
+                        inputProps={{
+                          onChange: (e: React.ChangeEvent<HTMLInputElement>) => Apps.onInput({ title: e.target.value }),
+                          defaultValue: Apps.title
+                        }}
+                        labelText={Dictionary.defValue(DictionaryService.keys.title)}/>
+                    </Grid>
+                    <Grid item lg={1} xs={3}>
+                      <ProgressButton
+                        onClick={() => Apps.addApp()}
+                        disabled={Apps.isDisabled}
+                        variant="contained"
+                        loading={Apps.fetching}
+                        color="primary"
+                        text={Dictionary.defValue(DictionaryService.keys.add)}
+                        startIcon={<CloudUploadIcon/>}
+                      />
+                    </Grid>
+                  </Grid>
+                );
+              })
+            }
+          </CardFooter>
         </Card>
       </GridItem>
+      {
+        useObserver(() => {
+          return (
+            <div>
+              <Snackbar
+                place="br"
+                color="info"
+                icon={AddAlert}
+                message={Dictionary.defValue(DictionaryService.keys.dataSavedSuccessfully, Apps.title)}
+                open={Apps.successRequest}
+                closeNotification={() => Apps.setSuccessRequest(false)}
+                close
+              />
+              <Snackbar
+                place="br"
+                color="danger"
+                icon={Clear}
+                message={Dictionary.defValue(DictionaryService.keys.dataSaveError, [Apps.title, Apps.error || ""])}
+                open={Apps.hasError}
+                closeNotification={() => Apps.setError(null)}
+                close
+              />
+            </div>
+          );
+        })
+      }
     </GridContainer>
   );
 }

@@ -20,28 +20,29 @@ import {
 // utils
 import { lazy } from "utils";
 
+// models
+import { EVENTS_USERS_LIST_ROUTE } from "models/Constants";
+import { App } from "models/App";
+
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 import { RouteComponentProps } from "react-router";
 import { Events } from "models/Event/EventsStore";
 
-import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader";
-import CardIcon from "components/Card/CardIcon";
-import CardFooter from "components/Card/CardFooter";
-
 import style from "assets/jss/material-dashboard-react/views/dashboardStyle";
-import CardBody from "components/Card/CardBody";
-import { CustomChartBar } from "components/Charts/CustomChartBar";
-import { CustomChartLine } from "components/Charts/CustomChartLine";
-import { EVENTS_USERS_LIST_ROUTE } from "models/Constants";
-import { App } from "models/App";
 
 // core components
+import { CustomChartBar } from "components/Charts/CustomChartBar";
+import { CustomChartLine } from "components/Charts/CustomChartLine";
 const Table = lazy(() => import("components/Table/TablePagination"));
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));
 const GridItem = lazy(() => import("components/Grid/GridItem"));
+const Card = lazy(() => import("components/Card/Card"));
+const CardHeader = lazy(() => import("components/Card/CardHeader"));
+const CardBody = lazy(() => import("components/Card/CardBody"));
+const CardFooter = lazy(() => import("components/Card/CardFooter"));
+const CardIcon = lazy(() => import("components/Card/CardIcon"));
 
 interface UsersTableProps {
   handleClick(id: string): void;

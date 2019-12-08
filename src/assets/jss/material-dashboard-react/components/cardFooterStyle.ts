@@ -1,6 +1,7 @@
 import { grayColor } from "assets/jss/material-dashboard-react.ts";
+import { createStyles } from "@material-ui/core";
 
-const cardFooterStyle = {
+const cardFooterStyle = createStyles({
   cardFooter: {
     padding: "0",
     paddingTop: "10px",
@@ -39,9 +40,12 @@ const cardFooterStyle = {
       marginLeft: "3px"
     }
   },
+  right: {
+    justifyContent: "flex-end"
+  },
   cardFooterChart: {
     borderTop: "1px solid " + grayColor[10]
   }
-};
+});
 
 export default cardFooterStyle;

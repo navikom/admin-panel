@@ -85,7 +85,8 @@ export default {
   "increase": "Increase",
   "decrease": "Decrease",
   "updatedMinutesAgo": "updated $ minutes ago",
-  "rowsPerPage": "Rows per page",
+  "rowsPerPage": "$ per page",
+  "rows": "Rows",
   "basicInfo": "Basic Info",
   "attributes": "Attributes",
   "devices": "Devices",
@@ -124,5 +125,9 @@ export default {
   "dataSaveError": "%0 data save error: %1",
   "dataSavedSuccessfully": "$ data saved successfully",
   "deepLink": "Deep Link",
-  "copied": "Copied"
+  "copied": "Copied",
+  "lastChanged": "Last changed $",
+  "newApp": "New App",
+  "add": "Add",
+  "apps:title must be unique": "Title must be unique"
 };

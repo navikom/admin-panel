@@ -12,4 +12,5 @@ export interface IRoute {
   component: React.ComponentType<any> | React.ComponentType<RouteComponentProps<any>>;
   layout: string;
   auth?: boolean;
+  category?: string;
 }

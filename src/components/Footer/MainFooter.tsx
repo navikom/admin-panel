@@ -13,7 +13,7 @@ function Footer({ ...props }) {
         <div className={classes.left}></div>
         <p className={classes.right} style={{paddingRight: "15px"}}>
           <span>
-            &copy; {1900 + new Date().getFullYear()}{" "}
+            &copy; {new Date().getFullYear()}{" "}
             <a href="http://webinsolut.com" className={classes.a}>
               WebInSolut
             </a>

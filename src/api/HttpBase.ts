@@ -5,10 +5,19 @@ export abstract class HttpBase {
   url: string;
   token?: string;
   debug: boolean = true;
+  currentRequests: {[k: string]: any} = {};
 
   protected constructor(url: string, token?: string) {
     this.url = url;
     this.token = token;
+  }
+
+  pagination(page: number, pageSize: number, additionalParams?: number) {
+    return this.fetchData("get", `${page}/${pageSize}${additionalParams ? "" + additionalParams : ""}`);
+  }
+
+  fullData(id: number) {
+    return this.fetchData("get", id.toString());
   }
 
   fetchData(method: string, calMethod?: string, body?: Body, header: Headers = {}, excludeHeaders?: string[]) {

@@ -64,6 +64,9 @@ const customInputStyle = createStyles({
     margin: "27px 0 0 0",
     position: "relative",
     verticalAlign: "unset"
+  },
+  marginNone: {
+    margin: "0"
   }
 });
 

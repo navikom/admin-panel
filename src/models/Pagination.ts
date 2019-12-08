@@ -5,7 +5,7 @@ import React from "react";
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IPagination } from "interfaces/IPagination";
 
-type ApiMethodsInterface = "user" | "event" | "app";
+type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture";
 type RequestTypesInterface = "pagination";
 
 export class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination<T> {
@@ -57,7 +57,7 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
 
   constructor(pKey: string, apiMethod: ApiMethodsInterface, size: number,
               requestMethod: RequestTypesInterface = "pagination", rowsPerPageOption: number[] = [5, 10, 25, 50],
-              additionalParams?: any) {
+              additionalParams?: any, viewRowsPerPage?: number) {
     super();
     this.pk = pKey;
     this.apiMethod = apiMethod;
@@ -66,6 +66,7 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
     this.additionalParams = additionalParams;
     this.rowsPerPageOptions = rowsPerPageOption;
     this.items = new Array<T>();
+    viewRowsPerPage && (this.viewRowsPerPage = viewRowsPerPage);
   }
 
   setPageSize(size: number) {

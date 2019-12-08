@@ -8,7 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 
 // core components
-import cardFooterStyle from "assets/jss/material-dashboard-react/components/cardFooterStyle.jsx";
+import cardFooterStyle from "assets/jss/material-dashboard-react/components/cardFooterStyle";
 
 function CardFooter({ ...props }) {
   const {
@@ -19,11 +19,13 @@ function CardFooter({ ...props }) {
     profile,
     stats,
     chart,
+    right,
     ...rest
   } = props;
   const cardFooterClasses = classNames({
     [classes.cardFooter]: true,
     [classes.cardFooterPlain]: plain,
+    [classes.right]: right,
     [classes.cardFooterProfile]: profile,
     [classes.cardFooterStats]: stats,
     [classes.cardFooterChart]: chart,

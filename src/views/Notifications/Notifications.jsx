@@ -11,8 +11,8 @@ import Button from "components/CustomButtons/Button.tsx";
 import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import Card from "components/Card/Card.tsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardBody from "components/Card/CardBody.tsx";
 
 const styles = {
   cardCategoryWhite: {

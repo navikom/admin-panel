@@ -11,10 +11,13 @@ import {
   People,
   Image,
   Apps,
-  Build as BuildIcon
+  Build as BuildIcon,
+  ListAltOutlined
 } from "@material-ui/icons";
 
 import { lazy } from "utils";
+import { ADMIN_ROUTE, SIDEBAR_APPLICATION, SIDEBAR_MAIN, SIDEBAR_OTHER, SIDEBAR_USER } from "models/Constants";
+import { IRoute } from "interfaces/IRoute";
 
 const DashboardPage = lazy(() => import("views/Dashboard/Dashboard"));
 const EventsUsersListPage = lazy(() => import("views/Events/UsersList"));
@@ -35,7 +38,7 @@ const Guide = lazy(() => import("views/Guide/Guide"));
 const SettingsPage = lazy(() => import("views/Guide/Guide"));
 const Build = lazy(() => import("views/Build/Build"));
 // core components/views for RTL layout
-const RTLPage = lazy(() => import("views/RTLPage/RTLPage"));
+const RTLPage = lazy(() => import("views/RTLPage/RTLPage.tsx"));
 
 const dashboardRoutesMap = {
   guide: {
@@ -44,8 +47,9 @@ const dashboardRoutesMap = {
     rtlName: "يرشد",
     icon: CastForEducation,
     component: Guide,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   build: {
     path: "/build",
@@ -53,8 +57,9 @@ const dashboardRoutesMap = {
     rtlName: "يرشد",
     icon: BuildIcon,
     component: Build,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   dashboard: {
     path: "/dashboard",
@@ -62,8 +67,9 @@ const dashboardRoutesMap = {
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   eventsUsers: {
     path: "/events-users",
@@ -71,8 +77,9 @@ const dashboardRoutesMap = {
     rtlName: "لوحة القيادة",
     icon: People,
     component: EventsUsersListPage,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   eventsUser: {
     url: "/events-users",
@@ -81,8 +88,9 @@ const dashboardRoutesMap = {
     rtlName: "لوحة القيادة",
     icon: People,
     component: EventsUserPage,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   apps: {
     path: "/apps",
@@ -90,18 +98,9 @@ const dashboardRoutesMap = {
     rtlName: "ملف تعريفي للمستخدم",
     icon: Apps,
     component: AppsList,
-    layout: "/admin",
-    auth: true
-  },
-  app: {
-    url: "/apps",
-    params: "/:appId",
-    name: "Application",
-    rtlName: "لوحة القيادة",
-    icon: Apps,
-    component: AppsItem,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   userProfile: {
     path: "/profile_user",
@@ -109,17 +108,9 @@ const dashboardRoutesMap = {
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
-    layout: "/admin",
-    auth: true
-  },
-  pictures: {
-    path: "/pictures",
-    name: "Pictures",
-    rtlName: "لوحة القيادة",
-    icon: Image,
-    component: PicturesPage,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_USER
   },
   table: {
     path: "/table",
@@ -127,8 +118,9 @@ const dashboardRoutesMap = {
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   typography: {
     path: "/typography",
@@ -136,8 +128,9 @@ const dashboardRoutesMap = {
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Typography,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   icons: {
     path: "/icons",
@@ -145,8 +138,9 @@ const dashboardRoutesMap = {
     rtlName: "الرموز",
     icon: BubbleChart,
     component: Icons,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   maps: {
     path: "/maps",
@@ -154,8 +148,9 @@ const dashboardRoutesMap = {
     rtlName: "خرائط",
     icon: LocationOn,
     component: Maps,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   notifications: {
     path: "/notifications",
@@ -163,36 +158,37 @@ const dashboardRoutesMap = {
     rtlName: "إخطارات",
     icon: Notifications,
     component: NotificationsPage,
-    layout: "/admin",
-    auth: true
+    layout: ADMIN_ROUTE,
+    auth: true,
+    category: SIDEBAR_OTHER
   },
   login: {
     path: "/login",
     name: "login",
     rtlName: "لوحة الادارة",
     component: Login,
-    layout: "/main",
+    layout: "/main"
   },
   signup: {
     path: "/sign-up",
     name: "Sign up",
     rtlName: "لوحة الادارة",
     component: SignUp,
-    layout: "/main",
+    layout: "/main"
   },
   startPage: {
     path: "/start-page",
     name: "Start Page",
     rtlName: "لوحة الادارة",
     component: StartPage,
-    layout: "/main",
+    layout: "/main"
   },
   startPageMain: {
     path: "/",
     name: "Start Page",
     rtlName: "لوحة الادارة",
     component: StartPage,
-    layout: "/main",
+    layout: "/main"
   },
   rtl: {
     path: "/rtl-page",
@@ -201,8 +197,66 @@ const dashboardRoutesMap = {
     icon: Language,
     component: RTLPage,
     layout: "/rtl",
-    auth: true
+    auth: true,
+    category: SIDEBAR_OTHER
   }
+};
+
+const appItem = {
+  url: "/apps",
+  params: "/:appId",
+  name: "Common",
+  rtlName: "لوحة القيادة",
+  component: AppsItem,
+  layout: ADMIN_ROUTE,
+  auth: true,
+  category: SIDEBAR_APPLICATION
+};
+
+export const appRoutes: {[key: string]: IRoute[]} = {
+  common: [
+    appItem,
+    {
+      ...appItem,
+      params: "/:appId/:pageName"
+    }
+  ],
+  "1": [
+    {
+      ...appItem,
+      path: "/apps/1",
+      params: undefined,
+      url: undefined,
+      icon: ListAltOutlined
+    },
+    {
+      ...appItem,
+      path: "/apps/1/pictures",
+      params: undefined,
+      url: undefined,
+      name: "Pictures",
+      rtlName: "لوحة القيادة",
+      icon: Image,
+    }
+  ],
+  "2": [
+    {
+      ...appItem,
+      path: "/apps/2",
+      params: undefined,
+      url: undefined,
+      icon: ListAltOutlined
+    }
+  ],
+  "11": [
+    {
+      ...appItem,
+      path: "/apps/11",
+      params: undefined,
+      url: undefined,
+      icon: ListAltOutlined
+    }
+  ]
 };
 
 export const mainNavRoutes = [
