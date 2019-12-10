@@ -12,20 +12,23 @@ import {
   Image,
   Apps,
   Build as BuildIcon,
-  ListAltOutlined
+  ListAltOutlined,
+  SupervisedUserCircle,
+  LinearScaleOutlined
 } from "@material-ui/icons";
 
 import { lazy } from "utils";
-import { ADMIN_ROUTE, SIDEBAR_APPLICATION, SIDEBAR_MAIN, SIDEBAR_OTHER, SIDEBAR_USER } from "models/Constants";
+import { PANEL_ROUTE, SIDEBAR_APPLICATION, SIDEBAR_MAIN, SIDEBAR_OTHER, SIDEBAR_USER } from "models/Constants";
 import { IRoute } from "interfaces/IRoute";
 
 const DashboardPage = lazy(() => import("views/Dashboard/Dashboard"));
-const EventsUsersListPage = lazy(() => import("views/Events/UsersList"));
-const EventsUserPage = lazy(() => import("views/Events/UsersItem"));
-const PicturesPage = lazy(() => import("views/pixart/Pictures/Pictures"));
+const EventsUsersList = lazy(() => import("views/Events/EventsUsersList.tsx"));
+const EventsUsersItem = lazy(() => import("views/Events/EventsUsersItem.tsx"));
 const UserProfile = lazy(() => import("views/UserProfile/UserProfile"));
 const TableList = lazy(() => import("views/TableList/TableList"));
 const AppsList = lazy(() => import("views/AppsList/AppsList"));
+const UsersList = lazy(() => import("views/Users/UsersList"));
+const UsersItem = lazy(() => import("views/Users/UsersItem"));
 const AppsItem = lazy(() => import("views/AppsList/AppsItem"));
 const Typography = lazy(() => import("views/Typography/Typography"));
 const Icons = lazy(() => import("views/Icons/Icons"));
@@ -47,7 +50,7 @@ const dashboardRoutesMap = {
     rtlName: "يرشد",
     icon: CastForEducation,
     component: Guide,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -57,7 +60,7 @@ const dashboardRoutesMap = {
     rtlName: "يرشد",
     icon: BuildIcon,
     component: Build,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -67,17 +70,17 @@ const dashboardRoutesMap = {
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_MAIN
   },
   eventsUsers: {
     path: "/events-users",
-    name: "Events Users List",
+    name: "Events",
     rtlName: "لوحة القيادة",
-    icon: People,
-    component: EventsUsersListPage,
-    layout: ADMIN_ROUTE,
+    icon: LinearScaleOutlined,
+    component: EventsUsersList,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_MAIN
   },
@@ -86,9 +89,29 @@ const dashboardRoutesMap = {
     params: "/:userId",
     name: "Events User",
     rtlName: "لوحة القيادة",
+    icon: SupervisedUserCircle,
+    component: EventsUsersItem,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
+  },
+  users: {
+    path: "/users",
+    name: "Users",
     icon: People,
-    component: EventsUserPage,
-    layout: ADMIN_ROUTE,
+    rtlName: "ملف تعريفي للمستخدم",
+    component: UsersList,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
+  },
+  user: {
+    url: "/users",
+    params: "/:userId",
+    name: "User",
+    rtlName: "ملف تعريفي للمستخدم",
+    component: UsersItem,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_MAIN
   },
@@ -98,7 +121,7 @@ const dashboardRoutesMap = {
     rtlName: "ملف تعريفي للمستخدم",
     icon: Apps,
     component: AppsList,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_MAIN
   },
@@ -108,7 +131,7 @@ const dashboardRoutesMap = {
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_USER
   },
@@ -118,7 +141,7 @@ const dashboardRoutesMap = {
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -128,7 +151,7 @@ const dashboardRoutesMap = {
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Typography,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -138,7 +161,7 @@ const dashboardRoutesMap = {
     rtlName: "الرموز",
     icon: BubbleChart,
     component: Icons,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -148,7 +171,7 @@ const dashboardRoutesMap = {
     rtlName: "خرائط",
     icon: LocationOn,
     component: Maps,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -158,7 +181,7 @@ const dashboardRoutesMap = {
     rtlName: "إخطارات",
     icon: Notifications,
     component: NotificationsPage,
-    layout: ADMIN_ROUTE,
+    layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_OTHER
   },
@@ -208,7 +231,7 @@ const appItem = {
   name: "Common",
   rtlName: "لوحة القيادة",
   component: AppsItem,
-  layout: ADMIN_ROUTE,
+  layout: PANEL_ROUTE,
   auth: true,
   category: SIDEBAR_APPLICATION
 };

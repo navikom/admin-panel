@@ -2,7 +2,7 @@ import { action, computed, observable } from "mobx";
 
 // interfaces
 import { IUsersEvents } from "interfaces/IUsersEvents";
-import { IUser } from "interfaces/IUser";
+import { GenderType, IUser } from "interfaces/IUser";
 import { IUsersDevices } from "interfaces/IUsersDevices";
 
 // services
@@ -16,6 +16,9 @@ import { IUsersApps } from "interfaces/IUsersApps";
 import { UsersApps } from "models/User/UsersApps";
 import { UsersDevices } from "models/User/UsersDevices";
 
+export const MALE = "Male";
+export const FEMALE = "Female";
+
 /**
  * User model
  *
@@ -25,16 +28,19 @@ export class UserStore implements IUser {
   createdAt!: Date;
   lastEvent!: Date;
   email!: string;
-  firstName!: string;
-  lastName!: string;
-
-  emailVerified: boolean = false;
-  notificationEmail!: boolean;
-  notificationSms: boolean = false;
-  phoneVerified: boolean = false;
+  referrer!: number;
 
   pk: string = "userId";
 
+  @observable firstName!: string;
+  @observable lastName!: string;
+  @observable gender: GenderType = MALE;
+  @observable birthday!: Date;
+  @observable emailVerified: boolean = false;
+  @observable notificationEmail!: boolean;
+  @observable notificationSms: boolean = false;
+  @observable phoneVerified: boolean = false;
+  @observable subscription: boolean = false;
   @observable events?: IUsersEvents;
   @observable anonymous: boolean = true;
   @observable eventsCount: number = 1;
@@ -71,8 +77,8 @@ export class UserStore implements IUser {
     this.anonymous = value;
   }
 
-  @action setFullDataLoaded() {
-    this.fullDataLoaded = true;
+  @action setFullDataLoaded(value: boolean = true) {
+    this.fullDataLoaded = value;
   }
 
   @action
@@ -81,6 +87,7 @@ export class UserStore implements IUser {
     convertDate(model);
     Object.assign(this, model);
     !this.events && (this.events = new UserEventsStore(this.userId));
+    !this.gender && (this.gender = MALE);
     if(model.regions) {
       model.location = model.regions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
     }
@@ -88,9 +95,43 @@ export class UserStore implements IUser {
     model.apps && (this.apps = model.apps.map(app => UsersApps.from(app)));
   }
 
+  @action updateForm(model: IUser) {
+    Object.assign(this, model);
+  }
+
   static from(model: IUser): UserStore {
     const user = new UserStore();
     user.update(model);
+    return user;
+  }
+
+  static emptyUser(): UserStore {
+    const user = new UserStore();
+    user.update({
+      userId: 0,
+      email: "",
+      firstName: "",
+      lastName: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: new Date(),
+      lastLogin: 0,
+      phone: undefined,
+      birthday: new Date(),
+      gender: MALE,
+      emailVerified: false,
+      phoneVerified: false,
+      notificationEmail: false,
+      notificationSms: false,
+      subscription: false,
+      referrer: undefined,
+      eventsCount: 0,
+      apps: undefined,
+      roles: undefined,
+      regions: undefined,
+      location: undefined,
+      lastEvent: undefined
+    } as IUser);
     return user;
   }
 

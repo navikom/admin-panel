@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import {observer} from "mobx-react";
-import PropTypes from "prop-types";
+import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
 
 // @material-ui/core components
@@ -23,14 +22,22 @@ import { SIDEBAR_APPLICATION, SIDEBAR_MAIN, SIDEBAR_OTHER, SIDEBAR_USER } from "
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
-import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Dictionary } from "services/Dictionary/Dictionary";
 
-type ColorType = "purple" | "blue" | "green" | "orange" | "red";
+import useSidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle";
 
-const Links = ({...props}) => {
-  const classes = props.classes;
+type ColorType = "purple" | "blue" | "green" | "orange" | "red";
+type LinkProps = {
+  color: string;
+  location: any;
+  rtlActive: boolean;
+  routes: (google.maps.DirectionsRoute & IRoute)[];
+  currentApp: string;
+}
+
+const Links = observer((props: LinkProps) => {
+  const classes = useSidebarStyle();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
     return props.location.pathname === routeName;
@@ -115,8 +122,7 @@ const Links = ({...props}) => {
       }
     </div>
   )
-
-};
+});
 
 const Brand = ({...props}) => {
   const classes = props.classes;
@@ -138,7 +144,8 @@ const Brand = ({...props}) => {
 }
 
 const Sidebar = ({...props}) => {
-  const {classes, color, logo, image, logoText, routes, history, currentApp} = props;
+  const classes = useSidebarStyle();
+  const {color, logo, image, logoText, routes, history, currentApp, rtlActive} = props;
 
   return (
     <div>
@@ -161,7 +168,7 @@ const Sidebar = ({...props}) => {
           <div className={classes.sidebarWrapper}>
             {props.rtlActive ? <RTLNavbarLinks history={history}/>
             : <AdminNavbarLinks history={history}/>}
-            <Links color={color} routes={routes} classes={classes} location={props.location} currentApp={currentApp}/>
+            <Links color={color} rtlActive={rtlActive} routes={routes} location={props.location} currentApp={currentApp}/>
           </div>
           {image !== undefined ? (
             <div
@@ -184,7 +191,7 @@ const Sidebar = ({...props}) => {
         >
           <Brand logo={logo} logoText={logoText} classes={classes}/>
           <div className={classes.sidebarWrapper}>
-            <Links routes={routes} color={color} classes={classes} location={props.location} currentApp={currentApp}/>
+            <Links routes={routes} rtlActive={rtlActive} color={color} location={props.location} currentApp={currentApp}/>
           </div>
           {image !== undefined ? (
             <div
@@ -198,4 +205,4 @@ const Sidebar = ({...props}) => {
   );
 };
 
-export default withStyles(sidebarStyle)(observer(Sidebar));
+export default Sidebar;

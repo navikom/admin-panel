@@ -1,8 +1,10 @@
 //******** Routes *********//
 export const ROOT_ROUTE: string = "/";
-export const ADMIN_ROUTE: string = "/admin";
-export const EVENTS_USERS_LIST_ROUTE: string = "/admin/events-users";
-export const APPS_LIST_ROUTE: string = "/admin/apps";
+export const PANEL_ROUTE: string = "/panel";
+export const DASHBOARD_ROUTE: string = "/panel/dashboard";
+export const EVENTS_USERS_LIST_ROUTE: string = "/panel/events-users";
+export const USERS_LIST_ROUTE: string = "/panel/users";
+export const APPS_LIST_ROUTE: string = "/panel/apps";
 export const LOGIN_ROUTE: string = "/login";
 export const SIGN_UP_ROUTE: string = "/sign-up";
 export const START_PAGE_ROUTE: string = "/start-page";

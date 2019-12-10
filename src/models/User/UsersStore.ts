@@ -1,10 +1,18 @@
 import { Pagination } from "models/Pagination";
-import { action } from "mobx";
+import { action, computed } from "mobx";
 import { UserStore } from "models/User/UserStore";
 import { IUser } from "interfaces/IUser";
 import { api, Apis } from "api";
+import { IEvent } from "interfaces/IEvent";
+import { Dictionary } from "services/Dictionary/Dictionary";
 
 export class UsersStore extends Pagination<IUser> {
+
+  @computed get userTableData() {
+    return this.tableData((e: IUser) =>
+      [e.userId.toString(), Dictionary.timeDateString(e.createdAt), e.fullName, e.email, e.anonymousString, e.eventsCount!.toString()]);
+  }
+
   constructor() {
     super("userId", "user", 20, "pagination")
   }
@@ -40,11 +48,11 @@ export class UsersStore extends Pagination<IUser> {
     return user;
   }
 
-  getOrCreate(data: IUser) {
+  getOrCreate(data: IUser): IUser {
     if(!this.has(data.userId)) {
       this.push([data]);
     }
-    return this.getById(data.userId);
+    return this.getById(data.userId) as IUser;
   }
 }
 

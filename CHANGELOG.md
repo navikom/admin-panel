@@ -22,7 +22,7 @@
 ### New components
 - **src/components/FixedPlugin/FixedPlugin.jsx**(Left menu used by us for customization - due to this, we've had to add a link for the fonts awesome cdn)
 - **src/components/Header/RTLHeaderLinks.jsx**
-- **src/layouts/Admin.tsx** (instead of Dashboard)
+- **src/layouts/Panel.tsx** (instead of Dashboard)
 - **src/layouts/RTL.jsx**
 - **src/views/RTLPage/RTLPage.tsx**
 ### Deleted components

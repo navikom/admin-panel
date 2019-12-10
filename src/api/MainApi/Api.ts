@@ -67,6 +67,10 @@ class User extends HttpBase {
     };
     return this.fetchData("post", "login", body)
   }
+
+  update(userId: number, data: any) {
+    return this.fetchData("put", userId.toString(), data);
+  }
 }
 
 class AEvent extends HttpBase {

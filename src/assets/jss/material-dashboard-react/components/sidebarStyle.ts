@@ -17,8 +17,7 @@ import {
 } from "assets/jss/material-dashboard-react.ts";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-export default
-  createStyles((theme: Theme) => ({
+export default makeStyles((theme: Theme) =>  createStyles({
     drawerPaper: {
       border: "none",
       position: "fixed",
@@ -298,4 +297,5 @@ export default
         bottom: "13px"
       }
     }
-  }));
+  })
+);

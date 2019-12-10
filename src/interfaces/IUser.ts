@@ -5,6 +5,7 @@ import { IUsersRegions } from "interfaces/IUsersRegions";
 import { IUsersDevices } from "interfaces/IUsersDevices";
 import { IUsersEvents } from "interfaces/IUsersEvents";
 
+export type GenderType = 'Male' | 'Female';
 export interface IUser extends WithPrimaryKey {
   readonly userId: number;
   email?: string;
@@ -16,7 +17,7 @@ export interface IUser extends WithPrimaryKey {
   lastLogin?: number;
   phone?: number;
   birthday?: Date;
-  gender?: 'male' | 'female';
+  gender?: GenderType;
   anonymous?: boolean;
   emailVerified?: boolean;
   phoneVerified?: boolean;
@@ -39,8 +40,9 @@ export interface IUser extends WithPrimaryKey {
   anonymousString?: string;
 
   update(model: IUser): void;
+  updateForm(model: IUser): void;
   setAnonymous(value: boolean): void;
-  setFullDataLoaded(): void;
+  setFullDataLoaded(value?: boolean): void;
   totalTime: string;
   eventsItems: IUsersEvents;
 }

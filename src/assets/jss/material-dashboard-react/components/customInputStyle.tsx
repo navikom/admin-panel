@@ -16,7 +16,8 @@ const customInputStyle = createStyles({
   underline: {
     "&:hover:not($disabled):before,&:before": {
       borderColor: grayColor[4] + " !important",
-      borderWidth: "1px !important"
+      borderWidth: "1px !important",
+      borderBottom: "1px solid rgba(0, 0, 0, 0.42)"
     },
     "&:after": {
       borderColor: primaryColor[0]

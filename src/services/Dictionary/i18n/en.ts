@@ -10,6 +10,8 @@ export default {
   "cantBeEmpty": "$ can't be empty",
   "cantBeLessThan": "%0 can't be less than %1 chars",
   "cantBeMoreThan": "%0 can't be more than %1 chars",
+  "invalid": "The $ is badly formatted.",
+
   "guide1": "Get Started",
   "guide2": "Guide",
   "guide3": "Make 3 steps to set up and run the application",
@@ -54,8 +56,10 @@ export default {
   "appName": "Application name",
   "canOnlyContain": "$ can only contain a-z and A-Z",
   "users": "Users",
+  "user": "User",
   "usersDashboard": "Users Dashboard",
   "eventsDashboard": "Events Dashboard",
+  "userDetails": "User Details",
   "userEvents": "User Events",
   "appDetails": "$ Details",
   "pictures": "Pictures",
@@ -129,5 +133,16 @@ export default {
   "lastChanged": "Last changed $",
   "newApp": "New App",
   "add": "Add",
-  "apps:title must be unique": "Title must be unique"
+  "apps:title must be unique": "Title must be unique",
+  "personalData": "Personal Data",
+  "credentials": "Credentials",
+  "referrals": "Referrals",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "birthday": "Birthday",
+  "gender": "Gender",
+  "notificationsEmail": "Email notifications",
+  "notificationSms": "SMS notifications",
+  "subscriptions": "Subscriptions",
+  "permissions": "Permissions"
 };

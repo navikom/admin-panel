@@ -32,11 +32,12 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import WaitingComponent from "hocs/WaitingComponent";
+import { PANEL_ROUTE } from "models/Constants";
 
 const switchRoutes = (routes: IRoute[]) => (
   <Switch>
     {routes.map((prop: IRoute, key: number) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === PANEL_ROUTE) {
         return (
           <Route
             exact
@@ -57,8 +58,8 @@ export default (props: RouteComponentProps) => {
   const [fixedClasses, setFixedClasses] = useState("dropdown");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currRoutes, setCurrRoutes] =
-    useState([...routes.filter(prop => prop.layout === "/admin"), ...appRoutes.common]);
-  const [sidebarRoutes, setSidebarRoutes] = useState(routes.filter(prop => prop.layout === "/admin") as IRoute[]);
+    useState([...routes.filter(prop => prop.layout === PANEL_ROUTE), ...appRoutes.common]);
+  const [sidebarRoutes, setSidebarRoutes] = useState(routes.filter(prop => prop.layout === PANEL_ROUTE) as IRoute[]);
   const [currentApp, setCurrentApp] = useState(null as string | null);
 
   const handleImageClick = (image: any) => {
@@ -83,8 +84,8 @@ export default (props: RouteComponentProps) => {
     reaction(() => App.currentApp && App.currentApp.title, (app?: string | null) => {
       console.log('effect==========', App.currentApp, App.appRoutes);
       setCurrentApp(app ? app : null);
-      setCurrRoutes([...routes.filter(prop => prop.layout === "/admin"), ...appRoutes.common, ...App.appRoutes]);
-      setSidebarRoutes([...routes.filter(prop => prop.layout === "/admin"), ...App.appRoutes]);
+      setCurrRoutes([...routes.filter(prop => prop.layout === PANEL_ROUTE), ...appRoutes.common, ...App.appRoutes]);
+      setSidebarRoutes([...routes.filter(prop => prop.layout === PANEL_ROUTE), ...App.appRoutes]);
     })
   );
 

@@ -11,6 +11,7 @@ import {
   Devices,
   InfoOutlined
 } from "@material-ui/icons";
+
 // utils
 import { lazy } from "utils";
 
@@ -42,7 +43,7 @@ interface MatchInfo {
 interface UsersItemProps extends RouteComponentProps<MatchInfo>, WithStyles<typeof style> {
 }
 
-const UsersItem = (props: UsersItemProps) => {
+const EventsUsersItem = (props: UsersItemProps) => {
   const userId = Number(props.match.params.userId);
   const [user, setUser] = useState({ userId } as IUser);
   let fullDataDispose: IReactionDisposer;
@@ -97,4 +98,4 @@ const UsersItem = (props: UsersItemProps) => {
 };
 
 
-export default withStyles(style)(UsersItem);
+export default withStyles(style)(EventsUsersItem);

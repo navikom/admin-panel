@@ -33,6 +33,8 @@ import ProgressButton from "components/CustomButtons/ProgressButton";
 import Fab from "components/CustomButtons/Fab";
 import { AppDataStore } from "models/App/AppDataStore";
 
+import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
+
 const useCardStyles = makeStyles((theme: Theme) => createStyles({
   card: {
     position: "relative",
@@ -55,34 +57,6 @@ const useCardStyles = makeStyles((theme: Theme) => createStyles({
     }
   }
 }));
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      marginBottom: theme.typography.pxToRem(20)
-    },
-    note: {
-      fontWeight: theme.typography.fontWeightBold,
-      marginLeft: theme.typography.pxToRem(20),
-      width: theme.typography.pxToRem(150),
-      opacity: .4
-    },
-    bottom: {
-      alignSelf: "flex-end"
-    },
-    center: {
-      alignSelf: "center"
-    },
-    divider: {
-      marginTop: theme.typography.pxToRem(10),
-      marginBottom: theme.typography.pxToRem(10)
-    },
-    typography: {
-      padding: theme.spacing(1),
-      marginLeft: theme.typography.pxToRem(5)
-    }
-  })
-);
 
 const Item = ({ ...props }) => {
   return (

@@ -17,6 +17,7 @@ import {
   AccessTime,
   ArrowUpward
 } from "@material-ui/icons";
+
 // utils
 import { lazy } from "utils";
 
@@ -76,7 +77,7 @@ const UsersTable = observer((props: UsersTableProps) => (
   />
 ));
 
-const UsersList = (props: UsersListProps) => {
+const EventsUsersList = (props: UsersListProps) => {
 
   useDisposable(() =>
     when(() => App.tokenIsReady, () => Events.fetchItems()));
@@ -244,4 +245,4 @@ const UsersList = (props: UsersListProps) => {
   );
 };
 
-export default withStyles(style)(UsersList);
+export default withStyles(style)(EventsUsersList);

@@ -149,7 +149,7 @@ material-dashboard-react
     │       ├── Success.jsx
     │       └── Warning.jsx
     ├── layouts
-    │   ├── Admin.tsx
+    │   ├── Panel.tsx
     │   └── RTL.jsx
     ├── variables
     │   ├── charts.jsx
