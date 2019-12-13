@@ -341,10 +341,16 @@ const buttonStyle = createStyles({
     borderRadius: "0.2rem"
   },
   superSm: {
-    padding: "0.60625rem 1.0rem",
-    fontSize: "0.2875rem",
-    lineHeight: ".7",
-    borderRadius: "0.1rem"
+    padding: "0.30625rem .5rem",
+    fontSize: "0.1475rem",
+    lineHeight: ".3",
+    borderRadius: "0.05rem",
+    width: "32px",
+    height: "32px",
+    "& svg": {
+      width: "15px",
+      height: "15px"
+    }
   },
   round: {
     borderRadius: "30px"

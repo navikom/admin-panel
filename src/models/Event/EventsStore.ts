@@ -34,6 +34,7 @@ class EventsStore extends Pagination<IEvent> {
       }
     }
   }
+
 }
 
 export const Events = new EventsStore();

@@ -20,6 +20,22 @@ export abstract class HttpBase {
     return this.fetchData("get", id.toString());
   }
 
+  list() {
+    return this.fetchData("get");
+  }
+
+  add(body: {[k: string]: any}) {
+    return this.fetchData("post", undefined, body);
+  }
+
+  update(id: number, body: {[k: string]: any}) {
+    return this.fetchData("put", id.toString(), body);
+  }
+
+  delete(id: number) {
+    return this.fetchData("delete", id.toString());
+  }
+
   fetchData(method: string, calMethod?: string, body?: Body, header: Headers = {}, excludeHeaders?: string[]) {
     if (this.token) {
       header.authorization = this.token;

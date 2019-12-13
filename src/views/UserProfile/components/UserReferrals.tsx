@@ -15,7 +15,7 @@ import { Users } from "models/User/UsersStore";
 
 // core components
 import Table from "components/Table/Table";
-import { UserDetails } from "views/Users/components/UserDetailsStore";
+import { UserDetails } from "views/UserProfile/components/UserDetailsStore";
 
 
 
@@ -37,7 +37,10 @@ export default observer((props: RouteComponentProps) => {
   if(referrals.count === 0) {
     return (
       <Typography variant="subtitle1" color="inherit" align="center" className={classes.title}>
-        {Dictionary.defValue(DictionaryService.keys.noReferrals)}.
+        {Dictionary.defValue(DictionaryService.keys.doNotHaveReferrals)}&nbsp;
+        <Link onClick={() => console.log("link to referrals guide")} className={classes.link}>
+          {Dictionary.defValue(DictionaryService.keys.learnMore)}.
+        </Link>
       </Typography>
     )
   }

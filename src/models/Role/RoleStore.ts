@@ -1,13 +1,31 @@
-import { action, observable } from "mobx";
-import { IRole } from "interfaces/IRole";
-import { ADMIN_ROLE, PARTNER_ROLE, SUPER_ADMIN_ROLE, USER_ROLE } from "models/Constants";
-import { IUser } from "interfaces/IUser";
+import { IRole, RoleType } from "interfaces/IRole";
+import { action } from "mobx";
 
 export class RoleStore implements IRole {
-  roleId!: number;
-  createdAt!: Date;
+  roleId: number;
+  createdAt?: Date;
   deletedAt!: Date;
-  name!: typeof USER_ROLE | typeof ADMIN_ROLE | typeof PARTNER_ROLE | typeof SUPER_ADMIN_ROLE;
+  name: string;
   updatedAt!: Date;
-  users: IUser[] = new Array<IUser>();
+
+  constructor(model: IRole) {
+    Object.assign(this, model);
+    this.roleId = model.roleId;
+    this.name = model.name;
+  }
+
+  @action update(model: IRole) {
+    Object.assign(this, model);
+  }
+
+  static from(model: IRole) {
+    return new RoleStore(model);
+  }
+
+  static defaultRole() {
+    return new RoleStore({
+      roleId: 0,
+      name: "user"
+    } as IRole);
+  }
 }

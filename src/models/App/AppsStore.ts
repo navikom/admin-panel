@@ -64,7 +64,7 @@ export class AppsStore extends Pagination<IApp> implements IPagination<IApp> {
 
   @action async addApp() {
     try {
-      const data = await api(Apis.Main).app.add(this.title);
+      const data = await api(Apis.Main).app.add({title: this.title});
       this.push([data]);
       this.setSuccessRequest(true);
       this.setTimeOut(() => this.setSuccessRequest(false), 5000);

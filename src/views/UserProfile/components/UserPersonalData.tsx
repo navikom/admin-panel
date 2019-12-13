@@ -26,14 +26,13 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 import { FEMALE, MALE } from "models/User/UserStore";
 
 // core components
-import { UserDetails } from "views/Users/components/UserDetailsStore";
+import { UserDetails } from "views/UserProfile/components/UserDetailsStore";
 import CustomInput from "components/CustomInput/CustomInput";
 
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import ProgressButton from "components/CustomButtons/ProgressButton";
 import Divider from "@material-ui/core/Divider";
-import Check from "components/Check/Check";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,12 +48,19 @@ const extraStyles = makeStyles((theme: Theme) =>
     }
   }));
 
+
 export default observer(() => {
   const classes = useStyles();
   const extraClasses = extraStyles();
-  const user = UserDetails.user;
+  const store = UserDetails.personalDataStore;
+  const user = store.formUser;
   const centerNote = classNames(classes.note, classes.center, extraClasses.label);
-
+  const onChange = (name: string) =>
+    (e: any) => store.onInput({ [name]: e.target.value } as IUser);
+  const onChangeDate = (name: string) => (date: any) =>
+    store.onInput({ [name]: date } as IUser);
+  const onSwitch = (name: string) => (e: any) =>
+    store.onInput({ [name]: e.target.checked } as IUser);
   if (!user) return null;
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -71,7 +77,8 @@ export default observer(() => {
           }}
           inputProps={{
             disabled: true,
-            value: user.email || ""
+            onChange: onChange("firstName"),
+            value: user.email
           }}
           labelText=""/>
       </Grid>
@@ -84,7 +91,7 @@ export default observer(() => {
             margin: "none"
           }}
           inputProps={{
-            disabled: true,
+            onChange: onChange("firstName"),
             value: user.firstName || ""
           }}
           labelText=""/>
@@ -98,7 +105,7 @@ export default observer(() => {
             margin: "none"
           }}
           inputProps={{
-            disabled: true,
+            onChange: onChange("lastName"),
             value: user.lastName || ""
           }}
           labelText=""/>
@@ -108,11 +115,13 @@ export default observer(() => {
           {Dictionary.defValue(DictionaryService.keys.phone)}:
         </Typography>
         <CustomInput
+          error={store.errors["phone"] !== undefined}
+          helperText={store.errors["phone"]}
           formControlProps={{
             margin: "none"
           }}
           inputProps={{
-            disabled: true,
+            onChange: onChange("phone"),
             value: user.phone || ""
           }}
           labelText=""/>
@@ -121,29 +130,38 @@ export default observer(() => {
         <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.birthday)}:
         </Typography>
-        <CustomInput
-          formControlProps={{
-            margin: "none"
-          }}
-          inputProps={{
-            disabled: true,
-            value: user.birthday || ""
-          }}
-          labelText=""/>
+        <DatePicker
+          maxDate={new Date()}
+          margin="normal"
+          label=""
+          id="date-picker-dialog"
+          format="MM/dd/yyyy"
+          value={user.birthday || new Date()}
+          onChange={onChangeDate("birthday")}
+        />
       </Grid>
       <Grid container item direction="row" className={classes.container}>
         <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.gender)}:
         </Typography>
-        <CustomInput
-          formControlProps={{
-            margin: "none"
-          }}
-          inputProps={{
-            disabled: true,
-            value: user.gender || ""
-          }}
-          labelText=""/>
+        <RadioGroup aria-label="position"
+                    className={extraClasses.radioGroup}
+                    name="gender"
+                    value={user.gender}
+                    onChange={onChange("gender")} row>
+          <FormControlLabel
+            value={MALE}
+            control={<Radio color="primary"/>}
+            label={MALE}
+            labelPlacement="start"
+          />
+          <FormControlLabel
+            value={FEMALE}
+            control={<Radio color="primary"/>}
+            label={FEMALE}
+            labelPlacement="start"
+          />
+        </RadioGroup>
       </Grid>
       <Divider variant="middle"/>
       <Typography variant="subtitle1" color="inherit" align="center" className={extraClasses.title}>
@@ -153,20 +171,44 @@ export default observer(() => {
         <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.notificationsEmail)}:
         </Typography>
-        <Check checked={user.notificationEmail} />
+        <Switch
+          checked={user.notificationEmail}
+          onChange={onSwitch("notificationEmail")}
+          value="notificationEmail"
+          color="primary"
+        />
       </Grid>
       <Grid container item direction="row" className={classes.container}>
         <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.notificationSms)}:
         </Typography>
-        <Check checked={user.notificationSms} />
+        <Switch
+          checked={user.notificationSms}
+          onChange={onSwitch("notificationSms")}
+          value="notificationSms"
+          color="primary"
+        />
       </Grid>
       <Grid container item direction="row" className={classes.container}>
         <Typography variant="subtitle2" className={centerNote}>
           {Dictionary.defValue(DictionaryService.keys.subscriptions)}:
         </Typography>
-        <Check checked={user.subscription} />
+        <Switch
+          checked={user.subscription}
+          onChange={onSwitch("subscription")}
+          value="subscription"
+          color="primary"
+        />
       </Grid>
+      <ProgressButton
+        onClick={() => UserDetails.saveUser()}
+        disabled={UserDetails.isPersonalDisabled}
+        variant="contained"
+        loading={UserDetails.fetching}
+        color="primary"
+        text={Dictionary.defValue(DictionaryService.keys.save)}
+        startIcon={<CloudUploadIcon/>}
+      />
     </MuiPickersUtilsProvider>
   );
 });

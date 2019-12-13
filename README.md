@@ -171,8 +171,8 @@ material-dashboard-react
         │   └── Typography.jsx
         ├── UpgradeToPro
         │   └── UpgradeToPro.jsx
-        └── UserProfile
-            └── UserProfile.jsx
+        └── UserProfile1
+            └── UserProfile1.jsx
 ```
 
 ## Browser Support

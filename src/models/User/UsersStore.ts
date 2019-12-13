@@ -3,7 +3,6 @@ import { action, computed } from "mobx";
 import { UserStore } from "models/User/UserStore";
 import { IUser } from "interfaces/IUser";
 import { api, Apis } from "api";
-import { IEvent } from "interfaces/IEvent";
 import { Dictionary } from "services/Dictionary/Dictionary";
 
 export class UsersStore extends Pagination<IUser> {
@@ -36,6 +35,14 @@ export class UsersStore extends Pagination<IUser> {
     }
   }
 
+  @action async fetchReferrals(user: IUser) {
+    try {
+      await user.referrals.fetchItems();
+    } catch (e) {
+      console.log("Fetch referrals error: %s", e.message);
+    }
+  }
+
   @action getByIdFullData(id: number): IUser {
     let user: IUser;
     if(!this.has(id)) {
@@ -48,7 +55,7 @@ export class UsersStore extends Pagination<IUser> {
     return user;
   }
 
-  getOrCreate(data: IUser): IUser {
+  @action getOrCreate(data: IUser): IUser {
     if(!this.has(data.userId)) {
       this.push([data]);
     }

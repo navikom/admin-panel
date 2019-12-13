@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { when } from "mobx";
 import { observer, useDisposable } from "mobx-react-lite";
-import { RouteComponentProps } from "react-router";
 
 // @material-ui/icons
 import { InfoOutlined, People, Clear } from "@material-ui/icons";
@@ -28,7 +27,7 @@ import WaitingComponent from "hocs/WaitingComponent";
 
 // core components
 import AppComponents from "views/AppsList/components/AppComponents";
-import useStyles from "assets/jss/material-dashboard-react/views/appsStyle";
+import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));

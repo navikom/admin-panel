@@ -27,6 +27,10 @@ export default class Api extends ApiBase {
   get pixartPicture(): PixartPicture {
     return new PixartPicture(this.token);
   }
+
+  get role(): Roles {
+    return new Roles(this.token);
+  }
 }
 
 class User extends HttpBase {
@@ -68,9 +72,14 @@ class User extends HttpBase {
     return this.fetchData("post", "login", body)
   }
 
-  update(userId: number, data: any) {
-    return this.fetchData("put", userId.toString(), data);
+  changePassword(password: string, newPassword: string) {
+    return this.fetchData("post", "change-password", {password, newPassword});
   }
+
+  updateRole(userId: number, roleId: number) {
+    return this.fetchData("post", `${userId}/update-role/${roleId}`);
+  }
+
 }
 
 class AEvent extends HttpBase {
@@ -82,10 +91,6 @@ class AEvent extends HttpBase {
 class App extends HttpBase {
   constructor(token?: string) {
     super(`${settings.mainApi}/apps`, token);
-  }
-
-  add(title: string) {
-    return this.fetchData("post", undefined, {title});
   }
 
   update(appId: number, data: any) {
@@ -118,5 +123,11 @@ class PixartPicture extends HttpBase {
 
   save(data: any) {
     return this.fetchData("post", undefined, data, undefined, ["Content-Type", "Accept"]);
+  }
+}
+
+class Roles extends HttpBase {
+  constructor(token?: string) {
+    super(`${settings.mainApi}/roles`, token);
   }
 }

@@ -61,11 +61,11 @@ function CustomTable({ ...props }) {
         <TableBody>
           {(tableData || []).map((prop: string[], key: number) => {
             return (
-              <StyledTableRow hover onClick={() => onRowClick(prop)} key={key}>
-                {prop.map((prop: string, key: number) => {
+              <StyledTableRow hover onClick={() => onRowClick(prop, key)} key={key}>
+                {prop.map((prop: any[] | string, key: number) => {
                   return (
                     <StyledTableCell className={classes.tableCell} key={key}>
-                      {prop}
+                      {Array.isArray(prop) ? React.createElement(prop[0], prop[1], prop[2]) : prop}
                     </StyledTableCell>
                   );
                 })}
@@ -80,21 +80,6 @@ function CustomTable({ ...props }) {
 
 CustomTable.defaultProps = {
   tableHeaderColor: "gray"
-};
-
-CustomTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  tableHeaderColor: PropTypes.oneOf([
-    "warning",
-    "primary",
-    "danger",
-    "success",
-    "info",
-    "rose",
-    "gray"
-  ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
 };
 
 export default withStyles(tableStyle)(CustomTable);

@@ -14,11 +14,19 @@ import {
   Build as BuildIcon,
   ListAltOutlined,
   SupervisedUserCircle,
-  LinearScaleOutlined
+  LinearScaleOutlined,
+  DeviceHub
 } from "@material-ui/icons";
 
 import { lazy } from "utils";
-import { PANEL_ROUTE, SIDEBAR_APPLICATION, SIDEBAR_MAIN, SIDEBAR_OTHER, SIDEBAR_USER } from "models/Constants";
+import {
+  PANEL_ROUTE,
+  SIDEBAR_APPLICATION,
+  SIDEBAR_MAIN,
+  SIDEBAR_OTHER,
+  SIDEBAR_USER,
+  SUPER_ADMIN_ROLE
+} from "models/Constants";
 import { IRoute } from "interfaces/IRoute";
 
 const DashboardPage = lazy(() => import("views/Dashboard/Dashboard"));
@@ -29,6 +37,7 @@ const TableList = lazy(() => import("views/TableList/TableList"));
 const AppsList = lazy(() => import("views/AppsList/AppsList"));
 const UsersList = lazy(() => import("views/Users/UsersList"));
 const UsersItem = lazy(() => import("views/Users/UsersItem"));
+const RolesList = lazy(() => import("views/Roles/RolesList"));
 const AppsItem = lazy(() => import("views/AppsList/AppsItem"));
 const Typography = lazy(() => import("views/Typography/Typography"));
 const Icons = lazy(() => import("views/Icons/Icons"));
@@ -115,6 +124,17 @@ const dashboardRoutesMap = {
     auth: true,
     category: SIDEBAR_MAIN
   },
+  roles: {
+    path: "/roles",
+    name: "Roles",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: DeviceHub,
+    component: RolesList,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN,
+    role: SUPER_ADMIN_ROLE
+  },
   apps: {
     path: "/apps",
     name: "Applications",
@@ -126,7 +146,7 @@ const dashboardRoutesMap = {
     category: SIDEBAR_MAIN
   },
   userProfile: {
-    path: "/profile_user",
+    path: "/user-profile",
     name: "User Profile",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,

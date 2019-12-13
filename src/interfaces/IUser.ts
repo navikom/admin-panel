@@ -1,9 +1,12 @@
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
-import { IRole } from "interfaces/IRole";
+import { IRole, RoleType } from "interfaces/IRole";
 import { IUsersApps } from "interfaces/IUsersApps";
 import { IUsersRegions } from "interfaces/IUsersRegions";
 import { IUsersDevices } from "interfaces/IUsersDevices";
 import { IUsersEvents } from "interfaces/IUsersEvents";
+import { IPagination } from "interfaces/IPagination";
+import { IObservableArray } from "mobx";
+import { IUsersRoles } from "interfaces/IUsersRoles";
 
 export type GenderType = 'Male' | 'Female';
 export interface IUser extends WithPrimaryKey {
@@ -15,7 +18,7 @@ export interface IUser extends WithPrimaryKey {
   updatedAt?: Date;
   deletedAt?: Date;
   lastLogin?: number;
-  phone?: number;
+  phone?: string;
   birthday?: Date;
   gender?: GenderType;
   anonymous?: boolean;
@@ -27,12 +30,13 @@ export interface IUser extends WithPrimaryKey {
   referrer?: number;
   eventsCount?: number;
   apps?: IUsersApps[];
-  roles?: IRole[];
+  roles: IObservableArray<IUsersRoles>;
   devices?: IUsersDevices[];
   events?: IUsersEvents;
   regions?: IUsersRegions[];
   location?: IUsersRegions;
   lastEvent?: Date;
+  referrals: IPagination<IUser>;
 
   fullDataLoaded: boolean;
 
@@ -43,6 +47,8 @@ export interface IUser extends WithPrimaryKey {
   updateForm(model: IUser): void;
   setAnonymous(value: boolean): void;
   setFullDataLoaded(value?: boolean): void;
+  hasRole(roleId: number): boolean;
+  updateRoles(roles: IUsersRoles[]): void;
   totalTime: string;
   eventsItems: IUsersEvents;
 }

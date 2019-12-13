@@ -10,10 +10,9 @@ export const SIGN_UP_ROUTE: string = "/sign-up";
 export const START_PAGE_ROUTE: string = "/start-page";
 
 //********* Roles **********//
-export const USER_ROLE: string = "role";
-export const ADMIN_ROLE: string = "admin";
-export const PARTNER_ROLE: string = "partner";
-export const SUPER_ADMIN_ROLE: string = "superadmin";
+export const USER_ROLE: number = 1;
+export const ADMIN_ROLE: number = 3;
+export const SUPER_ADMIN_ROLE: number = 2;
 
 //********* Sidebar Categories *********//
 export const SIDEBAR_MAIN = "Main";

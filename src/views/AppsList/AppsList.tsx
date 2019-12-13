@@ -4,7 +4,13 @@ import { observer, useDisposable, useObserver } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router";
 
 // @material-ui/core components
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+
+// @material-ui/icons
+import { Clear } from "@material-ui/icons";
+import AddAlert from "@material-ui/icons/AddAlert";
 
 // models
 import { APPS_LIST_ROUTE } from "models/Constants";
@@ -16,17 +22,12 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 // core components
 import { lazy } from "utils";
-import useStyles from "assets/jss/material-dashboard-react/views/appsStyle";
+import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import CardFooter from "components/Card/CardFooter";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+
 import ProgressButton from "components/CustomButtons/ProgressButton";
 import CustomInput from "components/CustomInput/CustomInput";
 import Snackbar from "components/Snackbar/Snackbar";
-import { Clear } from "@material-ui/icons";
-import AddAlert from "@material-ui/icons/AddAlert";
-import { AppDataStore } from "models/App/AppDataStore";
 
 const Table = lazy(() => import("components/Table/TablePagination"));
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));

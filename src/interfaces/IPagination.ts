@@ -9,6 +9,7 @@ export interface IPagination<T> {
   viewRowsPerPage: number;
   rowsPerPageOptions: number[];
   size: number;
+  getById(id: number): T | undefined;
   fetchItems(): Promise<boolean>;
   getNext(): Promise<boolean>;
   tryGetNext(): Promise<void>;

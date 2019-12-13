@@ -13,4 +13,5 @@ export interface IRoute {
   layout: string;
   auth?: boolean;
   category?: string;
+  role?: number;
 }

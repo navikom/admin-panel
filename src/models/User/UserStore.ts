@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { action, computed, IObservableArray, observable } from "mobx";
 
 // interfaces
 import { IUsersEvents } from "interfaces/IUsersEvents";
@@ -15,6 +15,12 @@ import convertDate from "utils/convertDate";
 import { IUsersApps } from "interfaces/IUsersApps";
 import { UsersApps } from "models/User/UsersApps";
 import { UsersDevices } from "models/User/UsersDevices";
+import { IPagination } from "interfaces/IPagination";
+import { UserReferralsStore } from "models/User/UserReferralsStore";
+import { IRole, RoleType } from "interfaces/IRole";
+import { ADMIN_ROLE, SUPER_ADMIN_ROLE } from "models/Constants";
+import { Roles } from "models/Role/RolesStore";
+import { IUsersRoles } from "interfaces/IUsersRoles";
 
 export const MALE = "Male";
 export const FEMALE = "Female";
@@ -34,7 +40,10 @@ export class UserStore implements IUser {
 
   @observable firstName!: string;
   @observable lastName!: string;
+  @observable phone!: string;
   @observable gender: GenderType = MALE;
+  @observable updatedAt!: Date;
+  @observable deletedAt!: Date;
   @observable birthday!: Date;
   @observable emailVerified: boolean = false;
   @observable notificationEmail!: boolean;
@@ -48,6 +57,8 @@ export class UserStore implements IUser {
   @observable fullDataLoaded: boolean = false;
   @observable devices?: IUsersDevices[];
   @observable apps?: IUsersApps[];
+  @observable referrals: IPagination<IUser>;
+  readonly roles: IObservableArray<IUsersRoles> = observable<IUsersRoles>([]);
 
   @computed
   get eventsItems() {
@@ -66,10 +77,29 @@ export class UserStore implements IUser {
       : Dictionary.defValue(DictionaryService.keys.loggedIn);
   }
 
+  @computed get isSuperAdmin() {
+    return this.hasRole(SUPER_ADMIN_ROLE);
+  }
+
+  @computed get isAdmin() {
+    return this.hasRole(ADMIN_ROLE);
+  }
+
+  hasRole(roleId: number): boolean {
+    return computed(() => {
+      if(!this.roles) return false;
+      return this.roles!.some((e: IUsersRoles) => e.role.roleId === roleId);
+    }).get();
+  }
+
   get totalTime() {
     const ms = Dictionary.moment(this.lastEvent).diff(Dictionary.moment(this.createdAt));
     const diff = Dictionary.moment.duration(ms);
     return [Math.round(diff.asHours()), diff.minutes(), diff.seconds()].join(':');
+  }
+
+  constructor(userId: number) {
+    this.referrals = new UserReferralsStore(userId);
   }
 
   @action
@@ -83,30 +113,54 @@ export class UserStore implements IUser {
 
   @action
   update(model: IUser) {
-    model.eventsCount && (model.eventsCount = Number(model.eventsCount));
+    model.eventsCount && (this.eventsCount = Number(model.eventsCount));
     convertDate(model);
-    Object.assign(this, model);
     !this.events && (this.events = new UserEventsStore(this.userId));
     !this.gender && (this.gender = MALE);
-    if(model.regions) {
-      model.location = model.regions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
-    }
+    model.regions &&
+    (model.location = model.regions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0]);
     model.devices && (this.devices = model.devices.map(device => UsersDevices.from(device)));
     model.apps && (this.apps = model.apps.map(app => UsersApps.from(app)));
+    model.userId && (this.userId = model.userId);
+    model.email && (this.email = model.email);
+    model.firstName && (this.firstName = model.firstName);
+    model.lastName && (this.lastName = model.lastName);
+    model.createdAt && (this.createdAt = model.createdAt);
+    model.updatedAt && (this.updatedAt = model.updatedAt);
+    model.deletedAt && (this.deletedAt = model.deletedAt);
+    model.lastLogin && (this.lastLogin = model.lastLogin);
+    model.phone && (this.phone = model.phone);
+    model.birthday && (this.birthday = model.birthday);
+    model.gender && (this.gender = model.gender);
+    model.emailVerified !== undefined && (this.emailVerified = model.emailVerified);
+    model.phoneVerified !== undefined && (this.phoneVerified = model.phoneVerified);
+    model.notificationEmail !== undefined && (this.notificationEmail = model.notificationEmail);
+    model.notificationSms !== undefined && (this.notificationSms = model.notificationSms);
+    model.subscription !== undefined && (this.subscription = model.subscription);
+    model.referrer && (this.referrer = model.referrer);
+    model.lastEvent && (this.lastEvent = model.lastEvent);
+    model.anonymous !== undefined && (this.anonymous = model.anonymous);
+    model.roles && this.updateRoles(model.roles);
   }
 
   @action updateForm(model: IUser) {
     Object.assign(this, model);
   }
 
+  @action updateRoles(roles: IUsersRoles[]) {
+    this.roles.replace([]);
+    roles.forEach((userRole: IUsersRoles) =>
+      this.roles.push({createdAt: userRole.createdAt, role: Roles.getOrCreate(userRole.role)}));
+  }
+
   static from(model: IUser): UserStore {
-    const user = new UserStore();
+    const user = new UserStore(model.userId);
     user.update(model);
     return user;
   }
 
   static emptyUser(): UserStore {
-    const user = new UserStore();
+    const user = new UserStore(0);
     user.update({
       userId: 0,
       email: "",
@@ -127,7 +181,6 @@ export class UserStore implements IUser {
       referrer: undefined,
       eventsCount: 0,
       apps: undefined,
-      roles: undefined,
       regions: undefined,
       location: undefined,
       lastEvent: undefined

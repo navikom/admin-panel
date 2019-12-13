@@ -14,9 +14,11 @@ import * as Constants from "models/Constants.ts";
 import { Apps } from "models/App/AppsStore";
 import { Settings } from "models/Settings";
 import { AppDataStore } from "models/App/AppDataStore";
+import { Roles } from "models/Role/RolesStore";
+import { Events } from "models/Event/EventsStore";
 
 export class AppStore implements IFlow {
-  @observable role: IRole = new RoleStore();
+  @observable role: IRole = RoleStore.defaultRole();
   @observable user: IUser | null = null;
   @observable navigationHistory?: History;
   userDisposer?: IReactionDisposer;
@@ -43,7 +45,10 @@ export class AppStore implements IFlow {
     this.anonymousDisposer = reaction(() => {
       console.log('this.anonymousDisposer', this.user, this.loggedIn);
       return this.loggedIn;
-    }, (loggedIn: boolean) => this.ifUserChanged());
+    }, async (loggedIn: boolean) => {
+      loggedIn && await Roles.fetch();
+      this.ifUserChanged();
+    });
 
   }
 
@@ -59,7 +64,6 @@ export class AppStore implements IFlow {
     } else {
       this.user.update(model);
     }
-
   }
 
   stop(): void {
@@ -69,16 +73,21 @@ export class AppStore implements IFlow {
     Apps.clear();
   }
 
+  clear() {
+    Events.clear();
+  }
+
   ifUserChanged() {
     console.log(2323232323, this.user);
     if (!this.navigationHistory || !this.user) {
+      this.clear();
       return;
     }
     if (this.user.anonymous) {
       this.navigationHistory.push(Constants.ROOT_ROUTE);
     } else {
-      console.log(2323232323, this.navigationHistory.location.pathname, this.navigationHistory.location.pathname.includes(Constants.PANEL_ROUTE));
-      if (!this.navigationHistory.location.pathname.includes(Constants.PANEL_ROUTE)) {
+      console.log(757575575757, window.location.pathname, window.location.pathname.includes(Constants.PANEL_ROUTE));
+      if (!window.location.pathname.includes(Constants.PANEL_ROUTE)) {
         this.navigationHistory.push(Constants.DASHBOARD_ROUTE);
       } else {
         // causes extra screen reloading
