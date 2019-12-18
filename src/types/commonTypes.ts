@@ -1,0 +1,12 @@
+export type AllUsersType = "All Users";
+export type NewUsersType = "New Users";
+export type ReturningType = "Returning";
+export type EmailType = "email";
+export type SmsType = "sms";
+export type InAppType = "in-app";
+export type PushType = "push";
+export type PMType = "pm";
+export type AMType = "am";
+export type MinutesType = "minutes";
+export type HoursType = "hours";
+export type DaysType = "days";

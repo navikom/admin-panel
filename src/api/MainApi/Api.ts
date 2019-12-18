@@ -1,6 +1,5 @@
 import { ApiBase } from "api/ApiBase";
 import { HttpBase } from "api/HttpBase";
-import settings from "config/server";
 import { ILoginResult } from "interfaces/ILoginResult";
 
 export default class Api extends ApiBase {
@@ -31,11 +30,15 @@ export default class Api extends ApiBase {
   get role(): Roles {
     return new Roles(this.token);
   }
+
+  get segment(): Segments {
+    return new Segments(this.token);
+  }
 }
 
 class User extends HttpBase {
   constructor(token?: string) {
-    super(`${settings.mainApi}/users`, token);
+    super("users", token);
   }
 
   signup(email: string, password: string): Promise<ILoginResult> {
@@ -84,13 +87,13 @@ class User extends HttpBase {
 
 class AEvent extends HttpBase {
   constructor(token?: string) {
-    super(`${settings.mainApi}/events`, token);
+    super("events", token);
   }
 }
 
 class App extends HttpBase {
   constructor(token?: string) {
-    super(`${settings.mainApi}/apps`, token);
+    super("apps", token);
   }
 
   update(appId: number, data: any) {
@@ -108,7 +111,7 @@ class App extends HttpBase {
 
 class Setting extends HttpBase {
   constructor(token?: string) {
-    super(`${settings.mainApi}/settings`, token);
+    super("settings", token);
   }
 
   getData() {
@@ -118,7 +121,7 @@ class Setting extends HttpBase {
 
 class PixartPicture extends HttpBase {
   constructor(token?: string) {
-    super(`${settings.mainApi}/pixart-pictures`, token);
+    super("pixart-pictures", token);
   }
 
   save(data: any) {
@@ -128,6 +131,12 @@ class PixartPicture extends HttpBase {
 
 class Roles extends HttpBase {
   constructor(token?: string) {
-    super(`${settings.mainApi}/roles`, token);
+    super("roles", token);
+  }
+}
+
+class Segments extends HttpBase {
+  constructor(token?: string) {
+    super("segments", token);
   }
 }

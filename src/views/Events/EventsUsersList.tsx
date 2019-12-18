@@ -35,6 +35,7 @@ import style from "assets/jss/material-dashboard-react/views/dashboardStyle";
 // core components
 import { CustomChartBar } from "components/Charts/CustomChartBar";
 import { CustomChartLine } from "components/Charts/CustomChartLine";
+
 const Table = lazy(() => import("components/Table/TablePagination"));
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));
@@ -52,30 +53,33 @@ interface UsersTableProps {
 interface UsersListProps extends RouteComponentProps, WithStyles<typeof style> {
 }
 
-const UsersTable = observer((props: UsersTableProps) => (
-  <Table
-    tableProps={{
-      tableHeaderColor: "primary",
-      tableHead: [
-        Dictionary.defValue(DictionaryService.keys.id),
-        Dictionary.defValue(DictionaryService.keys.date),
-        Dictionary.defValue(DictionaryService.keys.action),
-        Dictionary.defValue(DictionaryService.keys.email),
-        Dictionary.defValue(DictionaryService.keys.status),
-        Dictionary.defValue(DictionaryService.keys.activity)],
-      tableData: Events.eventTableData
-    }}
-    paginationProps={{
-      rowsPerPageOptions: Events.rowsPerPageOptions,
-      count: Events.count,
-      rowsPerPage: Events.viewRowsPerPage,
-      page: Events.viewPage,
-      onChangePage: Events.handleChangePageInView,
-      onChangeRowsPerPage: Events.handleChangeRowsPerPage
-    }}
-    onRowClick={(data: string[]) => props.handleClick(data[0])}
-  />
-));
+const UsersTable = observer((props: UsersTableProps) => {
+    return (
+      <Table
+        tableProps={{
+          tableHeaderColor: "primary",
+          tableHead: [
+            Dictionary.defValue(DictionaryService.keys.id),
+            Dictionary.defValue(DictionaryService.keys.date),
+            Dictionary.defValue(DictionaryService.keys.action),
+            Dictionary.defValue(DictionaryService.keys.email),
+            Dictionary.defValue(DictionaryService.keys.status),
+            Dictionary.defValue(DictionaryService.keys.activity)],
+          tableData: Events.eventTableData
+        }}
+        paginationProps={{
+          rowsPerPageOptions: Events.rowsPerPageOptions,
+          count: Events.count,
+          rowsPerPage: Events.viewRowsPerPage,
+          page: Events.viewPage,
+          onChangePage: Events.handleChangePageInView,
+          onChangeRowsPerPage: Events.handleChangeRowsPerPage
+        }}
+        onRowClick={(data: string[]) => props.handleClick(data[0])}
+      />
+    );
+  }
+);
 
 const EventsUsersList = (props: UsersListProps) => {
 

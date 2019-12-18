@@ -1,5 +1,6 @@
 import {Headers, Body} from "interfaces/Request";
 import { request } from "api/httpRequest";
+import settings from "config/server";
 
 export abstract class HttpBase {
   url: string;
@@ -8,7 +9,7 @@ export abstract class HttpBase {
   currentRequests: {[k: string]: any} = {};
 
   protected constructor(url: string, token?: string) {
-    this.url = url;
+    this.url = `${settings.mainApi}/${url}`;
     this.token = token;
   }
 

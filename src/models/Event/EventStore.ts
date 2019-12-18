@@ -20,7 +20,9 @@ export class EventStore implements IEvent {
 
   static from(model: IEvent) {
     parseModel(model);
+    const userData = model.user;
     model.user = Users.getOrCreate({...model.user, userId: model.userId}) as IUser;
+    model.user.update(userData);
     model.info = EventInfoStore.from(model.info);
     return new EventStore(model);
   }

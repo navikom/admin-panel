@@ -5,7 +5,7 @@ import React from "react";
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IPagination } from "interfaces/IPagination";
 
-type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture";
+type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture" | "segment";
 type RequestTypesInterface = "pagination";
 
 export class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination<T> {

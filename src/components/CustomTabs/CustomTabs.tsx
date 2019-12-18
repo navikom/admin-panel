@@ -17,12 +17,14 @@ interface CustomTabsProps extends WithStyles<typeof customTabsStyle> {
   headerColor: string;
   plainTabs?: boolean;
   tabs: any;
-  title: string;
+  title: React.ReactNode | string;
   rtlActive?: boolean;
+  noCardTitle?: boolean;
+  currentIndex?: number;
 }
 
 const CustomTabs = ({ ...props }: CustomTabsProps) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(props.currentIndex || 0);
 
   const handleChange = (event: React.ChangeEvent<{}>, value: number) => {
     setValue(value);
@@ -33,10 +35,12 @@ const CustomTabs = ({ ...props }: CustomTabsProps) => {
     plainTabs,
     tabs,
     title,
-    rtlActive
+    rtlActive,
+    noCardTitle
   } = props;
   const cardTitle = classNames({
     [classes.cardTitle]: true,
+    [classes.cardTitlePadding]: !noCardTitle,
     [classes.cardTitleRTL]: rtlActive
   });
 

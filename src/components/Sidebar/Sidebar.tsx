@@ -17,7 +17,14 @@ import { IRoute } from "interfaces/IRoute";
 
 // models
 import { App } from "models/App.ts";
-import { SIDEBAR_APPLICATION, SIDEBAR_MAIN, SIDEBAR_OTHER, SIDEBAR_USER, SUPER_ADMIN_ROLE } from "models/Constants";
+import {
+  SIDEBAR_APPLICATION,
+  SIDEBAR_ENGAGE,
+  SIDEBAR_MAIN,
+  SIDEBAR_OTHER,
+  SIDEBAR_USER,
+  SUPER_ADMIN_ROLE
+} from "models/Constants";
 
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
@@ -45,7 +52,7 @@ const Links = observer((props: LinkProps) => {
 
   const getKey = (key: string) => key === SIDEBAR_APPLICATION && props.currentApp ? props.currentApp : key;
   const color = props.color as ColorType;
-  const treeMap = [SIDEBAR_MAIN, SIDEBAR_APPLICATION, SIDEBAR_USER, SIDEBAR_OTHER]
+  const treeMap = [SIDEBAR_MAIN, SIDEBAR_APPLICATION, SIDEBAR_ENGAGE, SIDEBAR_USER, SIDEBAR_OTHER]
     .map((key) =>
       [getKey(key), props.routes.filter((route: google.maps.DirectionsRoute & IRoute) =>
         route.category === key && (!route.role || App.user && App.user.hasRole(route.role)))]);

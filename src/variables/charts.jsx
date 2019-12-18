@@ -43,7 +43,6 @@ const dailySalesChart = {
   // for animation
   animation: {
     draw: function(data) {
-      console.log(data.type, data.index);
       if (data.type === "line" || data.type === "area") {
         color = chartColors[data.index];
         data.element.animate({

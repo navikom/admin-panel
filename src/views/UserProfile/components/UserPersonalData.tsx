@@ -55,6 +55,7 @@ export default observer(() => {
   const store = UserDetails.personalDataStore;
   const user = store.formUser;
   const centerNote = classNames(classes.note, classes.center, extraClasses.label);
+  console.log(55555555555, user.email);
   const onChange = (name: string) =>
     (e: any) => store.onInput({ [name]: e.target.value } as IUser);
   const onChangeDate = (name: string) => (date: any) =>
@@ -78,7 +79,7 @@ export default observer(() => {
           inputProps={{
             disabled: true,
             onChange: onChange("firstName"),
-            value: user.email
+            value: user.email || ""
           }}
           labelText=""/>
       </Grid>

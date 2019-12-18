@@ -20,3 +20,5 @@ export const SIDEBAR_OTHER = "Other";
 export const SIDEBAR_APPLICATION = "Application";
 export const SIDEBAR_USER = "User";
 export const SIDEBAR_ENGAGE = "Engage";
+
+export const EX_LESS_THAN = "less than";

@@ -80,21 +80,17 @@ export class AppStore implements IFlow {
   ifUserChanged() {
     console.log(2323232323, this.user);
     if (!this.navigationHistory || !this.user) {
-      this.clear();
       return;
     }
     if (this.user.anonymous) {
+      this.clear();
       this.navigationHistory.push(Constants.ROOT_ROUTE);
     } else {
       console.log(757575575757, window.location.pathname, window.location.pathname.includes(Constants.PANEL_ROUTE));
       if (!window.location.pathname.includes(Constants.PANEL_ROUTE)) {
         this.navigationHistory.push(Constants.DASHBOARD_ROUTE);
-      } else {
-        // causes extra screen reloading
-        // this.navigationHistory.replace(this.navigationHistory.location.pathname);
       }
     }
-
   }
 
   setHistory(history: History) {

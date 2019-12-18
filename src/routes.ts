@@ -15,13 +15,14 @@ import {
   ListAltOutlined,
   SupervisedUserCircle,
   LinearScaleOutlined,
-  DeviceHub
+  DeviceHub,
+  Mail
 } from "@material-ui/icons";
 
 import { lazy } from "utils";
 import {
   PANEL_ROUTE,
-  SIDEBAR_APPLICATION,
+  SIDEBAR_APPLICATION, SIDEBAR_ENGAGE,
   SIDEBAR_MAIN,
   SIDEBAR_OTHER,
   SIDEBAR_USER,
@@ -49,6 +50,7 @@ const NotificationsPage = lazy(() => import("views/Notifications/Notifications")
 const Guide = lazy(() => import("views/Guide/Guide"));
 const SettingsPage = lazy(() => import("views/Guide/Guide"));
 const Build = lazy(() => import("views/Build/Build"));
+const EmailEngage = lazy(() => import("views/Engagement/Email/Email"));
 // core components/views for RTL layout
 const RTLPage = lazy(() => import("views/RTLPage/RTLPage.tsx"));
 
@@ -155,56 +157,56 @@ const dashboardRoutesMap = {
     auth: true,
     category: SIDEBAR_USER
   },
-  table: {
-    path: "/table",
-    name: "Table List",
-    rtlName: "قائمة الجدول",
-    icon: "content_paste",
-    component: TableList,
-    layout: PANEL_ROUTE,
-    auth: true,
-    category: SIDEBAR_OTHER
-  },
-  typography: {
-    path: "/typography",
-    name: "Typography",
-    rtlName: "طباعة",
-    icon: LibraryBooks,
-    component: Typography,
-    layout: PANEL_ROUTE,
-    auth: true,
-    category: SIDEBAR_OTHER
-  },
-  icons: {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: PANEL_ROUTE,
-    auth: true,
-    category: SIDEBAR_OTHER
-  },
-  maps: {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
-    layout: PANEL_ROUTE,
-    auth: true,
-    category: SIDEBAR_OTHER
-  },
-  notifications: {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: PANEL_ROUTE,
-    auth: true,
-    category: SIDEBAR_OTHER
-  },
+  // table: {
+  //   path: "/table",
+  //   name: "Table List",
+  //   rtlName: "قائمة الجدول",
+  //   icon: "content_paste",
+  //   component: TableList,
+  //   layout: PANEL_ROUTE,
+  //   auth: true,
+  //   category: SIDEBAR_OTHER
+  // },
+  // typography: {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   rtlName: "طباعة",
+  //   icon: LibraryBooks,
+  //   component: Typography,
+  //   layout: PANEL_ROUTE,
+  //   auth: true,
+  //   category: SIDEBAR_OTHER
+  // },
+  // icons: {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   rtlName: "الرموز",
+  //   icon: BubbleChart,
+  //   component: Icons,
+  //   layout: PANEL_ROUTE,
+  //   auth: true,
+  //   category: SIDEBAR_OTHER
+  // },
+  // maps: {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   rtlName: "خرائط",
+  //   icon: LocationOn,
+  //   component: Maps,
+  //   layout: PANEL_ROUTE,
+  //   auth: true,
+  //   category: SIDEBAR_OTHER
+  // },
+  // notifications: {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   rtlName: "إخطارات",
+  //   icon: Notifications,
+  //   component: NotificationsPage,
+  //   layout: PANEL_ROUTE,
+  //   auth: true,
+  //   category: SIDEBAR_OTHER
+  // },
   login: {
     path: "/login",
     name: "login",
@@ -233,16 +235,26 @@ const dashboardRoutesMap = {
     component: StartPage,
     layout: "/main"
   },
-  rtl: {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl",
+  emailEngage: {
+    path: "/engagement-email",
+    name: "Email",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Mail,
+    component: EmailEngage,
+    layout: PANEL_ROUTE,
     auth: true,
-    category: SIDEBAR_OTHER
+    category: SIDEBAR_ENGAGE
   }
+  // rtl: {
+  //   path: "/rtl-page",
+  //   name: "RTL Support",
+  //   rtlName: "پشتیبانی از راست به چپ",
+  //   icon: Language,
+  //   component: RTLPage,
+  //   layout: "/rtl",
+  //   auth: true,
+  //   category: SIDEBAR_OTHER
+  // }
 };
 
 const appItem = {
