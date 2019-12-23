@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
+import { observer, useDisposable } from "mobx-react-lite";
+import { RouteComponentProps } from "react-router";
 
 // @material-ui/icons
 import { AddCircleOutline, Public, List } from "@material-ui/icons";
@@ -12,18 +13,20 @@ import IconButton from "@material-ui/core/IconButton";
 // core components
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));
 const GridItem = lazy(() => import("components/Grid/GridItem"));
-const Overview = lazy(() => import("views/Engagement/Email/Overview"));
 const CustomTabs = lazy(() => import("components/CustomTabs/CustomTabs"));
+const Overview = lazy(() => import("views/Campaigns/Overview"));
+const Table = lazy(() => import("components/Table/TablePagination"));
+const RegularButton = lazy(() => import("components/CustomButtons/Button"));
 
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
-import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import { lazy } from "utils";
+import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import { whiteColor } from "assets/jss/material-dashboard-react";
-
-import Table from "components/Table/TablePagination";
-import RegularButton from "components/CustomButtons/Button";
+import { Campaigns } from "models/Campaign/CampaignsStore";
+import { App } from "models/App";
+import { when } from "mobx";
 
 const extendStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +46,7 @@ const extendStyles = makeStyles((theme: Theme) =>
     }
   }));
 
-const EmailTitle = ({ ...props }) => {
+const Title = ({ ...props }) => {
   const classes = useStyles();
   const eClasses = extendStyles();
   return (
@@ -59,7 +62,7 @@ const EmailTitle = ({ ...props }) => {
 };
 
 const CampaignTable = observer((props) => {
-  const eClasses = extendStyles();
+    const eClasses = extendStyles();
     return (
       <div className={eClasses.root}>
         <Table
@@ -99,14 +102,24 @@ const CampaignTable = observer((props) => {
   }
 );
 
-export default () => {
-  const [open, setOpen] = useState(false);
+export default (props: RouteComponentProps) => {
+  console.log(9999, Campaigns.stores.get(props.match.url));
+
+  const dispose = useDisposable(() =>
+    when(() => App.tokenIsReady, () => Campaigns.fetchItems(props.match.url))
+  );
+
+  useEffect(() => {
+    return () => {
+      dispose();
+    }
+  });
 
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <CustomTabs
-          title={<EmailTitle onClick={() => setOpen(true)}/>}
+          title={<Title onClick={() => {}}/>}
           noCardTitle
           headerColor="primary"
           currentIndex={1}

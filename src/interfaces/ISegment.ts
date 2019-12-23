@@ -43,7 +43,7 @@ type AttributeType = IAttribute | (IAttribute | AndType | OrType)[] | null;
 
 export type VisitorType = AllUsersType | NewUsersType | ReturningType | INumberOfSessions;
 
-interface IUserTab {
+export interface IUserTab {
   visitorType: VisitorType;
   lastSeen: IBefore | IAfter | IWithing;
   geo: IGeo;
@@ -62,13 +62,13 @@ interface IBehaviorEvent {
 
 type BehaviorType = IBehaviorEvent | (IBehaviorEvent | AndType | OrType)[] | null;
 
-interface IBehaviorTab {
+export interface IBehaviorTab {
   usersWhoDidEvents: BehaviorType;
   and: boolean;
   usersWhoDidNotDoEvents: BehaviorType;
 }
 
-interface ITechnologyTab {
+export interface ITechnologyTab {
   android: IAndroidDevice | null;
   ios: IIOSDevice | null;
 }
@@ -77,7 +77,7 @@ export interface ISegment extends WithPrimaryKey {
   segmentId: number;
   name: string;
   pk: string;
-  userTab: IUserTab;
-  behaviorTab: IBehaviorTab;
-  technologyTab: ITechnologyTab;
+  userTab?: IUserTab;
+  behaviorTab?: IBehaviorTab;
+  technologyTab?: ITechnologyTab;
 }

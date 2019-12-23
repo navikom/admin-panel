@@ -5,10 +5,10 @@ import React from "react";
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IPagination } from "interfaces/IPagination";
 
-type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture" | "segment";
+type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture" | "segment" | "campaign";
 type RequestTypesInterface = "pagination";
 
-export class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination<T> {
+export abstract class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination<T> {
   started: boolean = false;
   page: number = 0;
   pageSize: number = 20;
@@ -55,7 +55,7 @@ export class Pagination<T extends WithPrimaryKey> extends Errors implements IPag
     return computed(() => this.items.some((e: any) => id === e[this.pk])).get();
   }
 
-  constructor(pKey: string, apiMethod: ApiMethodsInterface, size: number,
+  protected constructor(pKey: string, apiMethod: ApiMethodsInterface, size: number,
               requestMethod: RequestTypesInterface = "pagination", rowsPerPageOption: number[] = [5, 10, 25, 50],
               additionalParams?: any, viewRowsPerPage?: number) {
     super();

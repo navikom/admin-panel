@@ -16,17 +16,22 @@ import {
   SupervisedUserCircle,
   LinearScaleOutlined,
   DeviceHub,
-  Mail
+  Mail,
+  PermPhoneMsg,
+  ViewCompact,
+  ConfirmationNumber
 } from "@material-ui/icons";
 
 import { lazy } from "utils";
 import {
-  PANEL_ROUTE,
+  APPS_LIST_ROUTE, DASHBOARD_ROUTE,
+  EMAIL_CAMPAIGNS_ROUTE, EVENTS_USERS_LIST_ROUTE, IN_APP_CAMPAIGNS_ROUTE, LOGIN_ROUTE,
+  PANEL_ROUTE, PUSH_CAMPAIGNS_ROUTE,
   SIDEBAR_APPLICATION, SIDEBAR_ENGAGE,
   SIDEBAR_MAIN,
   SIDEBAR_OTHER,
-  SIDEBAR_USER,
-  SUPER_ADMIN_ROLE
+  SIDEBAR_USER, SIGN_UP_ROUTE, SMS_CAMPAIGNS_ROUTE, START_PAGE_ROUTE,
+  SUPER_ADMIN_ROLE, USERS_LIST_ROUTE
 } from "models/Constants";
 import { IRoute } from "interfaces/IRoute";
 
@@ -50,7 +55,7 @@ const NotificationsPage = lazy(() => import("views/Notifications/Notifications")
 const Guide = lazy(() => import("views/Guide/Guide"));
 const SettingsPage = lazy(() => import("views/Guide/Guide"));
 const Build = lazy(() => import("views/Build/Build"));
-const EmailEngage = lazy(() => import("views/Engagement/Email/Email"));
+const Campaigns = lazy(() => import("views/Campaigns/CampaignsList"));
 // core components/views for RTL layout
 const RTLPage = lazy(() => import("views/RTLPage/RTLPage.tsx"));
 
@@ -236,11 +241,41 @@ const dashboardRoutesMap = {
     layout: "/main"
   },
   emailEngage: {
-    path: "/engagement-email",
+    path: "/campaigns/email",
     name: "Email",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Mail,
-    component: EmailEngage,
+    component: Campaigns,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_ENGAGE
+  },
+  smsEngage: {
+    path: "/campaigns/sms",
+    name: "SMS",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: PermPhoneMsg,
+    component: Campaigns,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_ENGAGE
+  },
+  inAppEngage: {
+    path: "/campaigns/in-app",
+    name: "In-App",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: ViewCompact,
+    component: Campaigns,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_ENGAGE
+  },
+  pushEngage: {
+    path: "/campaigns/push",
+    name: "Push",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: ConfirmationNumber,
+    component: Campaigns,
     layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_ENGAGE

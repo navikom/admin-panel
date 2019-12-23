@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { when } from "mobx";
 import { observer, useDisposable, useObserver } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router";
@@ -68,8 +68,14 @@ interface AppsProps extends RouteComponentProps {
 function AppList(props: AppsProps) {
   const classes = useStyles();
 
-  useDisposable(() =>
+  const dispose = useDisposable(() =>
     when(() => App.tokenIsReady, () => Apps.fetchItems()));
+
+  useEffect(() => {
+    return () => {
+      dispose();
+    }
+  });
 
   return (
     <GridContainer>

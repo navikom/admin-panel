@@ -1,10 +1,14 @@
 import { action, observable } from "mobx";
-import { ISegment, VisitorType } from "../../interfaces/ISegment";
+import { IBehaviorTab, ISegment, ITechnologyTab, IUserTab, VisitorType } from "interfaces/ISegment";
 
 export class SegmentStore implements ISegment {
   @observable name!: string;
   @observable segmentId!: number;
   @observable visitorType!: VisitorType;
+
+  @observable userTab?: IUserTab;
+  @observable behaviorTab?: IBehaviorTab;
+  @observable technologyTab?: ITechnologyTab;
 
   pk: string = "segmentId";
 
@@ -17,4 +21,5 @@ export class SegmentStore implements ISegment {
     segment.update(model);
     return segment;
   }
+
 }

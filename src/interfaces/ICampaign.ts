@@ -1,6 +1,7 @@
 import { VariantType } from "interfaces/IVariant";
 import { ISegment } from "interfaces/ISegment";
 import { AMType, EmailType, InAppType, PMType, PushType, SmsType } from "types/commonTypes";
+import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 
 export type ChannelType = EmailType | SmsType | InAppType | PushType;
 
@@ -24,41 +25,42 @@ interface IRunType {
   name: string;
 }
 
-interface IOneTimeRun extends IRunType {
+export interface IOneTimeRun extends IRunType {
   now: boolean;
   later: Date;
   userTimezone: boolean;
   appTimezone: boolean
 }
 
-interface ITriggerRun extends IRunType {
+export interface ITriggerRun extends IRunType {
   eventName: string;
   sendAsOccurs: boolean;
   waitMilliseconds: number
 }
 
-interface IRecurringRun extends IRunType {
+export interface IRecurringRun extends IRunType {
   reoccur: IMonthly | IDaily | IHourly;
 }
 
-interface IConversion {
+export interface IConversion {
   event: string;
   deadlineFromDeliveryMessage: number
 }
 
-export interface ICampaign {
-  campaignId: number;
-  name: string;
-  runType: IOneTimeRun | ITriggerRun | IRecurringRun;
-  channelType: ChannelType;
+export interface ICampaign extends WithPrimaryKey {
+  campaignId?: number;
+  name?: string;
+  runType?: IOneTimeRun | ITriggerRun | IRecurringRun;
+  channelType?: ChannelType;
   onlyForSubscribed: boolean;
-  segments: ISegment[];
-  excludeSegments: ISegment[];
+  segments?: ISegment[];
+  excludeSegments?: ISegment[];
   frequencyCap: boolean;
-  startDate: Date;
-  endDate: Date | null;
-  targetAndroidApps: string[];
-  targetIOSApps: string[];
+  startDate?: Date;
+  endDate?: Date | null;
+  targetAndroidApps?: string[];
+  targetIOSApps?: string[];
   conversion: IConversion | null;
-  variants: VariantType[];
+  variants?: VariantType[];
+  pk: string;
 }

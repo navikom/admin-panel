@@ -7,8 +7,9 @@ import { IUsersEvents } from "interfaces/IUsersEvents";
 import { IPagination } from "interfaces/IPagination";
 import { IObservableArray } from "mobx";
 import { IUsersRoles } from "interfaces/IUsersRoles";
+import { FemaleType, MaleType } from "types/commonTypes";
 
-export type GenderType = 'Male' | 'Female';
+export type GenderType = MaleType | FemaleType;
 export interface IUser extends WithPrimaryKey {
   readonly userId: number;
   email?: string;
