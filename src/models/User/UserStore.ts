@@ -100,6 +100,8 @@ export class UserStore implements IUser {
 
   constructor(userId: number) {
     this.referrals = new UserReferralsStore(userId);
+    this.userId = userId;
+    this.events = new UserEventsStore(userId);
   }
 
   @action
@@ -115,13 +117,11 @@ export class UserStore implements IUser {
   update(model: IUser) {
     model.eventsCount && (this.eventsCount = Number(model.eventsCount));
     convertDate(model);
-    !this.events && (this.events = new UserEventsStore(this.userId));
     !this.gender && (this.gender = MALE);
     model.regions &&
     (model.location = model.regions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0]);
     model.devices && (this.devices = model.devices.map(device => UsersDevices.from(device)));
     model.apps && (this.apps = model.apps.map(app => UsersApps.from(app)));
-    model.userId && (this.userId = model.userId);
     model.email && (this.email = model.email);
     model.firstName && (this.firstName = model.firstName);
     model.lastName && (this.lastName = model.lastName);

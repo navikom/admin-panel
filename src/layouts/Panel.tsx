@@ -30,7 +30,7 @@ import routes, { appRoutes } from "routes";
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle";
 
 import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import logo from "assets/img/webinsolut.png";
 import WaitingComponent from "hocs/WaitingComponent";
 import { PANEL_ROUTE } from "models/Constants";
 
@@ -112,7 +112,7 @@ export default (props: RouteComponentProps) => {
       <Sidebar
         routes={sidebarRoutes}
         currentApp={currentApp}
-        logoText={"WebInSolut"}
+        logoText={"ebInSolut"}
         logo={logo}
         image={appImage}
         handleDrawerToggle={handleDrawerToggle}

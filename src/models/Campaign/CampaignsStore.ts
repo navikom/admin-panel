@@ -19,15 +19,22 @@ class CampaignsStore {
     [IN_APP_CAMPAIGNS_ROUTE, InAppCampaigns],
     [PUSH_CAMPAIGNS_ROUTE, PushCampaigns]
   ]);
+  @observable currentStore: IChannelCampaigns<ICampaign> | null = null;
+
+  @action bindCurrentStore(key: string) {
+    this.currentStore = this.stores.get(key) as IChannelCampaigns<ICampaign>;
+  }
 
   @action async fetchItems(key: string) {
     const store = this.stores.get(key);
     try {
       await store!.fetchItems();
     } catch (e) {
+      console.log("Campaign %s fetch Items error: %s", this.currentStore!.title, e.message);
       store!.setError(e.message);
     }
   }
+
 }
 
 export const Campaigns = new CampaignsStore();

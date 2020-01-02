@@ -9,12 +9,20 @@ export abstract class ChannelCampaigns extends Pagination<ICampaign> {
       [5, 10, 25, 50], channel);
   }
 
-  @action push(data: CampaignStore[]) {
+  @action push(data: ICampaign[]) {
     let l = data.length;
     while (l--) {
       if(!this.has(data[l].campaignId)) {
         this.items.push(CampaignStore.from(data[l]));
       }
     }
+  }
+
+  @action
+  getOrCreate(data: ICampaign) {
+    if(!this.has(data.campaignId)) {
+      this.push([data]);
+    }
+    return this.getById(data.campaignId as number);
   }
 }

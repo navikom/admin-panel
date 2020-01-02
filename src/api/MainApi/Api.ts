@@ -38,6 +38,10 @@ export default class Api extends ApiBase {
   get campaign(): Campaign {
     return new Campaign(this.token);
   }
+
+  get region(): Region {
+    return new Region(this.token);
+  }
 }
 
 class User extends HttpBase {
@@ -148,5 +152,11 @@ class Segments extends HttpBase {
 class Campaign extends HttpBase {
   constructor(token?: string) {
     super("campaigns", token);
+  }
+}
+
+class Region extends HttpBase {
+  constructor(token?: string) {
+    super("regions", token);
   }
 }

@@ -2,11 +2,6 @@
 import {
   Dashboard,
   Person,
-  LibraryBooks,
-  BubbleChart,
-  LocationOn,
-  Notifications,
-  Language,
   CastForEducation,
   People,
   Image,
@@ -19,7 +14,8 @@ import {
   Mail,
   PermPhoneMsg,
   ViewCompact,
-  ConfirmationNumber
+  ConfirmationNumber,
+  PieChart
 } from "@material-ui/icons";
 
 import { lazy } from "utils";
@@ -55,7 +51,10 @@ const NotificationsPage = lazy(() => import("views/Notifications/Notifications")
 const Guide = lazy(() => import("views/Guide/Guide"));
 const SettingsPage = lazy(() => import("views/Guide/Guide"));
 const Build = lazy(() => import("views/Build/Build"));
-const Campaigns = lazy(() => import("views/Campaigns/CampaignsList"));
+const CampaignsList = lazy(() => import("views/Campaigns/CampaignsList"));
+const CampaignsItem = lazy(() => import("views/Campaigns/CampaignsItem"));
+const SegmentsList = lazy(() => import("views/Segments/SegmentsList"));
+const SegmentsItem = lazy(() => import("views/Segments/SegmentsItem"));
 // core components/views for RTL layout
 const RTLPage = lazy(() => import("views/RTLPage/RTLPage.tsx"));
 
@@ -141,6 +140,26 @@ const dashboardRoutesMap = {
     auth: true,
     category: SIDEBAR_MAIN,
     role: SUPER_ADMIN_ROLE
+  },
+  segments: {
+    path: "/segments",
+    name: "Segments",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: PieChart,
+    component: SegmentsList,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
+  },
+  segment: {
+    url: "/segments",
+    params: "/:segmentId",
+    name: "Segment",
+    rtlName: "ملف تعريفي للمستخدم",
+    component: SegmentsItem,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   apps: {
     path: "/apps",
@@ -245,40 +264,80 @@ const dashboardRoutesMap = {
     name: "Email",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Mail,
-    component: Campaigns,
+    component: CampaignsList,
     layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_ENGAGE
+  },
+  emailEngageItem: {
+    url: "/campaigns/email",
+    params: "/:campaignId",
+    name: "Email campaign",
+    rtlName: "لوحة القيادة",
+    component: CampaignsItem,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   smsEngage: {
     path: "/campaigns/sms",
     name: "SMS",
     rtlName: "ملف تعريفي للمستخدم",
     icon: PermPhoneMsg,
-    component: Campaigns,
+    component: CampaignsList,
     layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_ENGAGE
+  },
+  smsEngageItem: {
+    url: "/campaigns/sms",
+    params: "/:campaignId",
+    name: "SMS campaign",
+    rtlName: "لوحة القيادة",
+    component: CampaignsItem,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   inAppEngage: {
     path: "/campaigns/in-app",
     name: "In-App",
     rtlName: "ملف تعريفي للمستخدم",
     icon: ViewCompact,
-    component: Campaigns,
+    component: CampaignsList,
     layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_ENGAGE
+  },
+  inAppEngageItem: {
+    url: "/campaigns/in-app",
+    params: "/:campaignId",
+    name: "In-App campaign",
+    rtlName: "لوحة القيادة",
+    component: CampaignsItem,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   },
   pushEngage: {
     path: "/campaigns/push",
     name: "Push",
     rtlName: "ملف تعريفي للمستخدم",
     icon: ConfirmationNumber,
-    component: Campaigns,
+    component: CampaignsList,
     layout: PANEL_ROUTE,
     auth: true,
     category: SIDEBAR_ENGAGE
+  },
+  pushEngageItem: {
+    url: "/campaigns/push",
+    params: "/:campaignId",
+    name: "Push campaign",
+    rtlName: "لوحة القيادة",
+    component: CampaignsItem,
+    layout: PANEL_ROUTE,
+    auth: true,
+    category: SIDEBAR_MAIN
   }
   // rtl: {
   //   path: "/rtl-page",
@@ -293,7 +352,7 @@ const dashboardRoutesMap = {
 };
 
 const appItem = {
-  url: "/apps",
+  url: "/app",
   params: "/:appId",
   name: "Common",
   rtlName: "لوحة القيادة",
@@ -314,37 +373,19 @@ export const appRoutes: {[key: string]: IRoute[]} = {
   "1": [
     {
       ...appItem,
-      path: "/apps/1",
+      path: "/app/1/overview",
       params: undefined,
       url: undefined,
       icon: ListAltOutlined
     },
     {
       ...appItem,
-      path: "/apps/1/pictures",
+      path: "/app/1/pictures",
       params: undefined,
       url: undefined,
       name: "Pictures",
       rtlName: "لوحة القيادة",
       icon: Image,
-    }
-  ],
-  "2": [
-    {
-      ...appItem,
-      path: "/apps/2",
-      params: undefined,
-      url: undefined,
-      icon: ListAltOutlined
-    }
-  ],
-  "11": [
-    {
-      ...appItem,
-      path: "/apps/11",
-      params: undefined,
-      url: undefined,
-      icon: ListAltOutlined
     }
   ]
 };

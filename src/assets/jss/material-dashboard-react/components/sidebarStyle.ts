@@ -17,7 +17,7 @@ import {
 } from "assets/jss/material-dashboard-react.ts";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-export default makeStyles((theme: Theme) =>  createStyles({
+export default makeStyles((theme: Theme) => createStyles({
     drawerPaper: {
       border: "none",
       position: "fixed",
@@ -71,8 +71,8 @@ export default makeStyles((theme: Theme) =>  createStyles({
         position: "absolute",
         bottom: "0",
 
-        height: "1px",
-        right: "15px",
+        height: theme.typography.pxToRem(1),
+        right: theme.typography.pxToRem(15),
         width: "calc(100% - 30px)",
         backgroundColor: "rgba(" + hexToRgb(grayColor[6]) + ", 0.3)"
       }
@@ -82,10 +82,10 @@ export default makeStyles((theme: Theme) =>  createStyles({
       textTransform: "uppercase",
       padding: "5px 0",
       display: "block",
-      fontSize: "18px",
+      fontSize: theme.typography.pxToRem(18),
       textAlign: "left",
       fontWeight: 400,
-      lineHeight: "30px",
+      lineHeight: theme.typography.pxToRem(30),
       textDecoration: "none",
       backgroundColor: "transparent",
       "&,&:hover": {
@@ -98,16 +98,19 @@ export default makeStyles((theme: Theme) =>  createStyles({
     logoImage: {
       width: "30px",
       display: "inline-block",
-      maxHeight: "30px",
-      marginLeft: "10px",
-      marginRight: "15px"
+      maxHeight: theme.typography.pxToRem(30),
+      marginLeft: theme.typography.pxToRem(10)
     },
     img: {
-      width: "35px",
-      top: "22px",
+      width: theme.typography.pxToRem(35),
+      top: theme.typography.pxToRem(22),
       position: "absolute",
       verticalAlign: "middle",
       border: "0"
+    },
+    logoText: {
+      marginLeft: theme.typography.pxToRem(35),
+      marginTop: theme.typography.pxToRem(8)
     },
     background: {
       position: "absolute",
@@ -131,7 +134,7 @@ export default makeStyles((theme: Theme) =>  createStyles({
       }
     },
     list: {
-      marginTop: "20px",
+      marginTop: theme.typography.pxToRem(20),
       paddingLeft: "0",
       paddingTop: "0",
       paddingBottom: "0",
@@ -151,7 +154,7 @@ export default makeStyles((theme: Theme) =>  createStyles({
       width: "100%",
       transition: "all 300ms linear",
       margin: "10px 15px 0",
-      borderRadius: "3px",
+      borderRadius: theme.typography.pxToRem(3),
       position: "relative",
       display: "block",
       padding: "10px 15px",
@@ -162,26 +165,26 @@ export default makeStyles((theme: Theme) =>  createStyles({
       }
     },
     itemIcon: {
-      width: "24px",
-      height: "30px",
-      fontSize: "24px",
-      lineHeight: "30px",
+      width: theme.typography.pxToRem(24),
+      height: theme.typography.pxToRem(30),
+      fontSize: theme.typography.pxToRem(24),
+      lineHeight: theme.typography.pxToRem(30),
       float: "left",
-      marginRight: "15px",
+      marginRight: theme.typography.pxToRem(15),
       textAlign: "center",
       verticalAlign: "middle",
       color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"
     },
     itemIconRTL: {
-      marginRight: "3px",
-      marginLeft: "15px",
+      marginRight: theme.typography.pxToRem(3),
+      marginLeft: theme.typography.pxToRem(15),
       float: "right"
     },
     itemText: {
       ...defaultFont,
       margin: "0",
-      lineHeight: "30px",
-      fontSize: "14px",
+      lineHeight: theme.typography.pxToRem(30),
+      fontSize: theme.typography.pxToRem(14),
       color: whiteColor
     },
     categoryText: {
@@ -286,7 +289,7 @@ export default makeStyles((theme: Theme) =>  createStyles({
       position: "relative",
       height: "calc(100vh - 75px)",
       overflow: "auto",
-      width: "260px",
+      width: theme.typography.pxToRem(260),
       zIndex: 4,
       overflowScrolling: "touch"
     },
@@ -294,7 +297,7 @@ export default makeStyles((theme: Theme) =>  createStyles({
       [theme.breakpoints.up("md")]: {
         position: "absolute",
         width: "100%",
-        bottom: "13px"
+        bottom: theme.typography.pxToRem(13)
       }
     }
   })

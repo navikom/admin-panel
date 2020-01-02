@@ -1,28 +1,34 @@
 import { VariantType } from "interfaces/IVariant";
 import { ISegment } from "interfaces/ISegment";
-import { AMType, EmailType, InAppType, PMType, PushType, SmsType } from "types/commonTypes";
+import {
+  AMType, ChannelType,
+  EmailType,
+  InAppType,
+  PMType,
+  PushType,
+  RunType,
+  SmsType
+} from "types/commonTypes";
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 
-export type ChannelType = EmailType | SmsType | InAppType | PushType;
-
-interface IHourly {
+export interface IHourly {
   hours: number;
   minutes: number;
 }
 
-interface IMonthly {
+export interface IMonthly {
   day: number;
   time: IHourly;
   period: PMType | AMType;
 }
 
-interface IDaily {
+export interface IDaily {
   day: string;
   time: IHourly;
 }
 
-interface IRunType {
-  name: string;
+export interface IRunType {
+  readonly type: RunType;
 }
 
 export interface IOneTimeRun extends IRunType {
@@ -33,13 +39,16 @@ export interface IOneTimeRun extends IRunType {
 }
 
 export interface ITriggerRun extends IRunType {
-  eventName: string;
+  eventName?: string;
   sendAsOccurs: boolean;
-  waitMilliseconds: number
+  startDate: Date;
+  endDate?: Date | null;
 }
 
 export interface IRecurringRun extends IRunType {
   reoccur: IMonthly | IDaily | IHourly;
+  startDate: Date;
+  endDate?: Date | null;
 }
 
 export interface IConversion {
@@ -48,19 +57,18 @@ export interface IConversion {
 }
 
 export interface ICampaign extends WithPrimaryKey {
-  campaignId?: number;
+  campaignId: number;
+  readonly channelType: ChannelType;
+  readonly pk: string;
+
   name?: string;
-  runType?: IOneTimeRun | ITriggerRun | IRecurringRun;
-  channelType?: ChannelType;
+  runType: IOneTimeRun | ITriggerRun | IRecurringRun;
   onlyForSubscribed: boolean;
   segments?: ISegment[];
   excludeSegments?: ISegment[];
   frequencyCap: boolean;
-  startDate?: Date;
-  endDate?: Date | null;
   targetAndroidApps?: string[];
   targetIOSApps?: string[];
   conversion: IConversion | null;
   variants?: VariantType[];
-  pk: string;
 }

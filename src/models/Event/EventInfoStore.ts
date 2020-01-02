@@ -2,7 +2,7 @@ import { IEventInfo } from "interfaces/IEventInfo";
 import { IDevice } from "interfaces/IDevice";
 import { IRegion } from "interfaces/IRegion";
 import { DeviceStore } from "models/Device/DeviceStore";
-import { RegionStore } from "models/RegionStore";
+import { RegionStore } from "models/Region/RegionStore";
 import { IApp } from "interfaces/IApp";
 import { AppStore } from "models/App/AppStore";
 

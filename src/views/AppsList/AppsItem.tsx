@@ -69,9 +69,9 @@ const Content = observer((props: { app: IApp, children: React.ReactNode }) => {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>{Dictionary.defValue(DictionaryService.keys.applicationsList)}</h4>
+                  <h4 className={classes.cardTitleWhite}>{Dictionary.defValue(DictionaryService.keys.application)}</h4>
                   <p className={classes.cardCategoryWhite}>
-                    {Dictionary.defValue(DictionaryService.keys.availableApplications)}
+                    {Dictionary.defValue(DictionaryService.keys.appDetails, AppDataStore.app!.title)}
                   </p>
                 </CardHeader>
                 <CardBody>

@@ -13,7 +13,7 @@ import { Clear } from "@material-ui/icons";
 import AddAlert from "@material-ui/icons/AddAlert";
 
 // models
-import { APPS_LIST_ROUTE } from "models/Constants";
+import { APP_LIST_ROUTE } from "models/Constants";
 import { Apps } from "models/App/AppsStore";
 import { App } from "models/App";
 
@@ -89,7 +89,7 @@ function AppList(props: AppsProps) {
           </CardHeader>
           <CardBody>
             <AppTable
-              handleClick={(appId: string) => props.history.push(APPS_LIST_ROUTE + "/" + appId)}
+              handleClick={(appId: string) => props.history.push(APP_LIST_ROUTE + "/" + appId)}
             />
           </CardBody>
           <CardFooter>

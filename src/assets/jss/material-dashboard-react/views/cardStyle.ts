@@ -42,4 +42,5 @@ export default makeStyles((theme: Theme) =>
     center: {
       alignItems: "center"
     }
-  }));
+  })
+);

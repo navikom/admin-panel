@@ -17,6 +17,9 @@ export default makeStyles((theme: Theme) =>
     center: {
       alignSelf: "center"
     },
+    textToRight: {
+      textAlign: "right"
+    },
     divider: {
       marginTop: theme.typography.pxToRem(10),
       marginBottom: theme.typography.pxToRem(10)

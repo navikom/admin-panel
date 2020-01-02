@@ -1,63 +1,72 @@
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
-import { ChannelType } from "interfaces/ICampaign";
+import { IAndroidDevice, IIOSDevice } from "interfaces/ISegmentDevice";
+import { ChannelType } from "types/commonTypes";
 import {
-  IAfter,
-  IAtLeastOnce,
-  IBefore,
-  IOnce,
-  IWithing, NumberExpressionType
-} from "interfaces/IExpressions";
-import { IAndroidDevice, IIOSDevice, ISegmentDevice } from "interfaces/ISegmentDevice";
-import { AllUsersType, NewUsersType, ReturningType } from "types/commonTypes";
-import { AndType, OrType, AnyType, NoneType } from "types/expressions";
+  AndType,
+  OrType,
+  NumberTypes,
+  DateTypes,
+  AtLeastOnceType,
+  OnceType
+} from "types/expressions";
+import { IDateFilter, INumberFilter, IStringFilter } from "interfaces/IFilters";
+import { IRegion } from "interfaces/IRegion";
 
-interface INumberOfSessions {
-  condition: string;
-  value: number;
+export interface IVisitor {
+  name: string;
 }
 
-interface IGeo {
-  switch: AnyType | NoneType;
-  countries: string[];
-  cities: string[];
+export interface INumberOfSessions extends INumberFilter, IVisitor {}
+
+export interface IGeo {
+  include: IRegion[] | null;
+  exclude: IRegion[] | null;
 }
 
 interface IAttribute {
   property: string;
-  is: string;
-  typeValue: string;
-  value: string | number | boolean;
+  expression: IStringFilter | INumberFilter | IDateFilter;
 }
 
-interface IUserIDs {
+export interface IUserIDs {
   is: string;
   value: number | number[] | boolean;
 }
 
-interface IReachability {
+export interface IReachability {
   on: boolean;
   value: ChannelType;
 }
 
-type AttributeType = IAttribute | (IAttribute | AndType | OrType)[] | null;
-
-export type VisitorType = AllUsersType | NewUsersType | ReturningType | INumberOfSessions;
+export type AttributeType = IAttribute | (IAttribute | AndType | OrType)[] | null;
 
 export interface IUserTab {
-  visitorType: VisitorType;
-  lastSeen: IBefore | IAfter | IWithing;
-  geo: IGeo;
+  visitorType: INumberOfSessions;
+  lastSeen: IDateFilter | null;
+  geo: IGeo | null;
   attributes: AttributeType;
-  userIDs: IUserIDs;
-  reachability: IReachability;
+  userIDs: IUserIDs | null;
+  reachability: IReachability | null;
+
+  updateVisitor(name: string): void;
+  updateVisitorCondition(is: NumberTypes): void;
+  updateVisitorConditionValue(value: number | number[], key: "values" | "value" | "min" | "max"): void;
+  updateLastSeen(is?: DateTypes): void;
+  updateLastSeenValue(date: Date, key: "date" | "from" | "to"): void;
+  clear(): void;
 }
 
-type NumberOfOccursType = NumberExpressionType;
+export interface IOccurs {
+  is?: AtLeastOnceType | OnceType | NumberTypes,
+  value?: number | boolean | number[];
+  min?: number;
+  max?: number;
+}
 
 interface IBehaviorEvent {
   name: string;
   attributes: AttributeType;
-  occurs: IAtLeastOnce | IOnce | NumberOfOccursType;
+  occurs: IOccurs;
 }
 
 type BehaviorType = IBehaviorEvent | (IBehaviorEvent | AndType | OrType)[] | null;
@@ -80,4 +89,6 @@ export interface ISegment extends WithPrimaryKey {
   userTab?: IUserTab;
   behaviorTab?: IBehaviorTab;
   technologyTab?: ITechnologyTab;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

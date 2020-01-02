@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
 // @material-ui/core components
 import Drawer from "@material-ui/core/Drawer";
@@ -23,13 +24,11 @@ import {
   SIDEBAR_MAIN,
   SIDEBAR_OTHER,
   SIDEBAR_USER,
-  SUPER_ADMIN_ROLE
 } from "models/Constants";
 
 // core components
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
+import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.jsx";
-import withStyles from "@material-ui/core/styles/withStyles";
 import { Dictionary } from "services/Dictionary/Dictionary";
 
 import useSidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle";
@@ -47,7 +46,7 @@ const Links = observer((props: LinkProps) => {
   const classes = useSidebarStyle();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
-    return props.location.pathname === routeName;
+    return props.location.pathname.includes(routeName);
   };
 
   const getKey = (key: string) => key === SIDEBAR_APPLICATION && props.currentApp ? props.currentApp : key;
@@ -143,14 +142,26 @@ const Brand = ({...props}) => {
       >
         <div className={classes.logoImage}>
           <img src={props.logo} alt="logo" className={classes.img}/>
+          <div className={classes.logoText}>{props.logoText}</div>
         </div>
-        {props.logoText}
       </a>
     </div>
   )
 }
 
-const Sidebar = ({...props}) => {
+interface ISidebar extends RouteComponentProps {
+  routes: (google.maps.DirectionsRoute & IRoute)[];
+  rtlActive: boolean;
+  handleDrawerToggle(): void;
+  logoText: string;
+  open: boolean;
+  logo: any;
+  color: string;
+  image: any;
+  currentApp: string;
+}
+
+const Sidebar = (props: ISidebar) => {
   const classes = useSidebarStyle();
   const {color, logo, image, logoText, routes, history, currentApp, rtlActive} = props;
 
@@ -173,8 +184,7 @@ const Sidebar = ({...props}) => {
         >
           <Brand logo={logo} logoText={logoText} classes={classes}/>
           <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks history={history}/>
-            : <AdminNavbarLinks history={history}/>}
+            {props.rtlActive ? <RTLNavbarLinks history={history}/> : <AdminNavbarLinks {...props}/>}
             <Links color={color} rtlActive={rtlActive} routes={routes} location={props.location} currentApp={currentApp}/>
           </div>
           {image !== undefined ? (

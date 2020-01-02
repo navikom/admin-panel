@@ -4,7 +4,7 @@ import {
   whiteColor
 } from "assets/jss/material-dashboard-react.ts";
 
-import dropdownStyle from "assets/jss/material-dashboard-react/dropdownStyle.jsx";
+import dropdownStyle from "assets/jss/material-dashboard-react/dropdownStyle.ts";
 
 const headerLinksStyle = theme => ({
   ...dropdownStyle(theme),

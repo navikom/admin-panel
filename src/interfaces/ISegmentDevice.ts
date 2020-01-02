@@ -1,28 +1,26 @@
-import {
-  DateExpressionType, NumberExpressionType, StringExpressionType
 
-} from "interfaces/IExpressions";
+import { IDateFilter, INumberFilter, IStringFilter } from "interfaces/IFilters.ts";
 
 export interface ISegmentDevice {
-  appInstallationDate?: DateExpressionType;
-  lastSeen?: DateExpressionType;
-  totalTimeSpent?: NumberExpressionType;
-  appVersionName?: StringExpressionType;
-  appId?: StringExpressionType;
-  appVersionCode?: NumberExpressionType;
-  advertisingId?: NumberExpressionType;
-  apiVersion?: NumberExpressionType;
-  sdkVersion?: NumberExpressionType;
-  model?: StringExpressionType;
-  locale?: StringExpressionType;
+  appInstallationDate?: IDateFilter;
+  lastSeen?: IDateFilter;
+  totalTimeSpent?: INumberFilter;
+  appVersionName?: IStringFilter;
+  appId?: IStringFilter;
+  appVersionCode?: INumberFilter;
+  advertisingId?: INumberFilter;
+  apiVersion?: INumberFilter;
+  sdkVersion?: INumberFilter;
+  model?: IStringFilter;
+  locale?: IStringFilter;
 }
 
 export interface IAndroidDevice extends ISegmentDevice {
-  androidId?: NumberExpressionType;
-  manufacturer?: StringExpressionType;
-  brand?: StringExpressionType;
+  androidId?: INumberFilter;
+  manufacturer?: IStringFilter;
+  brand?: IStringFilter;
 }
 
 export interface IIOSDevice extends ISegmentDevice {
-  vendorId?: NumberExpressionType;
+  vendorId?: INumberFilter;
 }

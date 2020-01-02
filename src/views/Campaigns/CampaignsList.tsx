@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
 import { observer, useDisposable } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router";
+import { when } from "mobx";
 
 // @material-ui/icons
 import { AddCircleOutline, Public, List } from "@material-ui/icons";
 
 // @material-ui/core
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+
+// models
+import { Campaigns } from "models/Campaign/CampaignsStore";
+import { App } from "models/App";
 
 // core components
 const GridContainer = lazy(() => import("components/Grid/GridContainer"));
@@ -23,46 +27,30 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 import { lazy } from "utils";
 import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
-import { whiteColor } from "assets/jss/material-dashboard-react";
-import { Campaigns } from "models/Campaign/CampaignsStore";
-import { App } from "models/App";
-import { when } from "mobx";
+import useListStyles from "assets/jss/material-dashboard-react/views/listStyles";
 
-const extendStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      alignItems: "center",
-      textAlign: "center",
-    },
-    button: {
-      color: whiteColor,
-      opacity: .7,
-      "&:hover": {
-        opacity: .9
-      }
-    },
-    buttonAdd: {
-      marginTop: theme.typography.pxToRem(20)
-    }
-  }));
+// view stores
+import CampaignViewStore from "views/Campaigns/CampaignViewStore";
 
-const Title = ({ ...props }) => {
+const Title = observer((props: {onClick: () => void}) => {
   const classes = useStyles();
-  const eClasses = extendStyles();
+  const eClasses = useListStyles();
+  const store = Campaigns.currentStore;
   return (
     <Grid container className={eClasses.root}>
       <IconButton className={eClasses.button} onClick={props.onClick}>
         <AddCircleOutline/>
       </IconButton>
       <h4 className={classes.cardTitleWhite}>
-        {Dictionary.defValue(DictionaryService.keys.email)} {Dictionary.defValue(DictionaryService.keys.campaigns)}:
+        {Dictionary.value(store!.title)} {Dictionary.defValue(DictionaryService.keys.campaigns)}:
       </h4>
     </Grid>
   );
-};
+});
 
-const CampaignTable = observer((props) => {
-    const eClasses = extendStyles();
+const CampaignTable = observer((props: {onBtnClick: () => void}) => {
+    const eClasses = useListStyles();
+    const store = Campaigns.currentStore;
     return (
       <div className={eClasses.root}>
         <Table
@@ -82,19 +70,17 @@ const CampaignTable = observer((props) => {
             tableData: []
           }}
           paginationProps={{
-            rowsPerPageOptions: [5],
-            count: 0,
-            rowsPerPage: 5,
-            page: 0,
-            onChangePage: () => {
-            },
-            onChangeRowsPerPage: () => {
-            }
+            rowsPerPageOptions: store!.rowsPerPageOptions,
+            count: store!.count,
+            rowsPerPage: store!.viewRowsPerPage,
+            page: store!.page,
+            onChangePage: store!.handleChangePageInView,
+            onChangeRowsPerPage: store!.handleChangeRowsPerPage
           }}
           onRowClick={(data: string[]) => {
           }}
         />
-        <RegularButton color="primary" className={eClasses.buttonAdd}>
+        <RegularButton color="primary" className={eClasses.buttonAdd} onClick={props.onBtnClick}>
           {Dictionary.defValue(DictionaryService.keys.add)} {Dictionary.defValue(DictionaryService.keys.campaign)}
         </RegularButton>
       </div>
@@ -103,23 +89,22 @@ const CampaignTable = observer((props) => {
 );
 
 export default (props: RouteComponentProps) => {
-  console.log(9999, Campaigns.stores.get(props.match.url));
 
-  const dispose = useDisposable(() =>
+  Campaigns.bindCurrentStore(props.match.url);
+  useDisposable(() =>
     when(() => App.tokenIsReady, () => Campaigns.fetchItems(props.match.url))
   );
 
-  useEffect(() => {
-    return () => {
-      dispose();
-    }
-  });
+  const newCampaign = () => {
+    CampaignViewStore.setCampaign(0, Campaigns.stores.get(props.match.url)!.type);
+    props.history.push(props.match.url + "/0");
+  };
 
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <CustomTabs
-          title={<Title onClick={() => {}}/>}
+          title={<Title onClick={newCampaign}/>}
           noCardTitle
           headerColor="primary"
           currentIndex={1}
@@ -132,7 +117,7 @@ export default (props: RouteComponentProps) => {
             {
               tabName: Dictionary.defValue(DictionaryService.keys.campaignList),
               tabIcon: List,
-              tabContent: <CampaignTable/>
+              tabContent: <CampaignTable onBtnClick={newCampaign}/>
             }
           ]}
         />

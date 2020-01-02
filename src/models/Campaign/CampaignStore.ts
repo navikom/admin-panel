@@ -1,31 +1,43 @@
-import { ChannelType, ICampaign, IConversion, IOneTimeRun, IRecurringRun, ITriggerRun } from "interfaces/ICampaign";
+import { action, observable } from "mobx";
+
+// interfaces
+import { ICampaign, IConversion, IOneTimeRun, IRecurringRun, ITriggerRun } from "interfaces/ICampaign";
 import { ISegment } from "interfaces/ISegment";
 import { VariantType } from "interfaces/IVariant";
-import { action } from "mobx";
+
+// models
+import { OneTimeRunStore } from "models/Campaign/OneTimeRunStore";
+
+// types
+import { ChannelType } from "types/commonTypes";
 
 export class CampaignStore implements ICampaign {
-  campaignId?: number;
-  channelType?: ChannelType;
-  conversion: IConversion | null = null;
-  endDate?: Date | null;
-  excludeSegments?: ISegment[];
-  frequencyCap: boolean = false;
-  name?: string;
-  onlyForSubscribed: boolean = false;
-  runType?: IOneTimeRun | ITriggerRun | IRecurringRun;
-  segments?: ISegment[];
-  startDate?: Date;
-  targetAndroidApps?: string[];
-  targetIOSApps?: string[];
-  variants?: VariantType[];
-  pk: string = "campaignId";
+  campaignId: number;
+  readonly pk: string = "campaignId";
+  readonly channelType: ChannelType;
 
-  @action update(model: CampaignStore) {
+  @observable conversion: IConversion | null = null;
+  @observable excludeSegments?: ISegment[];
+  @observable frequencyCap: boolean = false;
+  @observable name?: string;
+  @observable onlyForSubscribed: boolean = false;
+  @observable runType: IOneTimeRun | ITriggerRun | IRecurringRun = new OneTimeRunStore();
+  @observable segments?: ISegment[];
+  @observable targetAndroidApps?: string[];
+  @observable targetIOSApps?: string[];
+  @observable variants?: VariantType[];
+
+  constructor(model: ICampaign) {
+    this.campaignId = model.campaignId;
+    this.channelType = model.channelType;
+  }
+
+  @action update(model: ICampaign) {
     Object.assign(this, model);
   }
 
-  static from(model: CampaignStore) {
-    return new CampaignStore();
+  static from(model: ICampaign) {
+    return new CampaignStore(model);
   }
 
 }

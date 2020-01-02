@@ -110,11 +110,11 @@
   - `src/assets/jss/material-dashboard-react/components/buttonStyle.tsx`
   - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.ts`
   - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.ts`
-  - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.ts`
   - `src/assets/jss/material-dashboard-react/components/customTabsStyle.ts`
 - Others
   - `src/assets/jss/material-dashboard-react/tooltipStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/dropdownStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/dropdownStyle.ts`
 ### Dropped components
 - Dropped popper usage in favour of `@material-ui/core/Popper` (Changes in `src/components/Header/HeaderLinks.jsx`)
 ### Added components

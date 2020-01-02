@@ -16,6 +16,8 @@ import { Settings } from "models/Settings";
 import { AppDataStore } from "models/App/AppDataStore";
 import { Roles } from "models/Role/RolesStore";
 import { Events } from "models/Event/EventsStore";
+import { Regions } from "models/Region/RegionsStore";
+import { SegmentRegionViewStore } from "views/Segments/SegmentRegionViewStore";
 
 export class AppStore implements IFlow {
   @observable role: IRole = RoleStore.defaultRole();
@@ -49,13 +51,15 @@ export class AppStore implements IFlow {
       loggedIn && await Roles.fetch();
       this.ifUserChanged();
     });
-
+    when(() => Regions.allFetched, () => SegmentRegionViewStore.loadData());
   }
 
   @action
   async start() {
     await Auth.start();
     await Settings.fetch();
+    Regions.addFakeRegions();
+    await Regions.fetchItems();
   }
 
   @action setUser(model: IUser) {

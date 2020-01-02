@@ -128,7 +128,7 @@ material-dashboard-react
     │   │   ├── GridContainer.tsx
     │   │   └── GridItem.tsx
     │   ├── Navbars
-    │   │   ├── AdminNavbarLinks.jsx
+    │   │   ├── AdminNavbarLinks.tsx
     │   │   ├── Navbar.tsx
     │   │   └── RTLNavbarLinks.jsx
     │   ├── Sidebar

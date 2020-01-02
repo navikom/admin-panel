@@ -5,7 +5,7 @@ import React from "react";
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IPagination } from "interfaces/IPagination";
 
-type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture" | "segment" | "campaign";
+type ApiMethodsInterface = "user" | "event" | "app" | "pixartPicture" | "segment" | "campaign" | "region";
 type RequestTypesInterface = "pagination";
 
 export abstract class Pagination<T extends WithPrimaryKey> extends Errors implements IPagination<T> {
@@ -80,8 +80,11 @@ export abstract class Pagination<T extends WithPrimaryKey> extends Errors implem
   @action setPageData(data: any) {
     this.page = this.page + 1;
     this.count = data.count;
-    if (data.items.length < this.pageSize || this.size + data.items.length >= data.count) {
+    if (this.size > 0 && (data.items.length < this.pageSize || this.size + data.items.length >= data.count)) {
       this.allFetched = true;
+    } else if (this.size === 0) {
+      this.setStarted(false);
+      this.page = 0;
     }
   }
 
@@ -107,12 +110,12 @@ export abstract class Pagination<T extends WithPrimaryKey> extends Errors implem
     if (this.isAllFetched) return true;
     if (this.additionalParams) {
       const response = await api(Apis.Main)[this.apiMethod][this.requestMethod](this.page, this.pageSize, this.additionalParams);
-      this.setPageData(response);
       this.push(response.items);
+      this.setPageData(response);
     } else {
       const response = await api(Apis.Main)[this.apiMethod][this.requestMethod](this.page, this.pageSize);
-      this.setPageData(response);
       this.push(response.items);
+      this.setPageData(response);
     }
 
     return true;

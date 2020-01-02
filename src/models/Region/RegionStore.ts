@@ -4,12 +4,14 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 export class RegionStore implements IRegion {
   city: string;
   country: string;
-  ip: string;
-  lg: number;
-  lt: number;
+  ip!: string;
+  lg!: number;
+  lt!: number;
   region: string;
   regionId: number;
-  timezone: string;
+  timezone!: string;
+
+  pk: string = "regionId";
 
   get plainData() {
     const data = [
@@ -25,12 +27,12 @@ export class RegionStore implements IRegion {
   constructor(model: IRegion) {
     this.city = model.city;
     this.country = model.country;
-    this.ip = model.ip;
-    this.lg = model.lg;
-    this.lt = model.lt;
+    model.ip && (this.ip = model.ip);
+    model.lg && (this.lg = model.lg);
+    model.lt && (this.lt = model.lt);
     this.region = model.region;
     this.regionId = model.regionId;
-    this.timezone = model.timezone;
+    model.timezone && (this.timezone = model.timezone);
   }
 
   static from(model: IRegion) {

@@ -3,7 +3,7 @@ export type LessThanType = "less than";
 export type EqualType = "equal to";
 export type DoesNotEqualType = "does not equal to";
 export type IsGreaterThanOrEqualType = "is greater than or equal to";
-export type IsLessThanOrEqualType = "is greater than or equal to";
+export type IsLessThanOrEqualType = "is less than or equal to";
 export type AtLeastOnceType = "at least once";
 export type OnceType = "once";
 export type BetweenType = "between";
@@ -22,5 +22,28 @@ export type ContainsType = "contains";
 export type BeforeType = "before";
 export type AfterType = "after";
 export type WithingType = "withing";
-export type AnyType = "any";
-export type NoneType = "none";
+export type IncludeType = "include";
+export type ExcludeType = "exclude";
+
+export type NumberTypes = GreaterThanType | LessThanType | EqualType | DoesNotEqualType | IsGreaterThanOrEqualType |
+  IsLessThanOrEqualType | BetweenType | NotBetweenType | OneOfType | NoneOneOfType | EmptyType | IsNotEmptyType;
+
+export type NumberExpressionTypesArray = [GreaterThanType, LessThanType, EqualType, DoesNotEqualType, IsGreaterThanOrEqualType,
+  IsLessThanOrEqualType, BetweenType, NotBetweenType, OneOfType, NoneOneOfType, EmptyType, IsNotEmptyType];
+
+export type DateTypes = BeforeType | AfterType | WithingType;
+
+export type DateExpressionTypesArray = [BeforeType, AfterType, WithingType];
+
+export type IncludingExpressionTypesArray = [IncludeType, ExcludeType];
+
+export type StringTypes = EqualType | DoesNotEqualType | OneOfType | NoneOneOfType | EndsWithType | DoesNotEndWithType
+| StartsWithType | DoesNotStartWithType | ContainsType | EmptyType | IsNotEmptyType;
+
+export type StringExpressionTypesArray = [EqualType, DoesNotEqualType, OneOfType, NoneOneOfType, EndsWithType,
+  DoesNotEndWithType, StartsWithType, DoesNotStartWithType, ContainsType, EmptyType, IsNotEmptyType];
+
+export type ValueType = "value" | "values" | "date" | "min" | "max" | "from" | "to";
+
+export type ExpressionValueType =
+  { key?: ValueType, keys?: ValueType[], defaultValue?: number | string | Date, defaultValues?: (number | Date)[]};

@@ -1,38 +1,43 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { RouteComponentProps } from "react-router";
+
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+
 // @material-ui/icons
 // core components
 import Button from "components/CustomButtons/Button.tsx";
 
-import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle";
-import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
-import * as Constants from "models/Constants.ts";
-import { mainNavRoutes } from "routes";
+// interfaces
 import { IRoute } from "interfaces/IRoute";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/SvgIcon/SvgIcon";
 
-function nav({ ...props }) {
-  const { classes, history } = props;
+// model
+import * as Constants from "models/Constants.ts";
+
+import { mainNavRoutes } from "routes";
+import useStyles from "assets/jss/material-dashboard-react/components/headerStyle";
+import { Dictionary } from "services/Dictionary/Dictionary";
+
+function nav(props: any, classes: any) {
   return mainNavRoutes.map((route: IRoute, i: number) => {
+    if(!route.path) return null;
     return (
       <Button
         key={i}
         color="transparent"
         className={classes.link}
-        onClick={() => history.push(route.path)}
+        onClick={() => props.history.push(route.path)}
       >
         {Dictionary.value(route.name)}
       </Button>
     );
   });
-}
+};
 
 function Header({ ...props }) {
   function makeBrand() {
@@ -45,10 +50,10 @@ function Header({ ...props }) {
     // });
     return name;
   }
-
-  const { classes, color, history } = props;
+  const classes = useStyles();
+  // const { color, history } = props;
   const appBarClasses = classNames({
-    [" " + classes[color]]: color
+    [" " + classes[props.color as keyof typeof classes]]: props.color
   });
   return (
     <AppBar className={classes.appBar + appBarClasses}>
@@ -58,13 +63,13 @@ function Header({ ...props }) {
           <Button
             color="transparent"
             className={classes.title}
-            onClick={() => history.push(Constants.ROOT_ROUTE)}
+            onClick={() => props.history.push(Constants.ROOT_ROUTE)}
           >
             {makeBrand()}
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          {nav(props)}
+          {nav(props, classes)}
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton
@@ -81,8 +86,7 @@ function Header({ ...props }) {
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
 };
 
-export default withStyles(headerStyle)(Header);
+export default Header;

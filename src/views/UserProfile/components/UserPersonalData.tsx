@@ -1,6 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import classNames from "classnames";
+
+// pickers
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -15,6 +17,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import Divider from "@material-ui/core/Divider";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 // interfaces
 import { IUser } from "interfaces/IUser";
@@ -26,13 +30,13 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 import { FEMALE, MALE } from "models/User/UserStore";
 
 // core components
-import { UserDetails } from "views/UserProfile/components/UserDetailsStore";
 import CustomInput from "components/CustomInput/CustomInput";
-
-import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import ProgressButton from "components/CustomButtons/ProgressButton";
-import Divider from "@material-ui/core/Divider";
+import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
+
+// view store
+import { UserDetails } from "views/UserProfile/components/UserDetailsStore";
+
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,7 +59,6 @@ export default observer(() => {
   const store = UserDetails.personalDataStore;
   const user = store.formUser;
   const centerNote = classNames(classes.note, classes.center, extraClasses.label);
-  console.log(55555555555, user.email);
   const onChange = (name: string) =>
     (e: any) => store.onInput({ [name]: e.target.value } as IUser);
   const onChangeDate = (name: string) => (date: any) =>

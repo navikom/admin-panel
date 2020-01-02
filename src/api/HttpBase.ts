@@ -14,7 +14,7 @@ export abstract class HttpBase {
   }
 
   pagination(page: number, pageSize: number, additionalParams?: number) {
-    return this.fetchData("get", `${page}/${pageSize}${additionalParams ? "" + additionalParams : ""}`);
+    return this.fetchData("get", `${page}/${pageSize}${additionalParams ? additionalParams : ""}`);
   }
 
   fullData(id: number) {
