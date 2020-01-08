@@ -30,7 +30,7 @@ import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import useListStyles from "assets/jss/material-dashboard-react/views/listStyles";
 
 // view stores
-import SegmentViewStore from "views/Segments/SegmentViewStore";
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
 import { Regions } from "models/Region/RegionsStore";
 
 const Title = (props: {onClick: () => void}) => {

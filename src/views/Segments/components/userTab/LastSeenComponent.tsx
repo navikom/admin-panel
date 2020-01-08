@@ -4,8 +4,11 @@ import { observer } from "mobx-react-lite";
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
-import SegmentViewStore from "views/Segments/SegmentViewStore";
-import FiltarableComponent from "views/Segments/components/FiltarableComponent";
+// view store
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
+
+// core components
+import FiltarableComponent from "components/Filter/FiltarableComponent";
 
 export default observer(() => {
   if (!SegmentViewStore.segment) return null;
@@ -17,16 +20,27 @@ export default observer(() => {
     label: Dictionary.defValue(DictionaryService.keys.is)
   };
 
-  const second = {
-    ...SegmentViewStore.lastSeenValues,
+  const values = SegmentViewStore.lastSeenValues;
+  let second = {
+    ...values,
     onChange: (e: Date, key: "from" | "to") => SegmentViewStore.updateLastSeenValue(e, key)
   };
+
+  let third = values.from ? {
+    ...SegmentViewStore.lastSeenValues,
+    onChange: (e: Date, key: "from" | "to") => SegmentViewStore.updateLastSeenValue(e, key)
+  } : undefined;
+
+  if(values.from) {
+    second!.to = undefined;
+    third!.from = undefined;
+  }
 
   return (
     <FiltarableComponent
       first={first}
       second={second}
-      third={{}}
+      third={third}
     />
   );
 });

@@ -1,26 +1,22 @@
 import { action, computed, observable } from "mobx";
 import { ISegmentAttributeView } from "interfaces/ISegmentAttributeView";
 
-import { AND, OR, UserAttributeNames } from "models/Constants";
+import { AND, OR, UserAttributeMap } from "models/Constants";
 import { AndType, ExpressionValueType, OrType, ValueType } from "types/expressions";
+import { AbstractViewStore } from "views/Segments/store/AbstractViewStore";
 
-export class SegmentAttributeViewStore implements ISegmentAttributeView {
+export class SegmentAttributeViewStore extends AbstractViewStore implements ISegmentAttributeView {
   static attributeNames: Map<string, Map<string, ExpressionValueType | undefined> | undefined> =
-    UserAttributeNames;
+    UserAttributeMap;
   @observable static readonly list = observable<SegmentAttributeViewStore>([]);
   @observable static readonly andOr = observable<AndType | OrType>([]);
 
   @observable currentAttributeName?: string;
   @observable currentExpression?: string;
-  @observable expressions?: string[];
-  @observable value?: string | number | boolean;
   @observable date?: Date;
   @observable from?: Date;
   @observable to?: Date;
-  @observable min?: number;
-  @observable max?: number;
-  @observable values?: (string | number)[];
-  @observable keys?: ValueType[];
+
 
   @action setAttributeName(name: string) {
     this.clear();
@@ -33,25 +29,6 @@ export class SegmentAttributeViewStore implements ISegmentAttributeView {
       } else {
         this.currentExpression = undefined;
       }
-    }
-  }
-
-  @action initExpression(expression: ExpressionValueType | undefined) {
-    if(!expression) {
-      this.clearValueData();
-      return;
-    }
-    if(expression.key) {
-      // @ts-ignore
-      this[expression.key] = expression.defaultValue !== undefined
-        ? expression.defaultValue : expression.defaultValues;
-      this.keys = [expression.key];
-    } else if(expression.keys) {
-      // @ts-ignore
-      this[expression.keys[0]] = expression.defaultValues![0];
-      // @ts-ignore
-      this[expression.keys[1]] = expression.defaultValues![1];
-      this.keys = expression.keys;
     }
   }
 
@@ -76,29 +53,25 @@ export class SegmentAttributeViewStore implements ISegmentAttributeView {
     this.clearValueData();
   }
 
-  @action clearValueData() {
-    this.values = undefined;
-    this.value = undefined;
-    this.keys = undefined;
-    this.min = undefined;
-    this.max = undefined;
-    this.from = undefined;
-    this.to = undefined;
-    this.date = undefined;
-  }
-
   //######## static ###########//
 
   static get attributeNamesKeys() {
-    return this.attributeNames.keys();
+    return Array.from(this.attributeNames.keys());
   }
 
   static isAnd(index: number) {
     return computed(() => this.andOr.length > index && this.andOr[index] === AND).get();
   }
 
+  @action static create() {
+    const item = new SegmentAttributeViewStore();
+    const attribute = SegmentAttributeViewStore.attributeNamesKeys[0];
+    item.setAttributeName(attribute);
+    return item;
+  }
+
   @action static addNewItem() {
-    this.list.push(new SegmentAttributeViewStore());
+    this.list.push(SegmentAttributeViewStore.create());
     this.andOr.push(AND);
   }
 
@@ -112,9 +85,7 @@ export class SegmentAttributeViewStore implements ISegmentAttributeView {
   }
 
   @action static clear() {
-    this.list.replace([
-      new SegmentAttributeViewStore()
-    ]);
+    this.list.replace([]);
     this.andOr.replace([]);
   }
 }

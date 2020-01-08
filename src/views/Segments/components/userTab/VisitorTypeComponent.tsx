@@ -5,8 +5,12 @@ import { observer } from "mobx-react-lite";
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 import { NumberTypes } from "types/expressions";
-import SegmentViewStore from "views/Segments/SegmentViewStore";
-import FiltarableComponent from "views/Segments/components/FiltarableComponent";
+
+// view store
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
+
+// core components
+import FiltarableComponent from "components/Filter/FiltarableComponent";
 
 type SecondSelectOptionsType = { value?: NumberTypes, options?: NumberTypes[], onChange?: (e: string) => void };
 type ThirdSelectOptionsType = {
@@ -32,8 +36,9 @@ export default observer(() => {
     second.onChange = (e: string) => userTab!.updateVisitorCondition(e as NumberTypes);
   }
 
+  const data = SegmentViewStore.visitorTypeValues;
   const third: ThirdSelectOptionsType = {
-    ...SegmentViewStore.visitorTypeValues,
+    ...data,
     onChange: (e: string | string[], key: "values" | "value" | "min" | "max") => SegmentViewStore.updateVisitorValue(e, key)
   };
 

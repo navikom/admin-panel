@@ -1,5 +1,6 @@
 
 import { IDateFilter, INumberFilter, IStringFilter } from "interfaces/IFilters.ts";
+import { ISegmentViewForm } from "interfaces/ISegmentViewForm";
 
 export interface ISegmentDevice {
   appInstallationDate?: IDateFilter;
@@ -23,4 +24,14 @@ export interface IAndroidDevice extends ISegmentDevice {
 
 export interface IIOSDevice extends ISegmentDevice {
   vendorId?: INumberFilter;
+}
+
+export interface ISegmentDevice extends ISegmentViewForm {
+  currentPropertyName?: string;
+  date?: Date;
+  from?: Date;
+  to?: Date;
+
+  setPropertyName(name: string): void;
+  clear(): void;
 }

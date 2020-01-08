@@ -3,20 +3,26 @@ import {
   IGeo,
   INumberOfSessions,
   IReachability,
-  IUserIDs,
   IUserTab
 } from "interfaces/ISegment";
 import { action, observable } from "mobx";
-import { DateExpressions, NumberExpressions, VisitorTypeList } from "models/Constants";
+import {
+  CHANNEL_LIST,
+  DateExpressions,
+  EMAIL_CHANNEL,
+  NumberExpressions,
+  ReachabilityExpressions,
+  VisitorTypeList
+} from "models/Constants";
 import { DateTypes, NumberTypes } from "types/expressions";
 import { IDateFilter } from "interfaces/IFilters";
+import { ChannelType } from "types/commonTypes";
 
 export class UserTabStore implements IUserTab {
   @observable attributes: AttributeType = null;
-  @observable geo: null = null;
+  @observable geo: IGeo | null = null;
   @observable lastSeen: IDateFilter | null = null;
   @observable reachability: IReachability | null = null;
-  @observable userIDs: IUserIDs | null = null;
   @observable visitorType: INumberOfSessions = { name: VisitorTypeList[0] };
 
   @action updateVisitor(name: string) {
@@ -65,12 +71,29 @@ export class UserTabStore implements IUserTab {
     this.lastSeen![key] = date;
   }
 
+  @action updateReachabilityOn(value: string) {
+    if (!ReachabilityExpressions.includes(value)) {
+      this.clearReachability();
+      return;
+    }
+    const on = value === ReachabilityExpressions[0];
+    this.reachability = Object.assign(this.reachability || {value: EMAIL_CHANNEL}, {on});
+  }
+
+  @action updateReachabilityValue(value: string) {
+    const type = CHANNEL_LIST.find((e) => e[1] === value)![0] as ChannelType;
+    this.reachability!.value = type;
+  }
+
+  @action clearReachability() {
+    this.reachability = null;
+  }
+
   @action clear() {
     this.attributes = null;
     this.geo = null;
     this.lastSeen = null;
     this.reachability = null;
-    this.userIDs = null;
     this.visitorType = { name: VisitorTypeList[0] };
   }
 }

@@ -5,6 +5,7 @@ export type DoesNotEqualType = "does not equal to";
 export type IsGreaterThanOrEqualType = "is greater than or equal to";
 export type IsLessThanOrEqualType = "is less than or equal to";
 export type AtLeastOnceType = "at least once";
+export type NotOnceType = "not once";
 export type OnceType = "once";
 export type BetweenType = "between";
 export type NotBetweenType = "not between";

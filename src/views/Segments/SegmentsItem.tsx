@@ -2,7 +2,7 @@ import React from "react";
 import { RouteComponentProps } from "react-router";
 
 // view store
-import SegmentViewStore from "views/Segments/SegmentViewStore";
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
 
 
 import { lazy } from "utils";

@@ -6,42 +6,28 @@ import { AddCircleOutline, DeleteOutline } from "@material-ui/icons";
 
 // @material-ui/core
 import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+
+// interfaces
+import { ISegmentAttributeView } from "interfaces/ISegmentAttributeView";
+
+// view store
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
+
+// local components
+import FiltarableComponent from "components/Filter/FiltarableComponent";
+import AndOrButton from "components/CustomButtons/AndOrButton";
+
+// view store
+import { SegmentAttributeViewStore } from "views/Segments/store/SegmentAttributeViewStore";
 
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
-import { ISegmentAttributeView } from "interfaces/ISegmentAttributeView";
-
-import SegmentViewStore from "views/Segments/SegmentViewStore";
-import FiltarableComponent from "views/Segments/components/FiltarableComponent";
-
-// view store
-import { SegmentAttributeViewStore } from "views/Segments/SegmentAttributeViewStore";
-import { whiteColor } from "assets/jss/material-dashboard-react";
-
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    dividerWrapper: {
-      width: "100%",
-      position: "relative",
-      height: theme.typography.pxToRem(20),
-      marginBottom: theme.typography.pxToRem(10),
-      borderBottom: "1px dashed rgba(0,0,0,.15)"
-    },
-    buttons: {
-      position: "absolute",
-      left: "50%",
-      bottom: 0,
-      transform: "translate(-50%, 50%)",
-      backgroundColor: whiteColor
-    },
-    button: {
-      fontSize: theme.typography.pxToRem(2),
-      padding: "2px"
+    root: {
+      width: "100%"
     },
     textRight: {
       textAlign: "right"
@@ -65,7 +51,7 @@ const UserAttributeComponent = observer((props: IPropsArgument) => {
   const classes = useStyles();
   const first = {
     value: props.item.currentAttributeName,
-    options: ["", ...Array.from(SegmentAttributeViewStore.attributeNamesKeys)],
+    options: SegmentAttributeViewStore.attributeNamesKeys,
     onChange: (e: string) => props.item.setAttributeName(e)
   };
 
@@ -74,7 +60,8 @@ const UserAttributeComponent = observer((props: IPropsArgument) => {
     second = {
       value: props.item.currentExpression,
       options: props.item.expressions,
-      onChange: (e: string) => props.item.setExpression(e)
+      onChange: (e: string) => props.item.setExpression(e),
+      label: Dictionary.defValue(DictionaryService.keys.is)
     };
   }
   if(props.item.keys) {
@@ -102,9 +89,9 @@ const UserAttributeComponent = observer((props: IPropsArgument) => {
       <Grid item xs={12} sm={9} md={10}>
         <FiltarableComponent
           first={first}
-          second={second || {}}
-          third={third || {}}
-          fourth={fourth || {}}
+          second={second}
+          third={third}
+          fourth={fourth}
         />
       </Grid>
       <Grid item xs={12} sm={3} md={2} className={classes.textRight}>
@@ -125,24 +112,7 @@ const UserAttributeComponent = observer((props: IPropsArgument) => {
       </Grid>
       {
         andOr && (
-          <div className={classes.dividerWrapper}>
-            <ButtonGroup size="small" aria-label="small outlined button group" className={classes.buttons}>
-              <Button
-                className={classes.button}
-                variant={isAnd ? "contained" : "outlined" }
-                color={isAnd ? "primary" : "default"}
-                onClick={props.handleAndOr}>
-                {Dictionary.defValue(DictionaryService.keys.and)}
-              </Button>
-              <Button
-                className={classes.button}
-                variant={!isAnd ? "contained" : "outlined" }
-                color={!isAnd ? "primary" : "default"}
-                onClick={props.handleAndOr}>
-                {Dictionary.defValue(DictionaryService.keys.or)}
-              </Button>
-            </ButtonGroup>
-          </div>
+          <AndOrButton isAnd={isAnd} onClick={props.handleAndOr}/>
         )
       }
     </Grid>
@@ -151,12 +121,16 @@ const UserAttributeComponent = observer((props: IPropsArgument) => {
 
 export default observer(() => {
   if (!SegmentViewStore.segment) return null;
-
-
+  const classes = useStyles();
+  const showAdd = SegmentAttributeViewStore.list.length === 0;
   return (
-    <div>
+    <div className={classes.root}>
       {
-        SegmentAttributeViewStore.list.map((item: ISegmentAttributeView, i: number) =>
+        showAdd ? (
+          <IconButton onClick={() => SegmentAttributeViewStore.addNewItem()}>
+            <AddCircleOutline color="primary"/>
+          </IconButton>
+        ) : SegmentAttributeViewStore.list.map((item: ISegmentAttributeView, i: number) =>
           <UserAttributeComponent
             key={i}
             item={item}

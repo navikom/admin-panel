@@ -28,11 +28,6 @@ interface IAttribute {
   expression: IStringFilter | INumberFilter | IDateFilter;
 }
 
-export interface IUserIDs {
-  is: string;
-  value: number | number[] | boolean;
-}
-
 export interface IReachability {
   on: boolean;
   value: ChannelType;
@@ -45,7 +40,6 @@ export interface IUserTab {
   lastSeen: IDateFilter | null;
   geo: IGeo | null;
   attributes: AttributeType;
-  userIDs: IUserIDs | null;
   reachability: IReachability | null;
 
   updateVisitor(name: string): void;
@@ -53,6 +47,9 @@ export interface IUserTab {
   updateVisitorConditionValue(value: number | number[], key: "values" | "value" | "min" | "max"): void;
   updateLastSeen(is?: DateTypes): void;
   updateLastSeenValue(date: Date, key: "date" | "from" | "to"): void;
+  updateReachabilityOn(value: string): void;
+  updateReachabilityValue(value: string): void;
+  clearReachability(): void;
   clear(): void;
 }
 
@@ -65,7 +62,6 @@ export interface IOccurs {
 
 interface IBehaviorEvent {
   name: string;
-  attributes: AttributeType;
   occurs: IOccurs;
 }
 
@@ -78,8 +74,8 @@ export interface IBehaviorTab {
 }
 
 export interface ITechnologyTab {
-  android: IAndroidDevice | null;
-  ios: IIOSDevice | null;
+  android?: IAndroidDevice | null;
+  ios?: IIOSDevice | null;
 }
 
 export interface ISegment extends WithPrimaryKey {

@@ -17,14 +17,14 @@ import { ISegmentRegionView } from "interfaces/ISegmentRegionView";
 // models
 import { ALL } from "models/Constants";
 
+// core components
+import FiltarableComponent from "components/Filter/FiltarableComponent";
 
 import { ExcludeType, IncludeType } from "types/expressions";
-import SegmentViewStore from "views/Segments/SegmentViewStore";
-import FiltarableComponent from "views/Segments/components/FiltarableComponent";
 
 // view store
-import { SegmentRegionViewStore } from "views/Segments/SegmentRegionViewStore";
-
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
+import { SegmentRegionViewStore } from "views/Segments/store/SegmentRegionViewStore";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

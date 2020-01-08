@@ -11,7 +11,6 @@ const CustomDateInput = ({ ...props }) => {
         className={props.classes.picker}
         margin="normal"
         label={props.label || ""}
-        id="date-picker-dialog"
         format="MM/dd/yyyy"
         value={props.date}
         onChange={props.onChange}

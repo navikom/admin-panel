@@ -6,7 +6,8 @@ import {
   NumberExpressionTypesArray,
   StringExpressionTypesArray
 } from "types/expressions";
-import { GenderExpressionTypesArray } from "types/commonTypes";
+import { EmailType, GenderExpressionTypesArray, InAppType, PushType, SmsType } from "types/commonTypes";
+import { IDateFilter, INumberFilter, IStringFilter } from "interfaces/IFilters";
 
 export const ROOT_ROUTE: string = "/";
 export const PANEL_ROUTE: string = "/panel";
@@ -42,10 +43,12 @@ export const IN_APP_CAMPAIGN = "In App";
 export const PUSH_CAMPAIGN = "Push";
 
 //********* Channels **************//
-export const EMAIL_CHANNEL = 1;
-export const SMS_CHANNEL = 2;
-export const IN_APP_CHANNEL = 3;
-export const PUSH_CHANNEL = 4;
+export const EMAIL_CHANNEL: EmailType = 1;
+export const SMS_CHANNEL: SmsType = 2;
+export const IN_APP_CHANNEL: InAppType = 3;
+export const PUSH_CHANNEL: PushType = 4;
+export const CHANNEL_LIST = [[EMAIL_CHANNEL, EMAIL_CAMPAIGN], [SMS_CHANNEL, SMS_CAMPAIGN],
+  [IN_APP_CHANNEL, IN_APP_CAMPAIGN], [PUSH_CHANNEL, PUSH_CAMPAIGN]];
 
 //********* Campaign Run Type *****//
 export const ONE_TIME_RUN_TYPE = 1;
@@ -83,11 +86,21 @@ export const StringExpressions: StringExpressionTypesArray = ["equal to", "does 
 export const ContainsExpressions: IncludingExpressionTypesArray = ["include", "exclude"];
 export const DateExpressions: DateExpressionTypesArray = ["before", "after", "withing"];
 export const GenderExpressions: GenderExpressionTypesArray = ["Male", "Female"];
+export const OccurExpressions = ["at least once", "not once", "amount"];
 
 //********** User Attributes ******//
-export const UserAttributes = ["createdAt", "updatedAt", "deletedAt", "lastEvent", "email", "referrer", "firstName",
+export const UserAttributes = ["userId", "createdAt", "updatedAt", "deletedAt", "lastEvent", "email", "referrer", "firstName",
   "lastName", "phone", "gender", "birthday", "emailVerified", "phoneVerified", "notificationEmail", "notificationSms",
   "subscription", "anonymous", "eventsCount", "lastLogin"];
+
+//********** Reachability Expressions ******//
+export const ReachabilityExpressions = ["reachableOn", "notReachableOn"];
+
+//********** Device Properties **********//
+export const DeviceProperties = ["appInstallationDate", "lastSeen", "totalTimeSpent", "appVersionName", "appId",
+  "appVersionCode", "advertisingId", "apiVersion", "sdkVersion", "model", "locale"];
+export const AndroidDeviceProperties = ["androidId", "manufacturer", "brand"];
+export const IOSDeviceProperties = ["vendorId"];
 
 //********** Expressions Map ********//
 export const DateExpressionsMap = new Map<string, ExpressionValueType>([
@@ -122,32 +135,65 @@ export const StringExpressionsMap: Map<string, ExpressionValueType | undefined> 
     [StringExpressions[7], { key: "value", defaultValue: "" }],
     [StringExpressions[8], { key: "value", defaultValue: "" }],
     [StringExpressions[9], undefined],
-    [StringExpressions[10], undefined],
+    [StringExpressions[10], undefined]
   ]);
 export const GenderExpressionsMap = new Map<string, undefined>([
   [GenderExpressions[0], undefined],
   [GenderExpressions[1], undefined]
 ]);
 
-export const UserAttributeNames: Map<string, Map<string, ExpressionValueType | undefined> | undefined> =
+export const UserAttributeMap: Map<string, Map<string, ExpressionValueType | undefined> | undefined> =
   new Map([
-    [UserAttributes[0], DateExpressionsMap],
+    [UserAttributes[0], NumberExpressionsMap],
     [UserAttributes[1], DateExpressionsMap],
     [UserAttributes[2], DateExpressionsMap],
     [UserAttributes[3], DateExpressionsMap],
-    [UserAttributes[4], StringExpressionsMap],
-    [UserAttributes[5], NumberExpressionsMap],
-    [UserAttributes[6], StringExpressionsMap],
+    [UserAttributes[4], DateExpressionsMap],
+    [UserAttributes[5], StringExpressionsMap],
+    [UserAttributes[6], NumberExpressionsMap],
     [UserAttributes[7], StringExpressionsMap],
     [UserAttributes[8], StringExpressionsMap],
-    [UserAttributes[9], GenderExpressionsMap],
-    [UserAttributes[10], DateExpressionsMap],
-    [UserAttributes[11], undefined],
+    [UserAttributes[9], StringExpressionsMap],
+    [UserAttributes[10], GenderExpressionsMap],
+    [UserAttributes[11], DateExpressionsMap],
     [UserAttributes[12], undefined],
     [UserAttributes[13], undefined],
     [UserAttributes[14], undefined],
     [UserAttributes[15], undefined],
     [UserAttributes[16], undefined],
-    [UserAttributes[17], NumberExpressionsMap],
-    [UserAttributes[18], DateExpressionsMap]
+    [UserAttributes[17], undefined],
+    [UserAttributes[18], NumberExpressionsMap],
+    [UserAttributes[19], DateExpressionsMap]
   ]);
+
+export const OccurExpressionsMap: Map<string, Map<string, ExpressionValueType | undefined> | undefined> = new Map([
+  [OccurExpressions[0], undefined],
+  [OccurExpressions[1], undefined],
+  [OccurExpressions[2], NumberExpressionsMap]
+]);
+
+const DevicePropertiesArray: [string, Map<string, ExpressionValueType | undefined> | undefined][] = [
+  [DeviceProperties[0], DateExpressionsMap],
+  [DeviceProperties[1], DateExpressionsMap],
+  [DeviceProperties[2], NumberExpressionsMap],
+  [DeviceProperties[3], StringExpressionsMap],
+  [DeviceProperties[4], StringExpressionsMap],
+  [DeviceProperties[5], NumberExpressionsMap],
+  [DeviceProperties[6], NumberExpressionsMap],
+  [DeviceProperties[7], NumberExpressionsMap],
+  [DeviceProperties[8], NumberExpressionsMap],
+  [DeviceProperties[9], StringExpressionsMap],
+  [DeviceProperties[10], StringExpressionsMap],
+];
+
+export const AndroidPropertiesMap: Map<string, Map<string, ExpressionValueType | undefined> | undefined> = new Map([
+  ...DevicePropertiesArray,
+  [AndroidDeviceProperties[0], NumberExpressionsMap],
+  [AndroidDeviceProperties[1], StringExpressionsMap],
+  [AndroidDeviceProperties[2], StringExpressionsMap]
+]);
+
+export const IOSPropertiesMap: Map<string, Map<string, ExpressionValueType | undefined> | undefined> = new Map([
+  ...DevicePropertiesArray,
+  [IOSDeviceProperties[0], NumberExpressionsMap]
+]);

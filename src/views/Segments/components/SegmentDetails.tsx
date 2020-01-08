@@ -24,21 +24,22 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
 import BootstrapInput from "components/CustomInput/BootstrapInput";
-import { CustomChartPie } from "components/Charts/CustomChartPie";
 import Card from "components/Card/Card";
 import CardBody from "components/Card/CardBody";
 import CardHeader from "components/Card/CardHeader";
 import CardFooter from "components/Card/CardFooter";
-import { grayColor, infoColor, primaryColor } from "assets/jss/material-dashboard-react";
 import ProgressButton from "components/CustomButtons/ProgressButton";
-import SegmentDetailsUser from "views/Segments/components/SegmentDetailsUser";
+import SegmentDetailsUser from "views/Segments/components/userTab/SegmentDetailsUser";
+import SegmentDetailsBehavior from "views/Segments/components/behavior/SegmentDetailsBehavior";
 
 // view store
-import SegmentViewStore from "views/Segments/SegmentViewStore";
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
 
+import { grayColor, infoColor, primaryColor } from "assets/jss/material-dashboard-react";
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import SegmentDetailsTechnology from "views/Segments/components/technology/SegmentDetailsTechnology";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -120,15 +121,15 @@ export default observer(() => {
         <Card>
           <CardBody>
             <Grid container item direction="row">
-              <Grid item xs={2} sm={2} md={2} className={extraClasses.titleWrapper}>
+              <Grid item xs={3} sm={2} md={2} className={extraClasses.titleWrapper}>
                 <Typography variant="subtitle2" className={centerNote}>
                   {Dictionary.defValue(DictionaryService.keys.name)}:
                 </Typography>
               </Grid>
-              <Grid item xs={8} sm={8} md={7}>
+              <Grid item xs={6} sm={8} md={7}>
                 <BootstrapInput fullWidth/>
               </Grid>
-              <Grid item xs={2} sm={2} md={3} className={classes.textToRight} >
+              <Grid item xs={3} sm={2} md={3} className={classes.textToRight} >
                 <Button color="primary" onClick={() => SegmentViewStore.clearAll()}>
                   {Dictionary.defValue(DictionaryService.keys.resetAll)}
                 </Button>
@@ -136,7 +137,7 @@ export default observer(() => {
             </Grid>
           </CardBody>
         </Card>
-        <ExpansionPanel expanded={true}>
+        <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -161,13 +162,10 @@ export default observer(() => {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
-            </Typography>
+            <SegmentDetailsBehavior/>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <ExpansionPanel>
+        <ExpansionPanel expanded={true}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
@@ -178,17 +176,14 @@ export default observer(() => {
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
-            </Typography>
+            <SegmentDetailsTechnology/>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <Card>
           <CardFooter>
             <ProgressButton
               color="primary"
-              onClick={() => {}}
+              onClick={() => SegmentViewStore.saveSegment()}
               loading={false}
               text={Dictionary.defValue(DictionaryService.keys.save)}
               startIcon={<CloudUploadIcon/>}

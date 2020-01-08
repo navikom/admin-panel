@@ -5,10 +5,10 @@ import { Errors } from "models/Errors";
 import { SegmentStore } from "models/Segment/SegmentStore";
 import { Segments } from "models/Segment/SegmentsStore";
 import {
-  ALL,
+  ALL, CHANNEL_LIST,
   ContainsExpressions,
   DateExpressions,
-  NumberExpressions,
+  NumberExpressions, ReachabilityExpressions,
   StringExpressions,
   VisitorTypeList
 } from "models/Constants";
@@ -17,16 +17,14 @@ import {
 import { ISegment } from "interfaces/ISegment";
 import {
   DateExpressionTypesArray,
-  DateTypes, ExcludeType, IncludeType,
-  IncludingExpressionTypesArray,
+  DateTypes,
   NumberExpressionTypesArray,
-  NumberTypes
 } from "types/expressions";
-import { Regions } from "models/Region/RegionsStore";
-import { IRegion } from "interfaces/IRegion";
 import { ISegmentRegionView } from "interfaces/ISegmentRegionView";
-import { SegmentRegionViewStore } from "views/Segments/SegmentRegionViewStore";
-import { SegmentAttributeViewStore } from "views/Segments/SegmentAttributeViewStore";
+import { SegmentRegionViewStore } from "views/Segments/store/SegmentRegionViewStore";
+import { SegmentAttributeViewStore } from "views/Segments/store/SegmentAttributeViewStore";
+import { SegmentEventViewStore } from "views/Segments/store/SegmentEventViewStore";
+import { SegmentTechnologyViewStore } from "views/Segments/store/SegmentTechnologyViewStore";
 
 class SegmentViewStore extends Errors {
   visitorTypes: Map<string, NumberExpressionTypesArray | undefined> = new Map([
@@ -36,6 +34,8 @@ class SegmentViewStore extends Errors {
     [VisitorTypeList[3], NumberExpressions]
   ]);
   lastSeenExpressions: DateExpressionTypesArray = DateExpressions;
+  reachabilityExpressions: string[] = ReachabilityExpressions;
+  channelList: (number | string)[][] = CHANNEL_LIST;
   regionViewStore?: ISegmentRegionView;
 
   @observable segment?: ISegment;
@@ -70,12 +70,26 @@ class SegmentViewStore extends Errors {
     return userTab!.lastSeen ? userTab!.lastSeen.is : "";
   }
 
+  @computed get reachabilityOn() {
+    const userTab = this.segment!.userTab;
+    return userTab!.reachability === null ? ""
+      : userTab!.reachability!.on ? this.reachabilityExpressions[0] : this.reachabilityExpressions[1];
+  }
+
+  @computed get reachabilityValue() {
+    const userTab = this.segment!.userTab;
+    return this.channelList.find((e) => userTab!.reachability!.value === e[0])![1];
+  }
+
+  get channelNames() {
+    return this.channelList.map((e) => e[1]);
+  }
+
   @action setSegment(segmentId: number) {
     this.segment = segmentId === 0
       ? SegmentStore.newSegment()
       : Segments.getById(segmentId);
-    SegmentRegionViewStore.clear();
-    SegmentAttributeViewStore.clear();
+    this.clearAll();
     this.regionViewStore = new SegmentRegionViewStore();
   }
 
@@ -108,9 +122,28 @@ class SegmentViewStore extends Errors {
     SegmentAttributeViewStore.clear();
   }
 
+  @action clearBehaviorEvents(didEvents: boolean) {
+    if(didEvents) {
+      SegmentEventViewStore.clearDidEvents();
+    } else {
+      SegmentEventViewStore.clearDidNotDoEvents();
+    }
+  }
+
+  @action clearReachability() {
+    this.segment!.userTab!.clearReachability();
+  }
+
+  @action saveSegment() {
+
+  }
+
   @action clearAll() {
     this.segment!.userTab!.clear();
     SegmentRegionViewStore.clear();
+    SegmentAttributeViewStore.clear();
+    SegmentEventViewStore.clear();
+    SegmentTechnologyViewStore.clear();
   }
 }
 

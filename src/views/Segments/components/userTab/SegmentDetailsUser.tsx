@@ -10,13 +10,14 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 
-import SegmentViewStore from "views/Segments/SegmentViewStore";
+import SegmentViewStore from "views/Segments/store/SegmentViewStore";
 
 //local components
-import GeoLocationsComponent from "views/Segments/components/GeoLocationComponent";
-import LastSeenComponent from "views/Segments/components/LastSeenComponent";
-import VisitorTypeComponent from "views/Segments/components/VisitorTypeComponent";
-import UserAttributesComponent from "views/Segments/components/UserAttributeComponent";
+import GeoLocationsComponent from "views/Segments/components/userTab/GeoLocationComponent";
+import LastSeenComponent from "views/Segments/components/userTab/LastSeenComponent";
+import VisitorTypeComponent from "views/Segments/components/userTab/VisitorTypeComponent";
+import UserAttributesComponent from "views/Segments/components/userTab/UserAttributeComponent";
+import ReachabilityComponent from "views/Segments/components/userTab/ReachabilityComponent";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,6 +92,18 @@ export default () => {
         </Grid>
       </Grid>
       <UserAttributesComponent/>
+      <Divider light className={eClasses.marginTop}/>
+      <Grid container className={eClasses.marginTop}>
+        <Grid item xs={6} sm={6} md={6}>
+          {Dictionary.defValue(DictionaryService.keys.reachability)}
+        </Grid>
+        <Grid item xs={6} sm={6} md={6} className={classes.textToRight}>
+          <Button color="primary" onClick={() => SegmentViewStore.clearReachability()}>
+            {Dictionary.defValue(DictionaryService.keys.reset)}
+          </Button>
+        </Grid>
+      </Grid>
+      <ReachabilityComponent/>
     </div>
   );
 };

@@ -21,7 +21,7 @@ import { IEvent } from "interfaces/IEvent";
 import { IUsersEvents } from "interfaces/IUsersEvents";
 
 // services
-import { Dictionary } from "services/Dictionary/Dictionary";
+import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 
 import ProgressButton from "components/CustomButtons/ProgressButton";
 import { ExpansionDataItems } from "components/ExpansionPanel/ExpansionDataItems";
@@ -163,6 +163,9 @@ const UserEventsTab = observer((props: { events: IUsersEvents }) => {
     props.events.tryGetNext();
   };
 
+  const line = classNames({
+    [classes.line]: props.events.size > 0
+  });
   return (
     <div className={classes.root}>
       {
@@ -188,10 +191,13 @@ const UserEventsTab = observer((props: { events: IUsersEvents }) => {
           </ExpansionPanel>
         ))
       }
-      {!isMobile && <div className={classes.line}/>}
+      {!isMobile && <div className={line}/>}
       {
-        !props.events.allFetched &&
-        <ProgressButton onClick={onClick} loading={props.events.fetching} text="Loading more"/>
+        props.events.size > 0 ? (
+          !props.events.allFetched &&
+          <ProgressButton onClick={onClick} loading={props.events.fetching} text="Loading more"/>
+          ) : Dictionary.defValue(DictionaryService.keys.thereIsNoEventsYet)
+
       }
     </div>
   );
