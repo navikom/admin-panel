@@ -8,6 +8,7 @@ const CustomDateInput = ({ ...props }) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <DatePicker
+        disabled={props.disabled}
         className={props.classes.picker}
         margin="normal"
         label={props.label || ""}

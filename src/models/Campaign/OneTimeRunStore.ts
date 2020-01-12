@@ -1,17 +1,21 @@
-import { IOneTimeRun } from "interfaces/ICampaign";
-import { ONE_TIME_RUN_TYPE } from "models/Constants";
-import { RunType } from "types/commonTypes";
-import { action, observable } from "mobx";
+import {action, observable} from "mobx";
+
+// interfaces
+import {IOneTimeRun} from "interfaces/ICampaign";
+import {RunType} from "types/commonTypes";
+
+// models
+import {ONE_TIME_RUN_TYPE} from "models/Constants";
 
 export class OneTimeRunStore implements IOneTimeRun {
-  type: RunType = ONE_TIME_RUN_TYPE;
+ type: RunType = ONE_TIME_RUN_TYPE;
 
-  @observable appTimezone: boolean = false;
-  @observable later: Date = new Date();
-  @observable now: boolean = true;
-  @observable userTimezone: boolean = false;
+ @observable appTimezone: boolean = true;
+ @observable later?: Date;
+ @observable now: boolean = true;
+ @observable userTimezone: boolean = false;
 
-  @action update(model: IOneTimeRun) {
-    Object.assign(this, model);
-  }
+ @action update(model: IOneTimeRun) {
+  Object.assign(this, model);
+ }
 }

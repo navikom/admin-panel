@@ -9,7 +9,7 @@ import GridContainer from "components/Grid/GridContainer";
 import { useDisposable } from "mobx-react-lite";
 import { when } from "mobx";
 import { App } from "models/App";
-import CampaignViewStore from "views/Campaigns/CampaignViewStore";
+import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
 
 const StepperComponent = lazy(() => import("views/Campaigns/components/StepperComponent"));
 
@@ -25,9 +25,9 @@ export default (props: RouteComponentProps<CampaignMatch>) => {
   if(!CampaignViewStore.campaign) {
     const url = props.match.url.split("/");
     url.pop();
-    setTimeout(() => props.history.push(url.join("/")), 0);
+    // setTimeout(() => props.history.push(url.join("/")), 0);
   }
-
+  CampaignViewStore.setCampaign(id, 1);
   useDisposable(() =>
     when(() => App.tokenIsReady, () => {
 

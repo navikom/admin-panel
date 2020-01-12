@@ -38,10 +38,9 @@ export default ({...props}) => {
       {...props}
       filterSelectedOptions
       multiple
-      id="size-small-outlined-multi"
       size="small"
       options={props.options}
-      getOptionLabel={(option: string) => option}
+      getOptionLabel={props.getOptionLabel ? props.getOptionLabel : (option: string) => option}
       value={props.values}
       renderInput={params => (
         <AutocompleteInput

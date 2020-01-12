@@ -3,11 +3,10 @@ import classNames from "classnames";
 import { observer } from "mobx-react-lite";
 
 // @material-ui/core
-import { createStyles, makeStyles, Theme, withStyles } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
 
 // services
 import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
@@ -15,21 +14,23 @@ import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
 // core components
 import Card from "components/Card/Card";
 import CardBody from "components/Card/CardBody";
-import BootstrapInput from "components/CustomInput/BootstrapInput";
+import CustomSelect from "components/CustomSelect/CustomSelect";
+import OneTimeRunTypeComponent from "views/Campaigns/components/whenToSend/OneTimeRunTypeComponent";
+import TriggerRunTypeComponent from "views/Campaigns/components/whenToSend/TriggerRunTypeComponent";
+import RecurringRunTypeComponent from "views/Campaigns/components/whenToSend/RecurringRunTypeComponent";
 
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 
-// view store
-import store from "views/Campaigns/CampaignViewStore";
+import { RunType } from "types/commonTypes";
+
+// view stores
+import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
+import { WhenToSendViewStore } from "views/Campaigns/store/WhenToSendViewStore";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       marginTop: theme.typography.pxToRem(20)
-    },
-    title: {
-      opacity: .5,
-      marginTop: theme.typography.pxToRem(10)
     },
     label: {
       width: theme.typography.pxToRem(200),
@@ -37,7 +38,12 @@ const extraStyles = makeStyles((theme: Theme) =>
     }
   }));
 
+const RunTypeComponents = [OneTimeRunTypeComponent, TriggerRunTypeComponent, RecurringRunTypeComponent];
+
 export default observer(() => {
+  const store = CampaignViewStore.whenToRunStepStore;
+  if (!store) return null;
+
   const classes = useStyles();
   const extraClasses = extraStyles();
   const centerNote = classNames(classes.note, classes.center, classes.textToRight, extraClasses.label);
@@ -46,36 +52,25 @@ export default observer(() => {
     <Card>
       <CardBody>
         <Grid container>
-          <Grid container item direction="row">
-            <Typography variant="subtitle2" className={centerNote}>
-              {Dictionary.defValue(DictionaryService.keys.name)}
-            </Typography>
-            <Grid item xs={12} sm={12} md={6}>
-              <BootstrapInput fullWidth/>
-            </Grid>
-          </Grid>
           <Grid container item direction="row" className={extraClasses.container}>
             <Typography variant="subtitle2" className={centerNote}>
               {Dictionary.defValue(DictionaryService.keys.runType)}
             </Typography>
             <Grid item xs={12} sm={12} md={6}>
               <FormControl fullWidth>
-                <NativeSelect
-                  id="demo-customized-select-native"
-                  value={10}
-                  onChange={() => {}}
-                  input={<BootstrapInput />}
-                >
-                  <option value="" />
-                  <option value={10}>Ten</option>
-                  <option value={20}>Twenty</option>
-                  <option value={30}>Thirty</option>
-                </NativeSelect>
+                <CustomSelect
+                  value={store.currentRunType}
+                  onChange={(e: RunType) => store.setCurrentRunType(e)}
+                  options={WhenToSendViewStore.runTypes}
+                />
               </FormControl>
             </Grid>
           </Grid>
+          {
+            React.createElement(RunTypeComponents[store.currentRunType - 1])
+          }
         </Grid>
       </CardBody>
     </Card>
-  );
+  )
 });

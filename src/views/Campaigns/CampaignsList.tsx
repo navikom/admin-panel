@@ -30,7 +30,7 @@ import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import useListStyles from "assets/jss/material-dashboard-react/views/listStyles";
 
 // view stores
-import CampaignViewStore from "views/Campaigns/CampaignViewStore";
+import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
 
 const Title = observer((props: {onClick: () => void}) => {
   const classes = useStyles();

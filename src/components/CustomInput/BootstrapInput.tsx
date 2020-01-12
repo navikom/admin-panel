@@ -1,7 +1,12 @@
 import React from "react";
+import classNames from "classnames";
+
+// @material-ui/core
 import { createStyles, makeStyles, Theme, withStyles } from "@material-ui/core";
-import { primaryColor, whiteColor } from "assets/jss/material-dashboard-react";
 import InputBase from "@material-ui/core/InputBase";
+
+import { dangerColor, primaryColor, whiteColor } from "assets/jss/material-dashboard-react";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -15,18 +20,42 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     paddingLeft: theme.typography.pxToRem(3),
     paddingRight: theme.typography.pxToRem(3),
     borderRadius: theme.typography.pxToRem(10)
+  },
+  labelError: {
+    color: dangerColor[0]
+  },
+  inputSuccess: {
+    border: "1px solid #ced4da"
+  },
+  inputError: {
+    border: "1px solid " + dangerColor[0]
   }
 }));
 
 const Input = ({ ...props }) => {
   const classes = useStyles();
+  const underline = classNames({
+    [props.classes.input]: true,
+    [classes.inputError]: props.error,
+    [classes.inputSuccess]: !props.error
+  });
+  const labelStyle = classNames({
+    [classes.label]: true,
+    [classes.labelError]: props.error
+  });
+
   return (
     <div className={classes.root}>
-      <InputBase {...props}/>
+      <InputBase {...props} classes={{ input: underline }} endAdornment={null}/>
       {
         props.label && (
-          <label className={classes.label}>{props.label}</label>
+          <label className={labelStyle}>{props.label}</label>
         )
+      }
+      {
+        props.error && <FormHelperText id="component-error-text" className={classes.labelError}>
+          {props.endAdornment}
+        </FormHelperText>
       }
     </div>
   );
@@ -43,7 +72,6 @@ export default withStyles((theme: Theme) =>
     input: {
       borderRadius: 4,
       position: "relative",
-      border: "1px solid #ced4da",
       fontSize: 16,
       padding: "10px 26px 10px 12px",
       transition: theme.transitions.create(["border-color", "box-shadow"]),
@@ -64,7 +92,7 @@ export default withStyles((theme: Theme) =>
         borderRadius: 4,
         borderWidth: 2,
         backgroundColor: whiteColor,
-        borderColor: primaryColor[0],
+        borderColor: primaryColor[0]
       }
     }
   })

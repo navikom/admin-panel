@@ -12,14 +12,14 @@ import BootstrapInput from "components/CustomInput/BootstrapInput";
 
 export default ({ ...props }) => {
   return <NativeSelect
-    id="demo-customized-select-native"
+    fullWidth
     value={props.value}
     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => props.onChange(e.target.value)}
     input={<BootstrapInput label={props.label}/>}
   >
     {
-      props.options.map((e: string, i: number) =>
-        <option key={i} value={e}>{Dictionary.value(e)}</option>)
+      props.options.map((e: string | (number | string)[], i: number) =>
+        <option key={i} value={Array.isArray(e) ? e[0] : e}>{Dictionary.value(Array.isArray(e) ? e[1].toString() : e)}</option>)
     }
   </NativeSelect>;
 }
