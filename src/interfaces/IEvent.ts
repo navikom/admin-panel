@@ -1,12 +1,17 @@
 import { WithPrimaryKey } from "interfaces/WithPrimaryKey";
 import { IUser } from "interfaces/IUser";
-import { IEventInfo } from "interfaces/IEventInfo";
+import {IApp} from "interfaces/IApp";
+import {IDevice} from "interfaces/IDevice";
+import {IRegion} from "interfaces/IRegion";
 
 export interface IEvent extends WithPrimaryKey {
   eventId: number;
   userId: number;
   user: IUser;
-  info: IEventInfo;
+  app: IApp | null;
+  device: IDevice;
+  region: IRegion;
+  info: {[key: string]: any} | null;
   title: string;
   createdAt: Date;
 }

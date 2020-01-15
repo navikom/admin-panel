@@ -10,5 +10,6 @@ export interface ISettings {
   beefree?: IBeefree,
   beefreeError: string | null;
   systemEventsList?: string[];
+  customEventsList?: string[];
   expressions?: string[];
 }

@@ -1,5 +1,5 @@
 import { createMuiTheme } from "@material-ui/core";
-import { dangerColor, infoColor, primaryColor, whiteColor } from "assets/jss/material-dashboard-react";
+import {blackOpacity, dangerColor, infoColor, primaryColor, whiteColor} from "assets/jss/material-dashboard-react";
 
 export default createMuiTheme({
   palette: {
@@ -8,7 +8,15 @@ export default createMuiTheme({
     error: { main: dangerColor[0] }
   },
   overrides: {
+    MuiButtonBase: {
+      root: {
+        color: blackOpacity(.4)
+      }
+    },
     MuiButton: {
+      root: {
+        color: blackOpacity(.4)
+      },
       containedSecondary: {
         color: whiteColor
       }
@@ -16,6 +24,22 @@ export default createMuiTheme({
     MuiOutlinedInput: {
       input: {
         padding: "11px 12px"
+      },
+      adornedStart: {
+        paddingLeft: "none"
+      },
+      adornedEnd: {
+        paddingRight: "none"
+      }
+    },
+    MuiInputLabel: {
+      outlined: {
+        transform: "translate(14px, 13px) scale(1)"
+      }
+    },
+    MuiInputAdornment: {
+      positionEnd: {
+        marginLeft: 0
       }
     },
     MuiBadge: {
@@ -24,6 +48,16 @@ export default createMuiTheme({
       },
       anchorOriginTopRightRectangle: {
         transform: "scale(1) translate(48%, -48%)"
+      }
+    },
+    MuiIconButton: {
+      root: {
+        color: blackOpacity(.4)
+      }
+    },
+    MuiSvgIcon: {
+      fontSizeSmall: {
+        fontSize: "0.8rem"
       }
     }
   }

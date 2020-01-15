@@ -5,7 +5,8 @@ import {
   infoCardHeader,
   primaryCardHeader,
   roseCardHeader,
-  whiteColor
+  whiteColor,
+  inheritCardHeader, blackOpacity
 } from "assets/jss/material-dashboard-react.ts";
 import { createStyles } from "@material-ui/core";
 
@@ -16,7 +17,7 @@ const cardHeaderStyle = createStyles({
     borderBottom: "none",
     background: "transparent",
     zIndex: 3,
-    "&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
+    "&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$inheritCardHeader,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
       margin: "0 15px",
       padding: "0",
       position: "relative",
@@ -25,7 +26,7 @@ const cardHeaderStyle = createStyles({
     "&:first-child": {
       borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
     },
-    "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
+    "&$inheritCardHeader,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
       "&:not($cardHeaderIcon)": {
         borderRadius: "3px",
         marginTop: "-20px",
@@ -66,7 +67,7 @@ const cardHeaderStyle = createStyles({
     }
   },
   cardHeaderIcon: {
-    "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
+    "&$inheritCardHeader,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
       background: "transparent",
       boxShadow: "none"
     },
@@ -82,6 +83,12 @@ const cardHeaderStyle = createStyles({
       textAlign: "center",
       lineHeight: "33px",
       margin: "5px 4px 0px"
+    }
+  },
+  inheritCardHeader: {
+    color: blackOpacity(.6),
+    "&:not($cardHeaderIcon)": {
+      ...inheritCardHeader
     }
   },
   warningCardHeader: {

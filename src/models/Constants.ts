@@ -70,6 +70,7 @@ export const APP_TIME_ZONE = "App Time Zone";
 
 //********** Others ************//
 export const ALL = "All";
+export const VARIABLES = "VARIABLES";
 
 //********** Expressions *********//
 export const AND = "and";
@@ -83,7 +84,7 @@ export const TimePeriods = ["Minutes", "Days", "Weeks", "Months"];
 export const OccurrenceTimePeriods = ["Day", "Week", "Month"];
 
 //********** Period Amount *********//
-export const PeriodAmount= {
+export const PeriodAmount = {
  [TimePeriods[0]]: 1000 * 60,
  [TimePeriods[1]]: 1000 * 60 * 60,
  [TimePeriods[2]]: 1000 * 60 * 60 * 24,
@@ -92,6 +93,12 @@ export const PeriodAmount= {
 
 //********** Visitor Type *******//
 export const VisitorTypeList = ["All Users", "New Users", "Returning", "No. of Sessions"];
+
+//********* User Attributes Events **********//
+export const UserOptions = ["User Attributes", "User System Events", "User Custom Events"];
+
+//********* System Events Main Properties ******//
+export const SystemEventsMainProperties = ["Date", "App", "Device", "Region"];
 
 //********** Expressions ********//
 export const NumberExpressions: NumberExpressionTypesArray =

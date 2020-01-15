@@ -2,15 +2,22 @@ import { IEvent } from "interfaces/IEvent";
 import { IUser } from "interfaces/IUser";
 import { Users } from "models/User/UsersStore";
 import parseModel from "utils/parseModelRow";
-import { EventInfoStore } from "models/Event/EventInfoStore";
-import { IEventInfo } from "interfaces/IEventInfo";
+import {DeviceStore} from "models/Device/DeviceStore";
+import {RegionStore} from "models/Region/RegionStore";
+import {AppStore} from "models/App/AppStore";
+import {IApp} from "interfaces/IApp";
+import {IDevice} from "interfaces/IDevice";
+import {IRegion} from "interfaces/IRegion";
 
 export class EventStore implements IEvent {
   pk: string = "eventId";
   userId!: number;
   createdAt!: Date;
   eventId!: number;
-  info!: IEventInfo;
+  app!: IApp | null;
+  device!: IDevice;
+  region!: IRegion;
+  info!: {[key: string]: any} | null;
   title!: string;
   user!: IUser;
 
@@ -23,7 +30,9 @@ export class EventStore implements IEvent {
     const userData = model.user;
     model.user = Users.getOrCreate({...model.user, userId: model.userId}) as IUser;
     model.user.update(userData);
-    model.info = EventInfoStore.from(model.info);
+    model.device = DeviceStore.from(model.device);
+    model.region = RegionStore.from(model.region);
+    model.app = model.app ? AppStore.from(model.app) : null;
     return new EventStore(model);
   }
 }

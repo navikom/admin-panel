@@ -6,6 +6,7 @@ import { EventStore } from "models/Event/EventStore";
 
 class EventsStore extends Pagination<IEvent> {
   @observable systemEventsList?: string[];
+  @observable customEventsList?: string[];
 
   @computed get eventTableData() {
     return this.tableData((e: IEvent) => {
@@ -41,6 +42,12 @@ class EventsStore extends Pagination<IEvent> {
   @action setSystemEventsList(list: string[]) {
     if(!this.systemEventsList) {
       this.systemEventsList = list;
+    }
+  }
+
+  @action setCustomEventsList(list: string[]) {
+    if(!this.customEventsList) {
+      this.customEventsList = list;
     }
   }
 

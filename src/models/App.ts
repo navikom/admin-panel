@@ -59,7 +59,10 @@ export class AppStore implements IFlow {
     await Auth.start();
     await Settings.fetch();
     Regions.addFakeRegions();
-    await Regions.fetchItems();
+    when(() => this.tokenIsReady, async () => {
+      await Regions.fetchItems();
+    })
+
   }
 
   @action setUser(model: IUser) {

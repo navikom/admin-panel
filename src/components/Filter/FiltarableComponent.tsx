@@ -7,15 +7,15 @@ import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 
 // core components
-import CustomSelect from "components/CustomSelect/CustomSelect";
 import AutocompleteInput from "components/CustomInput/AutocompleteInput";
 import DateInput from "components/CustomInput/DateInput";
 import LabeledInput from "components/CustomInput/LabeledInput";
 import AutocompleteSelect from "components/CustomSelect/AutocompleteSelect";
+import TimeInput from "components/CustomInput/TimeInput";
+import LabeledSelect from "components/CustomSelect/LabeledSelect";
 
 // services
 import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
-import TimeInput from "components/CustomInput/TimeInput";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,20 +58,19 @@ const FilterComponent = (props: FormItemType) => {
  return (
    <Grid item {...props.gridSize} className={container}>
     {
-     props.value !== undefined && (
+     props.value !== undefined && props.options && (
+       <LabeledSelect
+         id={`${props.label}_1`}
+         labelTitle={props.label}
+         value={props.value}
+         onChange={props.onChange}
+         options={props.options} />
+     )
+    }
+    {
+     props.value !== undefined && !props.options && (
        <FormControl fullWidth>
-        {
-         props.options ? (
-           <CustomSelect
-             value={props.value}
-             onChange={props.onChange}
-             options={props.options}
-             label={props.label}
-           />
-         ) : (
-           <LabeledInput type={props.type} value={props.value} onChange={(e: string) => props.onChange(e, "value")} />
-         )
-        }
+        <LabeledInput type={props.type} value={props.value} onChange={(e: string) => props.onChange(e, "value")} />
        </FormControl>
      )
     }

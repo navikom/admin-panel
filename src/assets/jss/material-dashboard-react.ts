@@ -60,6 +60,7 @@ const dangerColor = ["#f44336", "#ef5350", "#e53935", "#f55a4e"];
 const successColor = ["#4caf50", "#66bb6a", "#43a047", "#5cb860"];
 const infoColor = ["#00acc1", "#26c6da", "#00acc1", "#00d3ee"];
 const roseColor = ["#e91e63", "#ec407a", "#d81b60", "#eb3573"];
+const inheritColor = ["#d5d5d5", "#ededed", "#dbdbdb", "#f9f9f9"];
 const grayColor = [
   "#999",
   "#777",
@@ -114,6 +115,14 @@ const successBoxShadow = {
     hexToRgb(successColor[0]) +
     ",.4)"
 };
+const inheritBoxShadow = {
+  boxShadow:
+    "0 4px 20px 0 rgba(" +
+    hexToRgb(blackColor) +
+    ",.14), 0 7px 10px -5px rgba(" +
+    hexToRgb(inheritColor[0]) +
+    ",.4)"
+};
 const warningBoxShadow = {
   boxShadow:
     "0 4px 20px 0 rgba(" +
@@ -137,6 +146,12 @@ const roseBoxShadow = {
     ",.14), 0 7px 10px -5px rgba(" +
     hexToRgb(roseColor[0]) +
     ",.4)"
+};
+
+const inheritCardHeader = {
+  background:
+    "linear-gradient(60deg, " + inheritColor[1] + ", " + inheritColor[2] + ")",
+  ...inheritBoxShadow
 };
 
 const warningCardHeader = {
@@ -262,6 +277,7 @@ export {
   successColor,
   infoColor,
   roseColor,
+  inheritColor,
   grayColor,
   blackColor,
   whiteColor,
@@ -271,6 +287,7 @@ export {
   warningBoxShadow,
   dangerBoxShadow,
   roseBoxShadow,
+  inheritCardHeader,
   warningCardHeader,
   successCardHeader,
   dangerCardHeader,

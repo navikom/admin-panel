@@ -40,6 +40,7 @@ CardHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   color: PropTypes.oneOf([
+    "inherit",
     "warning",
     "success",
     "danger",

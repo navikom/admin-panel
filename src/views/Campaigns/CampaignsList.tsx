@@ -29,9 +29,6 @@ import { lazy } from "utils";
 import useStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import useListStyles from "assets/jss/material-dashboard-react/views/listStyles";
 
-// view stores
-import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
-
 const Title = observer((props: {onClick: () => void}) => {
   const classes = useStyles();
   const eClasses = useListStyles();
@@ -96,7 +93,6 @@ export default (props: RouteComponentProps) => {
   );
 
   const newCampaign = () => {
-    CampaignViewStore.setCampaign(0, Campaigns.stores.get(props.match.url)!.type);
     props.history.push(props.match.url + "/0");
   };
 

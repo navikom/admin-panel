@@ -39,6 +39,7 @@ class SettingsStore implements ISettings {
     this.beefreeError = data.beefreeError;
     data.beefree && (this.beefree = Beefree.from(data.beefree));
     Events.setSystemEventsList(data.systemEventsList as []);
+    Events.setCustomEventsList(data.customEventsList as []);
     Segments.setExpressions(data.expressions as []);
     this.loaded = true;
   }

@@ -10,6 +10,13 @@ import { useDisposable } from "mobx-react-lite";
 import { when } from "mobx";
 import { App } from "models/App";
 import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
+import {
+  EMAIL_CAMPAIGNS_ROUTE,
+  EMAIL_CHANNEL,
+  IN_APP_CAMPAIGNS_ROUTE, IN_APP_CHANNEL, PUSH_CAMPAIGNS_ROUTE, PUSH_CHANNEL,
+  SMS_CAMPAIGNS_ROUTE,
+  SMS_CHANNEL
+} from "models/Constants";
 
 const StepperComponent = lazy(() => import("views/Campaigns/components/StepperComponent"));
 
@@ -17,20 +24,21 @@ type CampaignMatch = {
   campaignId: string;
 }
 
+const channels = {
+  [EMAIL_CAMPAIGNS_ROUTE]: EMAIL_CHANNEL,
+  [SMS_CAMPAIGNS_ROUTE]: SMS_CHANNEL,
+  [IN_APP_CAMPAIGNS_ROUTE]: IN_APP_CHANNEL,
+  [PUSH_CAMPAIGNS_ROUTE]: PUSH_CHANNEL
+};
+
 export default (props: RouteComponentProps<CampaignMatch>) => {
   const id = Number(props.match.params.campaignId);
+  const channelRoute = props.match.path.split("/:")[0];
+  console.log("Campaign Item %d", id, channelRoute);
 
-  console.log("Campaign Item %d", id);
-
-  if(!CampaignViewStore.campaign) {
-    const url = props.match.url.split("/");
-    url.pop();
-    // setTimeout(() => props.history.push(url.join("/")), 0);
-  }
-  CampaignViewStore.setCampaign(id, 1);
   useDisposable(() =>
     when(() => App.tokenIsReady, () => {
-
+      CampaignViewStore.setCampaign(id, channels[channelRoute]);
     })
   );
 

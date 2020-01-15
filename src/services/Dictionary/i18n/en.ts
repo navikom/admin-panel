@@ -144,6 +144,7 @@ export default {
   "subscrExpires": "Subscription expires",
   "title": "Title",
   "action": "Action",
+  "clickAction": "Click Action",
   "id": "Id",
   "description": "Description",
   "date": "Date",
@@ -252,5 +253,14 @@ export default {
   "until": "Until",
   "sendAsOccurs": "Send As Occurs",
   "waitFor": "Wait For",
-  "andThenSend": "and then send"
+  "andThenSend": "and then send",
+  "message": "Message",
+  "attachments": "Attachments",
+  "layout": "Layout",
+  "theme": "Theme",
+  "advanced": "Advanced",
+  "keyValuePairs": "Key-Value Pairs",
+  "variables": "Variables",
+  "back": "Back",
+  "subject": "Subject"
 };

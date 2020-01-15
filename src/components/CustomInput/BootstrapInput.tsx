@@ -53,7 +53,7 @@ const Input = ({ ...props }) => {
         )
       }
       {
-        props.error && <FormHelperText id="component-error-text" className={classes.labelError}>
+        props.error && <FormHelperText className={classes.labelError}>
           {props.endAdornment}
         </FormHelperText>
       }
@@ -61,7 +61,7 @@ const Input = ({ ...props }) => {
   );
 };
 
-export default withStyles((theme: Theme) =>
+export const ThemedInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -96,4 +96,8 @@ export default withStyles((theme: Theme) =>
       }
     }
   })
-)(Input);
+);
+
+
+
+export default ThemedInput(Input);
