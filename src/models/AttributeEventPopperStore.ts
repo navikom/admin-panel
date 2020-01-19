@@ -37,6 +37,23 @@ export class AttributeEventPopperStore implements IAttributesEventsPopper {
   return `{{${variable}}}`;
  }
 
+ @computed get variableMargeTags() {
+  const variables: {name: string, value: string}[] = [];
+  (function traverse(map: IObject, variableName: string | null, variable: string) {
+   const keys: string[] = map.keys;
+   keys.forEach((key: string) => {
+    const value = `${variable}["${key}"]`;
+    const name = variableName ? variableName + " " + key : key;
+    if (map.hasNext(key)) {
+     traverse(map.items.get(key) as IObject, name, value);
+    } else {
+     variables.push({name, value: `{{${value}}}`});
+    }
+   });
+  })(this.variables, null, "VARIABLES");
+  return variables;
+ }
+
  constructor() {
   this.variables.items.set(UserOptions[0], new UserAttributeObjectStore(UserOptions[0], UserAttributes));
 

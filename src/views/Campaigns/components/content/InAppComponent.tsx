@@ -37,10 +37,8 @@ const extraStyles = makeStyles((theme: Theme) =>
    }
   }));
 
-export default observer(() => {
- const contentStepStore = CampaignViewStore.contentStepStore;
- if (!contentStepStore) return null;
- const store = contentStepStore.store as IContentInAppView;
+export default observer((props: {store: IContentInAppView}) => {
+ const store = props.store;
 
  const classes = useStyles();
  const cardClasses = cardStyles();

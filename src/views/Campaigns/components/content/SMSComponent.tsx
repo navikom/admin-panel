@@ -36,10 +36,8 @@ const extraStyles = makeStyles((theme: Theme) =>
    }
   }));
 
-export default observer(() => {
- const contentStepStore = CampaignViewStore.contentStepStore;
- if (!contentStepStore) return null;
- const store = contentStepStore.store as IContentSMSView;
+export default observer((props: {store: IContentSMSView}) => {
+ const store = props.store;
 
  const classes = useStyles();
  const cardClasses = cardStyles();

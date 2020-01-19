@@ -36,6 +36,8 @@ export default observer((props: {store: IPopper}) => {
   };
  }, []);
 
+ // @ts-ignore
+ const picker = <Picker onSelect={store.select} darkMode={false} />;
  return (
    <Popper
      open={store.open}
@@ -44,7 +46,7 @@ export default observer((props: {store: IPopper}) => {
      className={classes.box}
      transition>
     <Fade in={true} mountOnEnter unmountOnExit>
-     <Picker onSelect={store.select} />
+     {picker}
     </Fade>
    </Popper>
  );

@@ -1,6 +1,5 @@
 import { Headers, Body } from "interfaces/Request";
 import { ErrorHandler } from "utils/ErrorHandler";
-import { instanceOf } from "prop-types";
 
 export async function request(method: string, url: string, allHeaders: Headers = {}, body?: Body, excludeHeaders?: string[], debug = true) {
   let headers = Object.assign({

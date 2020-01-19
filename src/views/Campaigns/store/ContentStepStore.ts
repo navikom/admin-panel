@@ -1,4 +1,4 @@
-import {computed, observable} from "mobx";
+import {action, computed, observable} from "mobx";
 
 // models
 import {EMAIL_CHANNEL, IN_APP_CHANNEL, PUSH_CHANNEL, SMS_CHANNEL} from "models/Constants";
@@ -21,15 +21,28 @@ export class ContentStepStore implements IContentStep {
   [PUSH_CHANNEL]: ContentPushViewStore
  };
  channel: ChannelType;
- @observable store: ContentChannelsType;
+ variants = observable<ContentChannelsType>([]);
+ @observable currentVariant: number = 0;
 
  @computed get isValidStep(): boolean {
   return true;
  }
 
+ @computed get currentStore() {
+  return this.variants[this.currentVariant];
+ }
+
  constructor(channelType: ChannelType) {
   this.channel = channelType;
-  this.store = new ContentStepStore.channelStores[channelType]();
+  this.addStore();
+ }
+
+ @action addStore() {
+  this.variants.push(new ContentStepStore.channelStores[this.channel]());
+ }
+
+ @action setCurrentVariant(index: number) {
+  this.currentVariant = index;
  }
 
 }

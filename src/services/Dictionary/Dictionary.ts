@@ -4,9 +4,14 @@ import {settings} from './settings';
 type EN = typeof settings.en;
 type EN_TYPE = keyof typeof settings.en;
 
+const locales = {
+  en: "en-US"
+};
+
 export class DictionaryService {
   data: {[key: string]: string};
   reversed: {[key: string]: string};
+  locale: string;
   static keys: EN = settings.en;
 
   get moment() {
@@ -19,6 +24,7 @@ export class DictionaryService {
   }
 
   constructor(locale: "en") {
+    this.locale = locales[locale];
     this.data = settings[locale];
     moment.updateLocale(locale);
 
