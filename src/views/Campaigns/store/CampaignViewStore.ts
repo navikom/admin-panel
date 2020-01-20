@@ -4,6 +4,10 @@ import {action, computed, observable} from "mobx";
 import {IAudienceStep} from "interfaces/IAudienceStep";
 import {ICampaign} from "interfaces/ICampaign";
 import {IWhenToSendStep} from "interfaces/IWhenToSendStep";
+import {ITestStep} from "interfaces/ITestStep";
+import {IConversionStep} from "interfaces/IConversionStep";
+import {IContentStep} from "interfaces/IContentStep";
+import {ILaunchStep} from "interfaces/ILaunchStep";
 
 // models
 import {CampaignStore} from "models/Campaign/CampaignStore";
@@ -22,8 +26,11 @@ import {ChannelType} from "types/commonTypes";
 // step stores
 import {AudienceStepStore} from "views/Campaigns/store/AudienceStepStore";
 import {WhenToSendViewStore} from "views/Campaigns/store/WhenToSendViewStore";
-import {IContentStep} from "interfaces/IContentStep";
 import {ContentStepStore} from "views/Campaigns/store/ContentStepStore";
+import {ConversionStepStore} from "views/Campaigns/store/ConversionStepStore";
+import {TestStepStore} from "views/Campaigns/store/TestStepStore";
+import {LaunchStepStore} from "views/Campaigns/store/LaunchStepStore";
+
 
 class CampaignViewStore extends Errors {
  @observable campaign?: ICampaign;
@@ -31,6 +38,9 @@ class CampaignViewStore extends Errors {
  @observable audienceStepStore?: IAudienceStep;
  @observable whenToRunStepStore?: IWhenToSendStep;
  @observable contentStepStore?: IContentStep;
+ @observable conversionStepStore?: IConversionStep;
+ @observable testStepStore?: ITestStep;
+ @observable launchStepStore?: ILaunchStep;
 
  steps: string[] = [AUDIENCE_CAMPAIGN_STEP, WHEN_TO_SEND_CAMPAIGN_STEP, CONTENT_CAMPAIGN_STEP,
   CONVERSION_CAMPAIGN_STEP, TEST_CAMPAIGN_STEP, LAUNCH_CAMPAIGN_STEP];
@@ -60,6 +70,9 @@ class CampaignViewStore extends Errors {
   this.audienceStepStore = new AudienceStepStore();
   this.whenToRunStepStore = new WhenToSendViewStore();
   this.contentStepStore = new ContentStepStore(this.campaign!.channelType);
+  this.conversionStepStore = new ConversionStepStore();
+  this.testStepStore = new TestStepStore();
+  this.launchStepStore = new LaunchStepStore();
  }
 
 }

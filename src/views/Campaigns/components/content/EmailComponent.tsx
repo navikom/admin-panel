@@ -20,9 +20,6 @@ import InputWithIcon from "components/CustomInput/InputWithIcon";
 // interfaces
 import {ContentEmailPropsType, IContentEmailView} from "interfaces/IContentStep";
 
-// view stores
-import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
-
 // services
 import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 
@@ -32,7 +29,6 @@ import AttributesEventsListPopper from "components/Poppers/AttributesEventsListP
 // styles
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 import cardStyles from "assets/jss/material-dashboard-react/views/cardStyle";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import EmojiPopper from "components/Poppers/EmojiPopper";
 import BeeComponent from "views/Campaigns/components/content/BeeComponent";
 import {inheritColor} from "assets/jss/material-dashboard-react";

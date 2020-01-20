@@ -80,6 +80,7 @@ export const OR = "or";
 export const DaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 //********** Time Periods ***********//
+export const ConversionTimePeriods = ["Hours", "Days"];
 export const TimePeriods = ["Minutes", "Days", "Weeks", "Months"];
 export const OccurrenceTimePeriods = ["Day", "Week", "Month"];
 

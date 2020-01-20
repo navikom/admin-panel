@@ -162,7 +162,7 @@ const Reachable = observer(() => {
  );
 });
 
-export default observer(() => {
+const AudienceStep = () => {
 
  const store = CampaignViewStore.audienceStepStore;
  if (!store) return null;
@@ -277,4 +277,6 @@ export default observer(() => {
     </CardFooter>
    </Card>
  );
-});
+};
+
+export default observer(AudienceStep);

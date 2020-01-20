@@ -16,7 +16,6 @@ import Tabs from "@material-ui/core/Tabs";
 import {ContentChannelsType} from "interfaces/IContentStep";
 import {AddCircleOutline, Delete} from "@material-ui/icons";
 import {observer} from "mobx-react-lite";
-import IconButton from "@material-ui/core/IconButton";
 
 // channel components
 const EmailComponent = lazy(() => import("views/Campaigns/components/content/EmailComponent"));
@@ -50,7 +49,7 @@ const ChannelComponents = {
  [PUSH_CHANNEL]: PushComponent
 };
 
-const ContentStep =() => {
+const ContentStep = () => {
  const store = CampaignViewStore.contentStepStore;
  if (!store) return null;
 

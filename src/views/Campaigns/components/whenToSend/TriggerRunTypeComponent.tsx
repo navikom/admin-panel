@@ -25,6 +25,7 @@ import FiltarableComponent from "components/Filter/FiltarableComponent";
 import SwitchComponent from "views/Campaigns/components/SwitchComponent";
 
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
+import PeriodComponent from "components/Filter/PeriodComponent";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,52 +35,8 @@ const extraStyles = makeStyles((theme: Theme) =>
    label: {
     width: theme.typography.pxToRem(200),
     marginRight: theme.typography.pxToRem(30)
-   },
-   note: {
-    opacity: .4,
-    padding: theme.typography.pxToRem(10)
    }
   }));
-
-type WaitForComponentProps = {
- amount: number;
- onAmount: (e: number) => void;
- period: string;
- onPeriod: (e: string) => void;
-}
-
-const WaitForComponent = (props: WaitForComponentProps) => {
-
- const classes = extraStyles();
-
- const first = {
-  value: props.amount,
-  onChange: props.onAmount,
-  type: "number"
- };
-
- const second = {
-  value: props.period,
-  options: TriggerRunViewStore.timePeriods,
-  onChange: props.onPeriod
- };
-
- return (
-   <Grid container item md={10}>
-    <Grid item md={6}>
-     <FiltarableComponent
-       first={first}
-       second={second}
-     />
-    </Grid>
-    <Grid container item md={6}>
-     <Typography variant="body1" className={classes.note}>
-      {Dictionary.defValue(DictionaryService.keys.andThenSend)}
-     </Typography>
-    </Grid>
-   </Grid>
- );
-};
 
 export default observer(() => {
  const whenToRunStepStore = CampaignViewStore.whenToRunStepStore;
@@ -129,9 +86,11 @@ export default observer(() => {
         </Grid>
         {
          !store.model.sendAsOccurs &&
-         <WaitForComponent
+         <PeriodComponent
            onPeriod={(e) => store.setPeriod(e)}
            onAmount={(e) => store.setAmount(e)}
+           options={TriggerRunViewStore.timePeriods}
+           tale={Dictionary.defValue(DictionaryService.keys.andThenSend)}
            period={store.timePeriod}
            amount={store.timeAmount} />
         }

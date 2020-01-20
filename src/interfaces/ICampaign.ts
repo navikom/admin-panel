@@ -36,7 +36,8 @@ export interface IRecurringRun extends IRunType {
 
 export interface IConversion {
  event: string;
- deadlineFromDeliveryMessage: number
+ deadlineFromDeliveryMessage: number;
+ setEvent(value: string): void;
 }
 
 export interface ICampaign extends WithPrimaryKey {

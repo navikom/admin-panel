@@ -111,6 +111,8 @@ export default {
   "at": "at",
   "devices": "Devices",
   "events": "Events",
+  "conversionEvent": "Conversion Event",
+  "conversionDeadline": "Conversion Deadline",
   "contact": "Contact",
   "location": "Location",
   "name": "Name",
@@ -276,5 +278,7 @@ export default {
   "emailContentDidNotSave": "Email content didn't save",
   "discardAndClose": "Discard & Close",
   "saveAndClose": "Save & Close",
-  "addAttachment": "Add Attachment"
+  "addAttachment": "Add Attachment",
+  "conversionTracking": "Conversion Tracking",
+  "fromDeliveryMessageToUser": "from delivery message to user"
 };
