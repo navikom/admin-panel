@@ -37,4 +37,5 @@ export interface IContentStep extends IStep {
  currentStore: ContentChannelsType;
  setCurrentVariant(index: number): void;
  addStore(): void;
+ deleteStore(): void;
 }

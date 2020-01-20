@@ -36,7 +36,7 @@ const extraStyles = makeStyles((theme: Theme) =>
    }
   }));
 
-export default observer((props: {store: IContentSMSView}) => {
+const SMSComponent = (props: {store: IContentSMSView}) => {
  const store = props.store;
 
  const classes = useStyles();
@@ -62,4 +62,6 @@ export default observer((props: {store: IContentSMSView}) => {
     </Card>
    </div>
  )
-});
+};
+
+export default observer(SMSComponent);

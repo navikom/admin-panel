@@ -48,6 +48,9 @@ import {IAttachment} from "interfaces/IAttachment";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
+   root: {
+    padding: theme.spacing(1),
+   },
    divider: {
     height: theme.typography.pxToRem(30)
    },
@@ -151,7 +154,7 @@ const EmailFormDialog = (props: {open: boolean, handleClose: () => void, onSend:
  );
 };
 
-export default observer((props: {store: IContentEmailView}) => {
+const EmailComponent = (props: {store: IContentEmailView}) => {
 
  const store = props.store;
  const [testLetterDialogOpen, setTestLetterDialogOpen] = useState(false);
@@ -169,13 +172,14 @@ export default observer((props: {store: IContentEmailView}) => {
   typeof key === "number" ? store.attachments[key].setUrl("") : store.onInput(key, "");
  };
 
- const onVariableClick = (key: ContentEmailPropsType | number) => (e: React.MouseEvent<HTMLButtonElement>) => {
-  store.variablesPopperStore.handleClick(e.currentTarget, typeof key === "number" ? onAttachmentInput(key) : onInput(key));
+ const onVariableClick = (key: ContentEmailPropsType | number) => (e: React.MouseEvent<HTMLButtonElement> | HTMLButtonElement) => {
+  store.variablesPopperStore
+    .handleClick(e instanceof HTMLButtonElement ? e : e.currentTarget, typeof key === "number" ? onAttachmentInput(key) : onInput(key));
   store.emojiStore.clear();
  };
 
- const onEmojiClick = (key: ContentEmailPropsType) => (e: React.MouseEvent<HTMLButtonElement>) => {
-  store.emojiStore.handleClick(e.currentTarget, onInput(key));
+ const onEmojiClick = (key: ContentEmailPropsType) => (e: React.MouseEvent<HTMLButtonElement> | HTMLButtonElement) => {
+  store.emojiStore.handleClick(e instanceof HTMLButtonElement ? e : e.currentTarget, onInput(key));
   store.variablesPopperStore.clear();
  };
 
@@ -184,9 +188,9 @@ export default observer((props: {store: IContentEmailView}) => {
  };
 
  return (
-   <div className={classes.root}>
+   <div className={extraClasses.root}>
     <Card>
-     <CardHeader color="inherit">
+     <CardHeader color="inherit" plain>
       <h4 className={cardClasses.cardTitleBlack}>
        {Dictionary.defValue(DictionaryService.keys.from).toUpperCase()}
       </h4>
@@ -232,7 +236,7 @@ export default observer((props: {store: IContentEmailView}) => {
      </CardBody>
     </Card>
     <Card>
-     <CardHeader color="inherit">
+     <CardHeader color="inherit" plain>
       <h4 className={cardClasses.cardTitleBlack}>
        {Dictionary.defValue(DictionaryService.keys.message).toUpperCase()}
       </h4>
@@ -284,7 +288,7 @@ export default observer((props: {store: IContentEmailView}) => {
      </CardBody>
     </Card>
     <Card>
-     <CardHeader color="inherit">
+     <CardHeader color="inherit" plain>
       <h4 className={cardClasses.cardTitleBlack}>
        {Dictionary.defValue(DictionaryService.keys.attachments).toUpperCase()}
       </h4>
@@ -338,5 +342,7 @@ export default observer((props: {store: IContentEmailView}) => {
       onSend={(email: string) => console.log("Sent letter to %s", email)} />
    </div>
  );
-});
+};
+
+export default observer(EmailComponent);
 

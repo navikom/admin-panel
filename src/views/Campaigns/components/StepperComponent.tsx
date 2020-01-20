@@ -1,12 +1,12 @@
-import React from "react";
-import { observer } from "mobx-react-lite";
+import React, {useEffect, useState} from "react";
+import {observer} from "mobx-react-lite";
 
 // @material-ui/icons
-import { Clear } from "@material-ui/icons";
+import {Clear} from "@material-ui/icons";
 import AddAlert from "@material-ui/icons/AddAlert";
 
 // @material-ui/core
-import { createStyles, makeStyles, Stepper, Theme } from "@material-ui/core";
+import {createStyles, makeStyles, Stepper, Theme} from "@material-ui/core";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -23,12 +23,13 @@ import Button from "components/CustomButtons/Button";
 import store from "views/Campaigns/store/CampaignViewStore";
 
 // services
-import { Dictionary, DictionaryService } from "services/Dictionary/Dictionary";
+import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 
 // utils
-import { lazy } from "utils";
+import {lazy} from "utils";
 
 import WaitingComponent from "hocs/WaitingComponent";
+import useWindowSize from "hooks/useWindowResize";
 
 const AudienceStep = lazy(() => import("views/Campaigns/components/audience/AudienceStep"));
 const WhenToSendStep = lazy(() => import("views/Campaigns/components/whenToSend/WhenToSendStep"));
@@ -41,99 +42,98 @@ const stepsContent = [AudienceStep, WhenToSendStep, ContentStep, ConversionStep,
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    verticalStepper: {
-      backgroundColor: "#eeeeee"
-    },
-    center: {
-      justifyContent: "flex-end"
-    }
+   verticalStepper: {
+    backgroundColor: "#eeeeee"
+   },
+   center: {
+    justifyContent: "flex-end"
+   }
   }));
 
 const HorizontalSteps = observer(() => {
-  return (
-    <div>
-      <Stepper alternativeLabel nonLinear activeStep={store.activeStep}>
-        {store.steps.map((label, index) => {
-          return (
-            <Step key={label}>
-              <StepButton
-                completed={index < store.activeStep}
-                onClick={store.handleStep(index)}
-              >
-                {Dictionary.value(label)}
-              </StepButton>
-            </Step>
-          );
-        })}
-      </Stepper>
-      {React.createElement(WaitingComponent(stepsContent[store.activeStep]))}
-    </div>
-  );
+ return (
+   <div>
+    <Stepper alternativeLabel nonLinear activeStep={store.activeStep}>
+     {store.steps.map((label, index) => {
+      return (
+        <Step key={label}>
+         <StepButton
+           completed={index < store.activeStep}
+           onClick={store.handleStep(index)}
+         >
+          {Dictionary.value(label)}
+         </StepButton>
+        </Step>
+      );
+     })}
+    </Stepper>
+    {React.createElement(WaitingComponent(stepsContent[store.activeStep]))}
+   </div>
+ );
 });
 
 const VerticalSteps = observer(() => {
-  const classes = useStyles();
-  return (
-    <Stepper activeStep={store.activeStep} orientation="vertical" className={classes.verticalStepper}>
-      {store.steps.map((label, index) => (
-        <Step key={label}>
-          <StepButton
-            onClick={store.handleStep(index)}
-          >
-            {Dictionary.value(label)}
-          </StepButton>
-          <StepContent>
-            {React.createElement(WaitingComponent(stepsContent[index]))}
-          </StepContent>
-        </Step>
-      ))}
-    </Stepper>
-  );
+ const classes = useStyles();
+ return (
+   <Stepper activeStep={store.activeStep} orientation="vertical" className={classes.verticalStepper}>
+    {store.steps.map((label, index) => (
+      <Step key={label}>
+       <StepButton
+         onClick={store.handleStep(index)}
+       >
+        {Dictionary.value(label)}
+       </StepButton>
+       <StepContent>
+        {React.createElement(WaitingComponent(stepsContent[index]))}
+       </StepContent>
+      </Step>
+    ))}
+   </Stepper>
+ );
 });
 
 const StepBtn = observer(() => {
-  const classes = useStyles();
-  return (
-    <Card>
-      <CardFooter className={classes.center}>
-        <Button
-          disabled={!store.isNextButtonAvailable}
-          color="primary"
-          onClick={() => store.handleStep(store.activeStep + 1)()}>
-          {Dictionary.defValue(DictionaryService.keys.saveAndNextStep)}
-        </Button>
-      </CardFooter>
-    </Card>
-  )
+ const classes = useStyles();
+ return (
+   <Card>
+    <CardFooter className={classes.center}>
+     <Button
+       disabled={!store.isNextButtonAvailable}
+       color="primary"
+       onClick={() => store.handleStep(store.activeStep + 1)()}>
+      {Dictionary.defValue(DictionaryService.keys.saveAndNextStep)}
+     </Button>
+    </CardFooter>
+   </Card>
+ );
 });
 
 export default observer(() => {
-  if (!store.campaign) return null;
+ if (!store.campaign) return null;
+ const size = useWindowSize();
 
-  const width = window.innerWidth;
-
-  return (
-    <GridItem xs={12} sm={12} md={12}>
-      {width < 700 ? <VerticalSteps/> : <HorizontalSteps/>}
-      <StepBtn />
-      <Snackbar
-        place="br"
-        color="info"
-        icon={AddAlert}
-        message={Dictionary.defValue(DictionaryService.keys.dataSavedSuccessfully, store.campaign!.name)}
-        open={store.successRequest}
-        closeNotification={() => store.setSuccessRequest(false)}
-        close
-      />
-      <Snackbar
-        place="br"
-        color="danger"
-        icon={Clear}
-        message={Dictionary.defValue(DictionaryService.keys.dataSaveError, [store.campaign!.name || "", store.error || ""])}
-        open={store.hasError}
-        closeNotification={() => store.setError(null)}
-        close
-      />
-    </GridItem>
-  );
+ return (
+   <GridItem xs={12} sm={12} md={12}>
+    {size.width && size.width < 700 ? <VerticalSteps /> : <HorizontalSteps />}
+    <StepBtn />
+    <Snackbar
+      place="br"
+      color="info"
+      icon={AddAlert}
+      message={Dictionary.defValue(DictionaryService.keys.dataSavedSuccessfully, store.campaign!.name)}
+      open={store.successRequest}
+      closeNotification={() => store.setSuccessRequest(false)}
+      close
+    />
+    <Snackbar
+      place="br"
+      color="danger"
+      icon={Clear}
+      message={Dictionary.defValue(DictionaryService.keys.dataSaveError, [store.campaign!.name || "", store.error || ""])}
+      open={store.hasError}
+      closeNotification={() => store.setError(null)}
+      close
+    />
+   </GridItem>
+ );
 });

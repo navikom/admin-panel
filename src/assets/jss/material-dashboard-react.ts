@@ -148,9 +148,13 @@ const roseBoxShadow = {
     ",.4)"
 };
 
-const inheritCardHeader = {
+const inheritPlainCardHeader = {
   background:
     "linear-gradient(60deg, " + inheritColor[1] + ", " + inheritColor[2] + ")",
+};
+
+const inheritCardHeader = {
+  ...inheritPlainCardHeader,
   ...inheritBoxShadow
 };
 
@@ -301,6 +305,7 @@ export {
   cardTitle,
   cardSubtitle,
   cardLink,
+  inheritPlainCardHeader,
   blackOpacity,
   whiteOpacity
 };

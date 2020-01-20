@@ -37,7 +37,7 @@ const extraStyles = makeStyles((theme: Theme) =>
    }
   }));
 
-export default observer((props: {store: IContentInAppView}) => {
+const InAppComponent = (props: {store: IContentInAppView}) => {
  const store = props.store;
 
  const classes = useStyles();
@@ -93,4 +93,6 @@ export default observer((props: {store: IContentInAppView}) => {
     </Card>
    </div>
  )
-});
+};
+
+export default observer(InAppComponent);

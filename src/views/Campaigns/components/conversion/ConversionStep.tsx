@@ -1,7 +1,9 @@
 import React from "react";
 
-export default () => {
+const ConversionStep = () => {
   return (
     <div></div>
   )
 }
+
+export default ConversionStep;

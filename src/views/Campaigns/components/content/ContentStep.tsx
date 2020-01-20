@@ -14,8 +14,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import {ContentChannelsType} from "interfaces/IContentStep";
-import {AddCircleOutline} from "@material-ui/icons";
+import {AddCircleOutline, Delete} from "@material-ui/icons";
 import {observer} from "mobx-react-lite";
+import IconButton from "@material-ui/core/IconButton";
 
 // channel components
 const EmailComponent = lazy(() => import("views/Campaigns/components/content/EmailComponent"));
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   marginTop: theme.typography.pxToRem(10),
   flexGrow: 1,
   width: '100%',
+  backgroundColor: theme.palette.background.paper,
  },
  bar: {
   marginBottom: theme.typography.pxToRem(10)
@@ -48,7 +50,7 @@ const ChannelComponents = {
  [PUSH_CHANNEL]: PushComponent
 };
 
-export default observer(() => {
+const ContentStep =() => {
  const store = CampaignViewStore.contentStepStore;
  if (!store) return null;
 
@@ -68,8 +70,23 @@ export default observer(() => {
      >
       {
        store!.variants.map((prop: ContentChannelsType, i: number) => (
-         <Tab key={i} label={`Variant ${i + 1}`} id={`scrollable-auto-tab-${i}`} aria-controls={`scrollable-auto-tabpanel-${i}`} />
+         <Tab
+           key={i}
+           label={`Variant (${String.fromCharCode(65 + i)})`}
+           id={`scrollable-auto-tab-${i}`}
+           aria-controls={`scrollable-auto-tabpanel-${i}`} />
        ))
+      }
+      {
+       store!.variants.length > 1 && (
+         <Tab
+           className={classes.tabButton}
+           disableRipple={true}
+           disableFocusRipple={true}
+           icon={<Delete />} aria-label="delete"
+           color="warning"
+           onClick={() => store!.deleteStore()}/>
+       )
       }
       <Tab
         className={classes.tabButton}
@@ -85,4 +102,6 @@ export default observer(() => {
     }
    </div>
  )
-});
+};
+
+export default observer(ContentStep);

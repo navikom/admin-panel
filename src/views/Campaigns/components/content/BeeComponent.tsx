@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
+import {observer} from "mobx-react-lite";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
+// @material-ui/core
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {BeeStore} from "views/Campaigns/store/BeeStore";
 import Dialog from "@material-ui/core/Dialog";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,8 +12,24 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import {TransitionProps} from "@material-ui/core/transitions";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridList from "@material-ui/core/GridList";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
+// @material-ui/icons
 import {Close, MoreVert} from "@material-ui/icons";
+
+// stores
+import {BeeStore} from "views/Campaigns/store/BeeStore";
+
+// services
 import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
+
+// assets
 import basicECommerce from "assets/emailTemplates/templates/v2/BF-basic-e-commerce.json";
 import basicNewsletter from "assets/emailTemplates/templates/v2/BF-basic-newsletter.json";
 import oneColumn from "assets/emailTemplates/templates/v2/BF-basic-onecolumn.json";
@@ -21,18 +39,10 @@ import eCommerce from "assets/emailTemplates/templates/v2/BF-ecommerce-template.
 import newsletter from "assets/emailTemplates/templates/v2/BF-newsletter-template.json";
 import promo from "assets/emailTemplates/templates/v2/BF-promo-template.json";
 import simple from "assets/emailTemplates/templates/v2/BF-simple-template.json";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridList from "@material-ui/core/GridList";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import {inheritColor} from "assets/jss/material-dashboard-react";
-import {observer} from "mobx-react-lite";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
+import responsiveTypeStyles from "assets/jss/material-dashboard-react/responsiveTypeStyles";
+
 import CustomButton from "components/CustomButtons/Button";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 
 const Templates = [
  ["Blank", null, blank],
@@ -49,9 +59,8 @@ const Templates = [
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
    container: {
-    width: "100%",
+    minWidth: theme.typography.pxToRem(1100),
     height: `calc(100% - ${theme.typography.pxToRem(55)})`,
-    overflow: "hidden"
    },
    wrapper: {
     position: "relative",
@@ -113,18 +122,6 @@ const useStyles = makeStyles((theme: Theme) =>
      cursor: "pointer",
      opacity: .7
     }
-   },
-   sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-     display: "flex"
-    }
-   },
-   sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-     display: "none"
-    }
    }
   }));
 
@@ -174,6 +171,7 @@ const EmailTemplatesDialog = (props: {open: boolean, handleClose: () => void, on
 const EditorHeader = observer((props: {handleClose: () => void, store: BeeStore}) => {
  const {handleClose, store} = props;
  const classes = useStyles();
+ const responsiveClasses = responsiveTypeStyles();
  const [structureEnabled, setStructureEnabled] = useState(false);
  const [templatesOpen, setTemplatesOpen] = useState(false);
  const [dialogBeforeLeave, setDialogBeforeLeave] = useState(false);
@@ -254,7 +252,7 @@ const EditorHeader = observer((props: {handleClose: () => void, store: BeeStore}
      <Typography variant="h6" className={classes.title}>
       {Dictionary.defValue(DictionaryService.keys.email)} {Dictionary.defValue(DictionaryService.keys.editor)}
      </Typography>
-     <div className={classes.sectionDesktop}>
+     <div className={responsiveClasses.sectionDesktop}>
       <Button disabled={!store.started} color="inherit" onClick={() => setTemplatesOpen(true)}>
        {Dictionary.defValue(DictionaryService.keys.templates)}
       </Button>
@@ -272,7 +270,7 @@ const EditorHeader = observer((props: {handleClose: () => void, store: BeeStore}
        {Dictionary.defValue(DictionaryService.keys.save)}
       </Button>
      </div>
-     <div className={classes.sectionMobile}>
+     <div className={responsiveClasses.sectionMobile}>
       <IconButton
         disabled={!store.started}
         aria-label="show more"

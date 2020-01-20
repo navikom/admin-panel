@@ -36,7 +36,7 @@ const extraStyles = makeStyles((theme: Theme) =>
    }
   }));
 
-export default observer((props: {store: IContentPushView}) => {
+const PushComponent = (props: {store: IContentPushView}) => {
 
  const store = props.store;
 
@@ -103,4 +103,6 @@ export default observer((props: {store: IContentPushView}) => {
     </Card>
    </div>
  )
-});
+};
+
+export default observer(PushComponent);

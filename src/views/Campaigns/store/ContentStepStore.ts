@@ -39,6 +39,12 @@ export class ContentStepStore implements IContentStep {
 
  @action addStore() {
   this.variants.push(new ContentStepStore.channelStores[this.channel]());
+  this.setCurrentVariant(this.variants.length - 1);
+ }
+
+ @action deleteStore() {
+  this.variants.pop();
+  this.setCurrentVariant(this.variants.length - 1);
  }
 
  @action setCurrentVariant(index: number) {
