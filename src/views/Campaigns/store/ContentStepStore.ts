@@ -32,6 +32,11 @@ export class ContentStepStore implements IContentStep {
   return this.variants[this.currentVariant];
  }
 
+ @computed get variantOptions() {
+  return this.variants
+    .map((variant: ContentChannelsType, i: number) => [i, `Variant (${String.fromCharCode(65 + i)})`]);
+ }
+
  constructor(channelType: ChannelType) {
   this.channel = channelType;
   this.addStore();

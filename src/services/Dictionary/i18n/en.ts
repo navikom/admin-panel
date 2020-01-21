@@ -246,6 +246,7 @@ export default {
   "usersInMultipleSegments": "Send to users in multiple segments",
   "audience": "Audience",
   "sendTo": "Send To",
+  "sendTestTo": "Send Test Message To",
   "sendTestLetter": "Send Test Letter",
   "doNotSentTo": "Do not sent to",
   "include": "Include",
@@ -280,5 +281,8 @@ export default {
   "saveAndClose": "Save & Close",
   "addAttachment": "Add Attachment",
   "conversionTracking": "Conversion Tracking",
-  "fromDeliveryMessageToUser": "from delivery message to user"
+  "fromDeliveryMessageToUser": "from delivery message to user",
+  "variants": "Variants",
+  "testSendMessageDescription": "Test your campaigns on an internal segment before you launch your campaign. Please ensure that you only add your own details or your team member’s details to create a test segment.",
+  "filter": "Filter"
 };

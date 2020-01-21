@@ -7,6 +7,7 @@ import {
  StringExpressionTypesArray
 } from "types/expressions";
 import {EmailType, GenderExpressionTypesArray, InAppType, PushType, SmsType} from "types/commonTypes";
+import {TestSegmentPropertyType} from "interfaces/ITestStep";
 
 export const ROOT_ROUTE: string = "/";
 export const PANEL_ROUTE: string = "/panel";
@@ -97,6 +98,9 @@ export const VisitorTypeList = ["All Users", "New Users", "Returning", "No. of S
 
 //********* User Attributes Events **********//
 export const UserOptions = ["User Attributes", "User System Events", "User Custom Events"];
+
+//********* Test Property Names *****//
+export const TestPropertyNames: TestSegmentPropertyType[] = ["userId", "email", "phone"];
 
 //********* System Events Main Properties ******//
 export const SystemEventsMainProperties = ["Date", "App", "Device", "Region"];

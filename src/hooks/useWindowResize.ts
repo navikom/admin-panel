@@ -16,8 +16,12 @@ export default function useWindowSize() {
  }
 
  useEffect(() => {
+  console.log("useWindowSize mount");
   window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
+  return () => {
+   console.log("useWindowSize unmount");
+   window.removeEventListener("resize", handleResize);
+  }
  }, []); // Empty array ensures that effect is only run on mount and unmount
 
  return windowSize;
