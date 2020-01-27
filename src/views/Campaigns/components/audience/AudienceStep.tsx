@@ -3,11 +3,10 @@ import classNames from "classnames";
 import {observer} from "mobx-react-lite";
 
 // @material-ui/core
-import {createStyles, makeStyles, Theme, withStyles} from "@material-ui/core";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
 import IconButton from "@material-ui/core/IconButton";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
@@ -54,7 +53,7 @@ const extraStyles = makeStyles((theme: Theme) =>
     marginRight: theme.typography.pxToRem(30)
    },
    iconButton: {
-    padding: theme.typography.pxToRem(3)
+    padding: theme.typography.pxToRem(9)
    },
    extendedIcon: {
     marginRight: theme.spacing(1)
@@ -117,13 +116,13 @@ const SegmentRows = observer((props: ISegmentRow) => {
             store.includeSegments.length > 0 && (
               <IconButton onClick={() => {
               }} className={extraClasses.iconButton}>
-               <EditOutlined color="primary" fontSize="large" />
+               <EditOutlined color="primary" />
               </IconButton>
             )
            }
            <IconButton onClick={() => {
            }} className={extraClasses.iconButton}>
-            <AddCircleOutline color="primary" fontSize="large" />
+            <AddCircleOutline color="primary" />
            </IconButton>
           </Grid>
          </Grid>
@@ -231,13 +230,13 @@ const AudienceStep = () => {
              store.includeSegments.length > 0 && (
                <IconButton onClick={() => {
                }} className={extraClasses.iconButton}>
-                <EditOutlined color="primary" fontSize="large" />
+                <EditOutlined color="primary" />
                </IconButton>
              )
             }
             <IconButton onClick={() => {
             }} className={extraClasses.iconButton}>
-             <AddCircleOutline color="primary" fontSize="large" />
+             <AddCircleOutline color="primary" />
             </IconButton>
            </Grid>
           </Grid>

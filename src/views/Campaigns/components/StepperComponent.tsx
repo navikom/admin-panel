@@ -29,7 +29,6 @@ import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 import {lazy} from "utils";
 
 import WaitingComponent from "hocs/WaitingComponent";
-import useWindowSize from "hooks/useWindowResize";
 
 const AudienceStep = lazy(() => import("views/Campaigns/components/audience/AudienceStep"));
 const WhenToSendStep = lazy(() => import("views/Campaigns/components/whenToSend/WhenToSendStep"));
@@ -100,21 +99,21 @@ const StepBtn = observer(() => {
      <Button
        disabled={!store.isNextButtonAvailable}
        color="primary"
-       onClick={() => store.handleStep(store.activeStep + 1)()}>
-      {Dictionary.defValue(DictionaryService.keys.saveAndNextStep)}
+       onClick={() => store.activeStep < 5 ? store.handleStep(store.activeStep + 1)() : store.launch()}>
+      {Dictionary.defValue(store.activeStep < 5 ? DictionaryService.keys.saveAndNextStep : DictionaryService.keys.launchCampaign)}
      </Button>
     </CardFooter>
    </Card>
  );
 });
 
+
 export default observer(() => {
  if (!store.campaign) return null;
- const size = useWindowSize();
 
  return (
    <GridItem xs={12} sm={12} md={12}>
-    {size.width && size.width < 700 ? <VerticalSteps /> : <HorizontalSteps />}
+    {store.width < 700 ? <VerticalSteps /> : <HorizontalSteps />}
     <StepBtn />
     <Snackbar
       place="br"

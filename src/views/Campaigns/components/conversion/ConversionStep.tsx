@@ -28,6 +28,10 @@ import PeriodComponent from "components/Filter/PeriodComponent";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
+   root: {
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper
+   },
    container: {
     marginTop: theme.typography.pxToRem(20)
    },
@@ -60,7 +64,7 @@ const BodyComponent = (props: BodyComponentProps) => {
   onChange: props.setEvent
  };
  return (
-   <Grid container >
+   <Grid container>
     <Grid container item direction="row" className={extraClasses.container}>
      <Typography variant="subtitle2" className={centerNote}>
       {Dictionary.defValue(DictionaryService.keys.conversionEvent)}
@@ -95,33 +99,35 @@ const ConversionStep = () => {
  const extraClasses = extraStyles();
 
  return (
-   <Card>
-    <CardHeader color="inherit">
-     <Grid container justify="space-between">
-      <h4 className={cardClasses.cardTitleBlack}>
-       {Dictionary.defValue(DictionaryService.keys.conversionTracking).toUpperCase()}
-      </h4>
-      <IOSSwitch
-        checked={store!.enabled}
-        onChange={() => store.setEnabled(!store.enabled)}
-        value={"On"}
-      />
-     </Grid>
-    </CardHeader>
-    <CardBody className={extraClasses.cardBody}>
-     {
-      store.enabled &&
-      <BodyComponent
-        event={store!.conversion.event}
-        setEvent={store!.setEvent}
-        setAmount={store!.setAmount}
-        setPeriod={store!.setPeriod}
-        timePeriod={store!.timePeriod}
-        timeAmount={store!.timeAmount}
-      />
-     }
-    </CardBody>
-   </Card>
+   <div className={extraClasses.root}>
+    <Card>
+     <CardHeader color="inherit" plain>
+      <Grid container justify="space-between" alignItems="center">
+       <h4 className={cardClasses.cardTitleBlack}>
+        {Dictionary.defValue(DictionaryService.keys.conversionTracking).toUpperCase()}
+       </h4>
+       <IOSSwitch
+         checked={store!.enabled}
+         onChange={() => store.setEnabled(!store.enabled)}
+         value={"On"}
+       />
+      </Grid>
+     </CardHeader>
+     <CardBody className={extraClasses.cardBody}>
+      {
+       store.enabled &&
+       <BodyComponent
+         event={store!.conversion.event}
+         setEvent={store!.setEvent}
+         setAmount={store!.setAmount}
+         setPeriod={store!.setPeriod}
+         timePeriod={store!.timePeriod}
+         timeAmount={store!.timeAmount}
+       />
+      }
+     </CardBody>
+    </Card>
+   </div>
  );
 };
 

@@ -219,7 +219,7 @@
 						"image": {
 							"alt": "Image",
 							"src": "https://res.cloudinary.com/dnfk5l75j/image/upload/v1579263128/email-editor/v2/placeholder_06.png",
-							"href": "https://beefree.io"
+							"href": "http://webinsolut.com"
 						},
 						"style": {
 							"width": "100%"
@@ -812,7 +812,7 @@
 					"type": "mailup-bee-newsletter-modules-text",
 					"descriptor": {
 						"text": {
-							"html": "<p style=\"font-size: 18px; line-height: 21px; text-align: center;\" data-mce-style=\"font-size: 18px; line-height: 21px; text-align: center;\"><span style=\"font-size: 14px; line-height: 16px;\" data-mce-style=\"font-size: 14px; line-height: 14px;\">This is a sample template from BEE free email editor</span><br><span style=\"font-size: 14px; line-height: 16px;\" data-mce-style=\"font-size: 14px; line-height: 14px;\">Visit <span style=\"text-decoration: underline; line-height: 16px; font-size: 14px;\"><strong><a href=\"http://beefree.io/\" target=\"_blank\" data-mce-href=\"http://beefree.io/\">beefree.io</a></strong></span>&nbsp;to create beautiful and rich email messages at no cost.</span></p>",
+							"html": "<p style=\"font-size: 18px; line-height: 21px; text-align: center;\" data-mce-style=\"font-size: 18px; line-height: 21px; text-align: center;\"><span style=\"font-size: 14px; line-height: 16px;\" data-mce-style=\"font-size: 14px; line-height: 14px;\">This is a sample template from BEE free email editor</span><br><span style=\"font-size: 14px; line-height: 16px;\" data-mce-style=\"font-size: 14px; line-height: 14px;\">Visit <span style=\"text-decoration: underline; line-height: 16px; font-size: 14px;\"><strong><a href=\"http://webinsolut.com/\" target=\"_blank\" data-mce-href=\"http://webinsolut.com/\">webinsolut.com</a></strong></span>&nbsp;to create beautiful and rich email messages at no cost.</span></p>",
 							"style": {
 								"color": "#bbbbbb",
 								"line-height": "120%",

@@ -18,6 +18,7 @@ import { Roles } from "models/Role/RolesStore";
 import { Events } from "models/Event/EventsStore";
 import { Regions } from "models/Region/RegionsStore";
 import { SegmentRegionViewStore } from "views/Segments/store/SegmentRegionViewStore";
+import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
 
 export class AppStore implements IFlow {
   @observable role: IRole = RoleStore.defaultRole();
@@ -78,6 +79,7 @@ export class AppStore implements IFlow {
     this.userDisposer && this.userDisposer();
     this.anonymousDisposer();
     Apps.clear();
+    CampaignViewStore.clear();
   }
 
   clear() {

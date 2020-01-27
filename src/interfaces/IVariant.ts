@@ -1,6 +1,10 @@
-interface ISMSMessage {
+import {EmailType, InAppType, PushType, SmsType} from "types/commonTypes";
+
+export interface ISMSMessage {
   sender: string; // senderId from sms provider SSP(sms service provider)
   message: string;
+
+  update(model: ISMSMessage): void;
 }
 
 interface IAttachment {
@@ -22,14 +26,16 @@ interface IVariantCommon {
   name: string;
 }
 
-interface ISMSVariant extends IVariantCommon {
+export interface ISMSVariant extends IVariantCommon {
+  channel: SmsType;
   provider: string; // SSP sms service provider
-  message: ISMSMessage;
+  data: ISMSMessage;
 }
 
 interface IEmailVariant extends IVariantCommon {
+  channel: EmailType;
   provider: string; // ESP email service provider
-  message: IEmailMessage;
+  data: IEmailMessage;
 }
 
 interface IButton {
@@ -108,6 +114,7 @@ type LayoutInAppType = IHeaderInAppLayout | IFooterInAppLayout | IPopoutInAppLay
   IFullScreenInAppLayout | IBlockerInAppLayout;
 
 interface IInAppVariant extends IVariantCommon {
+  channel: InAppType;
   layout: LayoutInAppType;
 }
 
@@ -133,6 +140,7 @@ interface IBannerPushLayout {
 type LayoutPushType = ITextPushLayout | IBannerPushLayout;
 
 export interface IPushVariant extends IVariantCommon {
+  channel: PushType;
   layout: LayoutPushType;
   advancedOptionsAndroid: IAdvancedOptions | null;
   advancedOptionsIOS: IAdvancedOptions | null;
@@ -140,3 +148,4 @@ export interface IPushVariant extends IVariantCommon {
 }
 
 export type VariantType = IEmailVariant | ISMSVariant | IInAppVariant | IPushVariant;
+export type MobileVariantType = ISMSVariant | IPushVariant | IInAppVariant;

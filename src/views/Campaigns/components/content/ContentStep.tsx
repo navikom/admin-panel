@@ -49,7 +49,7 @@ const ChannelComponents = {
  [PUSH_CHANNEL]: PushComponent
 };
 
-const ContentStep = () => {
+function ContentStep() {
  const store = CampaignViewStore.contentStepStore;
  if (!store) return null;
 

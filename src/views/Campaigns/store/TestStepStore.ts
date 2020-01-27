@@ -4,6 +4,7 @@ import {ITestSegments} from "interfaces/ITestSegments";
 import {TestSegments} from "models/Campaign/TestSegmentsStore";
 import {TestPropertyNames} from "models/Constants";
 import {TestSegmentStore} from "models/Campaign/TestSegmentStore";
+import {IUser} from "interfaces/IUser";
 
 export class TestStepStore implements ITestStep {
  static propertyNames = TestPropertyNames;
@@ -12,6 +13,8 @@ export class TestStepStore implements ITestStep {
  @observable currentVariant: number = 0;
  @observable currentSegment!: ITestSegment;
  @observable open: boolean = false;
+ @observable dataOfSegmentedUsers: boolean = true;
+ @observable userToTestData!: IUser;
 
  @computed get isValidStep(): boolean {
   return true;
@@ -19,6 +22,14 @@ export class TestStepStore implements ITestStep {
 
  constructor() {
   this.setCurrentTestSegment();
+ }
+
+ @action setTestUser(user: IUser): void {
+  this.userToTestData = user;
+ }
+
+ @action switchDataOfSegmentedUsers = (): void => {
+  this.dataOfSegmentedUsers = !this.dataOfSegmentedUsers;
  }
 
  @action setOpen(value: boolean) {
@@ -40,11 +51,17 @@ export class TestStepStore implements ITestStep {
  @action save = () => {
   TestSegments.saveChanges(this.currentSegment);
   this.setOpen(false);
- }
+ };
 
  @action createNewSegment = (): void => {
   this.setCurrentTestSegment();
   this.setOpen(true);
+ };
+
+ @action deleteSegment = (): void => {
+  TestSegments.removeItem(this.currentSegment);
+  this.setCurrentTestSegment(TestSegments.items[0]);
+
  };
 
  //########### static ###########//

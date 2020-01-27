@@ -41,11 +41,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import validate from "validate.js";
 import {IAttachment} from "interfaces/IAttachment";
+import {insertSubstring} from "utils/string";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
    root: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
    },
    divider: {
     height: theme.typography.pxToRem(30)
@@ -154,6 +155,7 @@ const EmailComponent = (props: {store: IContentEmailView}) => {
 
  const store = props.store;
  const [testLetterDialogOpen, setTestLetterDialogOpen] = useState(false);
+ const [cursorIndex, setCursorIndex] = useState(0);
 
  const classes = useStyles();
  const cardClasses = cardStyles();
@@ -161,7 +163,7 @@ const EmailComponent = (props: {store: IContentEmailView}) => {
  const centerNote = classNames(classes.note, classes.center, classes.textToRight, extraClasses.label);
 
  const onInput = (key: ContentEmailPropsType) => (e: React.ChangeEvent<HTMLInputElement> | string) => {
-  store.onInput(key, typeof e === "string" ? store[key] + e : e.target.value);
+  store.onInput(key, typeof e === "string" ? insertSubstring(store[key], cursorIndex, e) : e.target.value);
  };
 
  const onClear = (key: ContentEmailPropsType | number) => () => {
@@ -203,6 +205,7 @@ const EmailComponent = (props: {store: IContentEmailView}) => {
             divider={{className: extraClasses.divider}}
             value={store.fromName}
             onChange={onInput("fromName")}
+            cursorChange={setCursorIndex}
             endAdornments={[
              {component: <Clear />, onClick: onClear("fromName")},
              {component: <Person />, onClick: onVariableClick("fromName")}
@@ -220,6 +223,7 @@ const EmailComponent = (props: {store: IContentEmailView}) => {
             divider={{className: extraClasses.divider}}
             value={store.fromEmail}
             onChange={onInput("fromEmail")}
+            cursorChange={setCursorIndex}
             endAdornments={[
              {component: <Clear />, onClick: onClear("fromEmail")},
              {component: <Person />, onClick: onVariableClick("fromEmail")}
@@ -249,6 +253,7 @@ const EmailComponent = (props: {store: IContentEmailView}) => {
             divider={{className: extraClasses.divider}}
             value={store.subject}
             onChange={onInput("subject")}
+            cursorChange={setCursorIndex}
             endAdornments={[
              {component: <Clear />, onClick: onClear("subject")},
              {component: <InsertEmoticon />, onClick: onEmojiClick("subject")},
@@ -302,6 +307,7 @@ const EmailComponent = (props: {store: IContentEmailView}) => {
              <InputWithIcon
                divider={{className: extraClasses.divider}}
                value={attachment.url}
+               cursorChange={setCursorIndex}
                placeholder="http://example.com/document.pdf"
                onChange={onAttachmentInput(i)}
                endAdornments={[

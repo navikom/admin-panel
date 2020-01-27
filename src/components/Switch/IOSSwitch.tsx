@@ -13,8 +13,8 @@ interface Props extends SwitchProps {
 const IOSSwitch = withStyles((theme: Theme) =>
   createStyles({
    root: {
-    width: 42,
-    height: 26,
+    width: theme.typography.pxToRem(42),
+    height: theme.typography.pxToRem(27),
     padding: 0,
     margin: theme.spacing(1),
    },
@@ -35,11 +35,11 @@ const IOSSwitch = withStyles((theme: Theme) =>
     },
    },
    thumb: {
-    width: 24,
-    height: 24,
+    width: theme.typography.pxToRem(24),
+    height: theme.typography.pxToRem(24),
    },
    track: {
-    borderRadius: 26 / 2,
+    borderRadius: theme.typography.pxToRem(26 / 2),
     backgroundColor: blackOpacity(.2),
     opacity: 1,
     transition: theme.transitions.create(['background-color', 'border']),

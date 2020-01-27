@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
 import classNames from "classnames";
 
@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 // interfaces
-import {IContentSMSView} from "interfaces/IContentStep";
+import {ContentEmailPropsType, ContentSMSPropsType, IContentSMSView} from "interfaces/IContentStep";
 
 // view stores
 import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
@@ -24,44 +24,121 @@ import FiltarableComponent from "components/Filter/FiltarableComponent";
 
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 import cardStyles from "assets/jss/material-dashboard-react/views/cardStyle";
+import FormControl from "@material-ui/core/FormControl";
+import InputWithIcon from "components/CustomInput/InputWithIcon";
+import {Clear, InsertEmoticon, Person} from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
+import AttributesEventsListPopper from "components/Poppers/AttributesEventsListPopper";
+import EmojiPopper from "components/Poppers/EmojiPopper";
+import MobileDeviceComponent from "views/Campaigns/components/content/device/MobileDeviceComponent";
+import {insertSubstring} from "utils/string";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
+   root: {
+    padding: theme.spacing(1)
+   },
    container: {
     marginTop: theme.typography.pxToRem(20)
    },
    label: {
-    width: theme.typography.pxToRem(200),
     marginRight: theme.typography.pxToRem(30)
    }
   }));
 
 const SMSComponent = (props: {store: IContentSMSView}) => {
  const store = props.store;
-
+ const [cursorIndex, setCursorIndex] = useState(0);
  const classes = useStyles();
  const cardClasses = cardStyles();
  const extraClasses = extraStyles();
  const centerNote = classNames(classes.note, classes.center, classes.textToRight, extraClasses.label);
 
- const first = {
+ const onInput = (key: ContentSMSPropsType) => (e: React.ChangeEvent<HTMLInputElement> | string) => {
+  store.onInput(key, typeof e === "string" ? insertSubstring(store.variant.data[key], cursorIndex, e) : e.target.value);
+ };
 
+ const onClear = (key: ContentSMSPropsType) => () => {
+  store.onInput(key, "");
+ };
+
+ const onVariableClick = (key: ContentSMSPropsType) => (e: React.MouseEvent<HTMLButtonElement> | HTMLButtonElement) => {
+  store.variablesPopperStore
+    .handleClick(e instanceof HTMLButtonElement ? e : e.currentTarget, onInput(key));
+  store.emojiStore.clear();
+ };
+
+ const onEmojiClick = (key: ContentSMSPropsType) => (e: React.MouseEvent<HTMLButtonElement> | HTMLButtonElement) => {
+  store.emojiStore.handleClick(e instanceof HTMLButtonElement ? e : e.currentTarget, onInput(key));
+  store.variablesPopperStore.clear();
  };
 
  return (
-   <div className={classes.root}>
+   <div className={extraClasses.root}>
     <Card>
-     <CardHeader  color="inherit">
+     <CardHeader color="inherit" plain>
       <h4 className={cardClasses.cardTitleBlack}>
        {Dictionary.defValue(DictionaryService.keys.message).toUpperCase()}
       </h4>
      </CardHeader>
      <CardBody>
-
+      <Grid container>
+       <Grid item xs={12} sm={12} md={8}>
+        <Grid container>
+         <Grid container item direction="row" className={extraClasses.container}>
+          <Typography variant="subtitle2" className={centerNote}>
+           {Dictionary.defValue(DictionaryService.keys.sender)}
+          </Typography>
+          <Grid item xs={12} sm={12} md={8}>
+           <FormControl fullWidth>
+            <InputWithIcon
+              input={{error: store.hasError("sender")}}
+              cursorChange={setCursorIndex}
+              value={store.variant.data.sender}
+              onChange={onInput("sender")}
+              endAdornments={[
+               {component: <Clear />, onClick: onClear("sender")},
+               {component: <Person />, onClick: onVariableClick("sender")}
+              ]}
+            />
+           </FormControl>
+          </Grid>
+         </Grid>
+        </Grid>
+        <Grid container>
+         <Grid container item direction="row" className={extraClasses.container}>
+          <Typography variant="subtitle2" className={centerNote}>
+           {Dictionary.defValue(DictionaryService.keys.message)}
+          </Typography>
+          <Grid item xs={12} sm={12} md={8}>
+           <FormControl fullWidth>
+            <InputWithIcon
+              multiline
+              input={{error: store.hasError("message")}}
+              cursorChange={setCursorIndex}
+              value={store.variant.data.message}
+              onChange={onInput("message")}
+              endAdornments={[
+               {component: <Clear />, onClick: onClear("message")},
+               {component: <InsertEmoticon />, onClick: onEmojiClick("message")},
+               {component: <Person />, onClick: onVariableClick("message")}
+              ]}
+            />
+           </FormControl>
+          </Grid>
+         </Grid>
+        </Grid>
+       </Grid>
+       <Grid item xs={12} sm={12} md={4}>
+        <MobileDeviceComponent variant={store.variant} />
+       </Grid>
+      </Grid>
      </CardBody>
     </Card>
+    <AttributesEventsListPopper store={store.variablesPopperStore} />
+    <EmojiPopper store={store.emojiStore} />
    </div>
- )
+ );
 };
 
 export default observer(SMSComponent);

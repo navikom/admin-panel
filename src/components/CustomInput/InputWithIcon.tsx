@@ -13,21 +13,42 @@ import {ArrowDropDown} from "@material-ui/icons";
 import {ThemedInput} from "components/CustomInput/BootstrapInput";
 
 import useStyles from "assets/jss/material-dashboard-react/responsiveTypeStyles";
+import {blackOpacity} from "assets/jss/material-dashboard-react";
+import classNames from "classnames";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
    popper: {
     width: theme.typography.pxToRem(50),
     backgroundColor: theme.palette.background.paper,
-    border: "1px solid rgba(0,0,0,.15)",
+    border: "1px solid " + blackOpacity(.15),
     zIndex: 4
+   },
+   container: {
+    padding: "18px 0"
+   },
+   wrapper: {
+    position: "absolute",
+    height: "100%"
+   },
+   right: {
+    transform: "translateX(-100%)",
+    borderLeft: "1px solid " + blackOpacity(.15)
+   },
+   left: {
+    borderRight: "1px solid " + blackOpacity(.15)
+   },
+   button: {
+    padding: theme.typography.pxToRem(7)
    }
   }));
 
 const Adornment = ({...props}) => {
  const {component, ...rest} = props;
+ const classes = extraStyles();
  return (
    <IconButton
+     className={classes.button}
      {...rest}
    >
     {component}
@@ -38,19 +59,26 @@ const Adornment = ({...props}) => {
 const InputWithIcon = ({...props}) => {
  const classes = useStyles();
  const extraClasses = extraStyles();
+ const adornmentEl = React.useRef<HTMLDivElement>(null);
  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
  const [adornments, setAdornments] = React.useState<{component: ReactNode, onClick: () => void}[]>([]);
+ const [adornmentWidth, setAdornmentWidth] = React.useState(0);
  const {
-  input,
   startAdornment,
   startAdornments,
   endAdornment,
   endAdornments,
   startAdornmentClick,
   endAdornmentClick,
-  divider,
+  cursorChange,
   ...rest
  } = props;
+
+ const input = props.input || {};
+
+ React.useEffect(() => {
+  setAdornmentWidth(adornmentEl.current!.offsetWidth);
+ }, []);
 
  const handlePopperOpen = (list: {component: ReactNode, onClick: () => void}[]) => (event: React.MouseEvent<HTMLElement>) => {
   setAdornments(list);
@@ -63,47 +91,67 @@ const InputWithIcon = ({...props}) => {
   setAnchorEl(null);
  };
 
+ const container = classNames({
+  [extraClasses.container]: props.multiline !== undefined
+ });
+
+ if (input.onClick === undefined && input.onKeyUp === undefined) {
+  input.onKeyUp = (e: React.BaseSyntheticEvent<HTMLTextAreaElement | HTMLInputElement>) => cursorChange && cursorChange(e.target.selectionStart);
+  input.onClick = (e: React.BaseSyntheticEvent<HTMLTextAreaElement | HTMLInputElement>) => cursorChange && cursorChange(e.target.selectionStart);
+ }
+
+ if(startAdornments) {
+  input.inputProps = {style: {paddingLeft: `${adornmentWidth}px`}}
+ }
+
+ if(endAdornments) {
+  input.inputProps = {style: {paddingRight: `${adornmentWidth}px`}}
+ }
+
  return (
-   <div>
+   <React.Fragment>
     <OutlinedInput
-     {...rest}
-     {...(input || {})}
-     labelWidth={0}
-     startAdornment={startAdornment ?
-       <InputAdornment position="start">
-        <Adornment onClick={startAdornmentClick} component={startAdornment} />
-       </InputAdornment>
-       :
-       startAdornments && (
-         <InputAdornment position="start">
-          <div className={classes.sectionMobile}>
-           <Adornment onClick={handlePopperOpen(startAdornments)} component={<ArrowDropDown />}/>
-          </div>
-          <div className={classes.sectionDesktop}>
-           {startAdornments.map((prop: any, i: number) => <Adornment {...prop} key={i} />)}
-          </div>
-          <Divider orientation="vertical" {...(divider || {})} />
-         </InputAdornment>
-       )
-     }
-     endAdornment={endAdornment ?
-       <InputAdornment position="end">
-        <Adornment onClick={endAdornmentClick} component={endAdornment} />
-       </InputAdornment>
-       :
-       endAdornments && (
-         <InputAdornment position="end">
-          <Divider orientation="vertical" {...(divider || {})} />
-          <div className={classes.sectionMobile}>
-           <Adornment onClick={handlePopperOpen(endAdornments)} component={<ArrowDropDown />}/>
-          </div>
-          <div className={classes.sectionDesktop}>
-           {endAdornments.map((prop: any, i: number) => <Adornment {...prop} key={i} />)}
-          </div>
-         </InputAdornment>
-       )
-     }
-   />
+      className={container}
+      {...rest}
+      {...input}
+      labelWidth={0}
+      startAdornment={startAdornment ?
+        <InputAdornment position="start">
+         <Adornment onClick={startAdornmentClick} component={startAdornment} />
+        </InputAdornment>
+        :
+        startAdornments && (
+          <InputAdornment position="start">
+           <div className={classNames(extraClasses.wrapper, extraClasses.left)} ref={adornmentEl}>
+            <div className={classes.sectionMobile}>
+             <Adornment onClick={handlePopperOpen(startAdornments)} component={<ArrowDropDown />} />
+            </div>
+            <div className={classes.sectionDesktop}>
+             {startAdornments.map((prop: any, i: number) => <Adornment {...prop} key={i} />)}
+            </div>
+           </div>
+          </InputAdornment>
+        )
+      }
+      endAdornment={endAdornment ?
+        <InputAdornment position="end">
+         <Adornment onClick={endAdornmentClick} component={endAdornment} />
+        </InputAdornment>
+        :
+        endAdornments && (
+          <InputAdornment position="end">
+           <div className={classNames(extraClasses.wrapper, extraClasses.right)} ref={adornmentEl}>
+            <div className={classes.sectionMobile}>
+             <Adornment onClick={handlePopperOpen(endAdornments)} component={<ArrowDropDown />} />
+            </div>
+            <div className={classes.sectionDesktop}>
+             {endAdornments.map((prop: any, i: number) => <Adornment {...prop} key={i} />)}
+            </div>
+           </div>
+          </InputAdornment>
+        )
+      }
+    />
     <Popper
       className={extraClasses.popper}
       open={isPopperOpen}
@@ -112,11 +160,11 @@ const InputWithIcon = ({...props}) => {
       transition>
      {adornments && adornments.map((prop: any, i: number) =>
        <Adornment key={i} {...prop} onClick={() => {
-      popperClose();
-      prop.onClick(anchorEl);
-     }} />)}
+        popperClose();
+        prop.onClick(anchorEl);
+       }} />)}
     </Popper>
-   </div>
+   </React.Fragment>
  );
 };
 
@@ -129,7 +177,8 @@ InputWithIcon.propTypes = {
  startAdornment: PropTypes.node,
  startAdornmentClick: PropTypes.func,
  endAdornmentClick: PropTypes.func,
- divider: PropTypes.object
+ divider: PropTypes.object,
+ cursorChange: PropTypes.func
 };
 
 export default ThemedInput(InputWithIcon);

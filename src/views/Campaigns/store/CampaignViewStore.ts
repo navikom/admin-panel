@@ -41,13 +41,20 @@ class CampaignViewStore extends Errors {
  @observable conversionStepStore?: IConversionStep;
  @observable testStepStore?: ITestStep;
  @observable launchStepStore?: ILaunchStep;
+ @observable width: number = window.innerWidth;
 
  steps: string[] = [AUDIENCE_CAMPAIGN_STEP, WHEN_TO_SEND_CAMPAIGN_STEP, CONTENT_CAMPAIGN_STEP,
   CONVERSION_CAMPAIGN_STEP, TEST_CAMPAIGN_STEP, LAUNCH_CAMPAIGN_STEP];
 
  @computed get isNextButtonAvailable(): boolean {
-  const steps = [this.audienceStepStore, this.whenToRunStepStore, this.contentStepStore];
+  const steps = [this.audienceStepStore, this.whenToRunStepStore, this.contentStepStore, this.conversionStepStore,
+   this.testStepStore, this.launchStepStore];
   return steps[this.activeStep] !== undefined && steps[this.activeStep]!.isValidStep;
+ }
+
+ constructor() {
+  super();
+  window.addEventListener("resize", this.handleResize);
  }
 
  @action handleStep = (step: number) => () => {
@@ -55,15 +62,23 @@ class CampaignViewStore extends Errors {
  };
 
  @action setActiveStep(value: number) {
-  this.activeStep = value;
-
+  this.activeStep = Math.min(5, value);
  }
+
+ @action handleResize = () =>  {
+  this.width = window.innerWidth;
+ };
 
  @action setCampaign(campaignId: number, channelType: ChannelType) {
   this.campaign = campaignId === 0 ?
     CampaignStore.from({campaignId, channelType} as ICampaign) :
     Campaigns.currentStore!.getById(campaignId);
+  this.setActiveStep(0);
   this.bindStores();
+ }
+
+ @action launch() {
+
  }
 
  @action bindStores() {
@@ -73,6 +88,10 @@ class CampaignViewStore extends Errors {
   this.conversionStepStore = new ConversionStepStore();
   this.testStepStore = new TestStepStore();
   this.launchStepStore = new LaunchStepStore();
+ }
+
+ clear() {
+  window.removeEventListener("resize", this.handleResize);
  }
 
 }
