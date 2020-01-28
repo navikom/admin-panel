@@ -9,6 +9,7 @@ import {blackOpacity, grayColor, inheritColor, whiteColor, whiteOpacity} from "a
 import {ISMSVariant, MobileVariantType} from "interfaces/IVariant";
 import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 import Grid from "@material-ui/core/Grid";
+import {SMSChannelComponentType} from "types/commonTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -132,10 +133,6 @@ const iosStyles = makeStyles((theme: Theme) =>
    }
   }));
 
-type SMSChannelComponentType = {
- ios: boolean;
- variant: MobileVariantType;
-}
 
 function AndroidContent(props: {variant: MobileVariantType}) {
  const classes = useStyles();

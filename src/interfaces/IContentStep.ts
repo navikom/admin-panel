@@ -2,10 +2,11 @@ import {IStep} from "interfaces/IStep";
 import {ChannelType} from "types/commonTypes";
 import {IAttributesEventsPopper, IPopper} from "interfaces/IPopper";
 import {IAttachment} from "interfaces/IAttachment";
-import {ISMSVariant} from "interfaces/IVariant";
+import {IInAppVariant, IPushVariant, ISMSVariant} from "interfaces/IVariant";
 
 export type ContentEmailPropsType = "fromEmail" | "fromName" | "subject";
 export type ContentSMSPropsType = "sender" | "message";
+export type ContentNotificationPropsType = "title" | "message";
 
 export interface IRichText {
  emojiStore: IPopper;
@@ -31,18 +32,21 @@ export interface IContentEmailView extends IRichText {
  addAttachment(): void;
  deleteAttachment(index: number): void;
 }
-export interface IContentSMSView extends IRichText {
- variant: ISMSVariant;
- phone: string;
+
+export interface IContentDevice extends IRichText {
+ variant: ISMSVariant | IPushVariant | IInAppVariant;
  errors: {[key: string]: string};
+ keyValue?: string[][] | null;
 
- hasError(key: ContentSMSPropsType): boolean;
- onInput(key: ContentSMSPropsType, value: string): void;
+ hasError(key: ContentSMSPropsType | ContentNotificationPropsType): boolean;
+ onInput(key: ContentSMSPropsType | ContentNotificationPropsType, value: string): void;
 }
-export interface IContentInAppView {}
-export interface IContentPushView {}
 
-export type ContentChannelsType = IContentEmailView | IContentSMSView | IContentInAppView | IContentPushView;
+export interface IContentSMSView extends IContentDevice {
+ phone: string;
+}
+
+export type ContentChannelsType = IContentEmailView | IContentDevice;
 
 export interface IContentStep extends IStep {
  channel: ChannelType;

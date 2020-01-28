@@ -7,24 +7,18 @@ import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 // interfaces
 import {ContentSMSPropsType, IContentSMSView} from "interfaces/IContentStep";
 import {ISMSMessage, ISMSVariant} from "interfaces/IVariant";
-import {IAttributesEventsPopper, IPopper} from "interfaces/IPopper";
 
 // models
-import {AttributeEventPopperStore} from "models/AttributeEventPopperStore";
-import {EmojiPopperStore} from "models/EmojiPopperStore";
 import {SMSVariantStore} from "models/Campaign/Sms/SMSVariantStore";
+import {ContentDeviceViewStore} from "views/Campaigns/store/ContentDeviceViewStore";
 
-export class ContentSMSViewStore implements IContentSMSView {
- constraints: {[key: string]: any};
+export class ContentSMSViewStore extends ContentDeviceViewStore implements IContentSMSView {
 
  @observable phone!: string;
- @observable variant: ISMSVariant;
- @observable variablesPopperStore: IAttributesEventsPopper = new AttributeEventPopperStore();
- @observable emojiStore: IPopper = new EmojiPopperStore();
- @observable errors!: {[key: string]: string};
+
 
  constructor(variant: ISMSVariant = new SMSVariantStore()) {
-  this.variant = variant;
+  super(variant);
   this.constraints = {
    sender: {
     presence: {
@@ -49,12 +43,8 @@ export class ContentSMSViewStore implements IContentSMSView {
   };
  }
 
- hasError(key: ContentSMSPropsType) {
-  return this.errors !== undefined && this.errors[key] !== undefined;
- }
-
  @action onInput = (key: ContentSMSPropsType, value: string) => {
-  const sms = this.variant.data;
+  const sms = this.variant.data as ISMSMessage;
   this.errors = validate(Object.assign({sender: sms.sender, message: sms.message}, {[key]: value}), this.constraints);
   sms.update({[key]: value} as unknown as ISMSMessage);
  };

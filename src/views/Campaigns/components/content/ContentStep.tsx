@@ -20,7 +20,6 @@ import {observer} from "mobx-react-lite";
 // channel components
 const EmailComponent = lazy(() => import("views/Campaigns/components/content/EmailComponent"));
 const SMSComponent = lazy(() => import("views/Campaigns/components/content/SMSComponent"));
-const InAppComponent = lazy(() => import("views/Campaigns/components/content/InAppComponent"));
 const PushComponent = lazy(() => import("views/Campaigns/components/content/PushComponent"));
 
 
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const ChannelComponents = {
  [EMAIL_CHANNEL]: EmailComponent,
  [SMS_CHANNEL]: SMSComponent,
- [IN_APP_CHANNEL]: InAppComponent,
+ [IN_APP_CHANNEL]: PushComponent,
  [PUSH_CHANNEL]: PushComponent
 };
 

@@ -1,10 +1,30 @@
 import {EmailType, InAppType, PushType, SmsType} from "types/commonTypes";
 
 export interface ISMSMessage {
-  sender: string; // senderId from sms provider SSP(sms service provider)
+  sender: string;
   message: string;
 
   update(model: ISMSMessage): void;
+}
+
+export interface IPushMessage {
+  layout?: LayoutPushType;
+  advancedOptionsAndroid?: IAdvancedOptions | null;
+  advancedOptionsIOS?: IAdvancedOptions | null;
+  title: string;
+  message: string;
+  keyValue: string[][] | null;
+
+  update(model: IPushMessage): void;
+}
+
+export interface IInAppMessage {
+  layout?: LayoutInAppType;
+  title: string;
+  message: string;
+  keyValue: string[][] | null;
+
+  update(model: IInAppMessage): void;
 }
 
 interface IAttachment {
@@ -113,9 +133,9 @@ interface IBlockerInAppLayout {
 type LayoutInAppType = IHeaderInAppLayout | IFooterInAppLayout | IPopoutInAppLayout | IClassicInAppLayout |
   IFullScreenInAppLayout | IBlockerInAppLayout;
 
-interface IInAppVariant extends IVariantCommon {
+export interface IInAppVariant extends IVariantCommon {
   channel: InAppType;
-  layout: LayoutInAppType;
+  data: IInAppMessage;
 }
 
 interface IBasic {
@@ -141,10 +161,8 @@ type LayoutPushType = ITextPushLayout | IBannerPushLayout;
 
 export interface IPushVariant extends IVariantCommon {
   channel: PushType;
-  layout: LayoutPushType;
-  advancedOptionsAndroid: IAdvancedOptions | null;
-  advancedOptionsIOS: IAdvancedOptions | null;
-  keyValue: {[k: string]: any}[] | null;
+  data: IPushMessage;
+
 }
 
 export type VariantType = IEmailVariant | ISMSVariant | IInAppVariant | IPushVariant;

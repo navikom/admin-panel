@@ -1,3 +1,5 @@
+import {MobileVariantType} from "interfaces/IVariant";
+
 export type EmailType = 1;
 export type SmsType = 2;
 export type InAppType = 3;
@@ -15,4 +17,8 @@ export type RunType = OneTimeRunType | TriggerRunType | RecurringRunType;
 export type ChannelType = EmailType | SmsType | InAppType | PushType;
 
 export type GenderExpressionTypesArray = [MaleType, FemaleType];
+export type SMSChannelComponentType = {
+ ios: boolean;
+ variant: MobileVariantType;
+}
 

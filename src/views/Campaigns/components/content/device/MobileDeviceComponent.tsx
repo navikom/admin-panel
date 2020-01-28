@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import classNames from "classnames";
-import moment from "moment";
 
 // @material-ui/icons
 import {Android, Apple} from "@material-ui/icons";
@@ -12,17 +11,32 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
 // assets
+import {blackOpacity} from "assets/jss/material-dashboard-react";
 import AndroidWrapper from "assets/img/device/gpixel_outer.png";
 import IOSWrapper from "assets/img/device/iphone_6_outer.png";
+
+// components
 import SMSChannelComponent from "views/Campaigns/components/content/device/SMSChannelComponent";
+
+// interfaces
 import {MobileVariantType} from "interfaces/IVariant";
-import {SMS_CHANNEL} from "models/Constants";
+
+// models
+import {PUSH_CHANNEL, SMS_CHANNEL} from "models/Constants";
+import InAppChannelComponent from "views/Campaigns/components/content/device/InAppChannelComponent";
+import PushChannelComponent from "views/Campaigns/components/content/device/PushChannelComponent";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
    root: {
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.background.default
+    padding: theme.spacing(1),
+    margin: "8px 0",
+    backgroundColor: theme.palette.background.default,
+    borderRadius: theme.typography.pxToRem(3),
+    boxShadow: "0 1px 4px 0 " + blackOpacity(.14)
+   },
+   container: {
+    padding: theme.spacing(3),
    },
    wrapper: {
     position: "relative",
@@ -62,42 +76,43 @@ type DeviceType = {
  variant: MobileVariantType
 }
 
-function OtherChannelsComponent(props: DeviceType) {
-
- return(
-   <div></div>
- )
-}
-
 function DeviceComponent(props: DeviceType) {
  const {ios, variant} = props;
  const classes = useStyles();
  const extraClasses = ios ? iosStyles() : androidStyles();
  const wrapper = classNames(classes.wrapper, extraClasses.wrapper);
  return (
-   <div className={wrapper}>
-    {variant.channel === SMS_CHANNEL ? <SMSChannelComponent {...props}/> : <OtherChannelsComponent {...props}/>}
+   <div className={classes.container}>
+    <div className={wrapper}>
+     {
+      variant.channel === SMS_CHANNEL ? <SMSChannelComponent {...props}/> :
+        variant.channel === PUSH_CHANNEL ? <PushChannelComponent {...props}/> : <InAppChannelComponent {...props}/>
+     }
+    </div>
    </div>
  );
 }
 
-function MobileDeviceComponent(props: {variant: MobileVariantType}) {
+function MobileDeviceComponent(props: {variant: MobileVariantType, justify: "flex-end" | "center"}) {
 
  const [ios, setIOS] = useState(true);
  const classes = useStyles();
+ const {justify, ...rest} = props;
  return (
-   <Grid container className={classes.root} justify="center">
-    <Grid container justify="flex-end">
-     <ButtonGroup variant="outlined" size="small">
-      <Button color={ios ? "default" : "primary"} onClick={() => setIOS(false)}>
-       <Android />
-      </Button>
-      <Button color={!ios ? "default" : "primary"} onClick={() => setIOS(true)}>
-       <Apple />
-      </Button>
-     </ButtonGroup>
+   <Grid container justify={justify}>
+    <Grid className={classes.root}>
+     <Grid container justify="flex-end">
+      <ButtonGroup variant="outlined" size="small">
+       <Button color={ios ? "default" : "primary"} onClick={() => setIOS(false)}>
+        <Android />
+       </Button>
+       <Button color={!ios ? "default" : "primary"} onClick={() => setIOS(true)}>
+        <Apple />
+       </Button>
+      </ButtonGroup>
+     </Grid>
+     <DeviceComponent ios={ios} {...rest}/>
     </Grid>
-    <DeviceComponent ios={ios} {...props}/>
    </Grid>
  );
 }

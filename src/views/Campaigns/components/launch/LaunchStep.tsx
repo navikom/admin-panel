@@ -39,6 +39,7 @@ import WaitingComponent from "hocs/WaitingComponent";
 
 // channel components
 const EmailContent = lazy(() => import("views/Campaigns/components/launch/EmailContent"));
+const SMSContent = lazy(() => import("views/Campaigns/components/launch/SMSContent"));
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,9 +61,9 @@ const extraStyles = makeStyles((theme: Theme) =>
 
 const ChannelComponents = {
  [EMAIL_CHANNEL]: EmailContent,
- [SMS_CHANNEL]: undefined,
- [IN_APP_CHANNEL]: undefined,
- [PUSH_CHANNEL]: undefined
+ [SMS_CHANNEL]: SMSContent,
+ [IN_APP_CHANNEL]: SMSContent,
+ [PUSH_CHANNEL]: SMSContent
 };
 
 function ContentTabs(props: {store: IContentStep}) {
@@ -92,7 +93,7 @@ function ContentTabs(props: {store: IContentStep}) {
      </Tabs>
     </AppBar>
     {
-     React.createElement(WaitingComponent(ChannelComponents[props.store.channel]), {store: props.store!.currentStore})
+     React.createElement(WaitingComponent(ChannelComponents[props.store.channel]), {store: props.store!.variants[index]})
     }
    </React.Fragment>
  )

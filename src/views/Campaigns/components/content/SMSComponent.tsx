@@ -7,11 +7,11 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-// interfaces
-import {ContentEmailPropsType, ContentSMSPropsType, IContentSMSView} from "interfaces/IContentStep";
+// @material-ui/icons
+import {Clear, InsertEmoticon, Person} from "@material-ui/icons";
 
-// view stores
-import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
+// interfaces
+import {ContentSMSPropsType, IContentSMSView} from "interfaces/IContentStep";
 
 // services
 import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
@@ -20,18 +20,17 @@ import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 import Card from "components/Card/Card";
 import CardHeader from "components/Card/CardHeader";
 import CardBody from "components/Card/CardBody";
-import FiltarableComponent from "components/Filter/FiltarableComponent";
 
 import useStyles from "assets/jss/material-dashboard-react/components/inputFieldStyle";
 import cardStyles from "assets/jss/material-dashboard-react/views/cardStyle";
 import FormControl from "@material-ui/core/FormControl";
 import InputWithIcon from "components/CustomInput/InputWithIcon";
-import {Clear, InsertEmoticon, Person} from "@material-ui/icons";
-import Button from "@material-ui/core/Button";
+
 import AttributesEventsListPopper from "components/Poppers/AttributesEventsListPopper";
 import EmojiPopper from "components/Poppers/EmojiPopper";
 import MobileDeviceComponent from "views/Campaigns/components/content/device/MobileDeviceComponent";
 import {insertSubstring} from "utils/string";
+import {ISMSMessage} from "interfaces/IVariant";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,8 +53,10 @@ const SMSComponent = (props: {store: IContentSMSView}) => {
  const extraClasses = extraStyles();
  const centerNote = classNames(classes.note, classes.center, classes.textToRight, extraClasses.label);
 
+ const data = store.variant.data as ISMSMessage;
+
  const onInput = (key: ContentSMSPropsType) => (e: React.ChangeEvent<HTMLInputElement> | string) => {
-  store.onInput(key, typeof e === "string" ? insertSubstring(store.variant.data[key], cursorIndex, e) : e.target.value);
+  store.onInput(key, typeof e === "string" ? insertSubstring(data[key], cursorIndex, e) : e.target.value);
  };
 
  const onClear = (key: ContentSMSPropsType) => () => {
@@ -94,7 +95,7 @@ const SMSComponent = (props: {store: IContentSMSView}) => {
             <InputWithIcon
               input={{error: store.hasError("sender")}}
               cursorChange={setCursorIndex}
-              value={store.variant.data.sender}
+              value={data.sender}
               onChange={onInput("sender")}
               endAdornments={[
                {component: <Clear />, onClick: onClear("sender")},
@@ -130,7 +131,7 @@ const SMSComponent = (props: {store: IContentSMSView}) => {
         </Grid>
        </Grid>
        <Grid item xs={12} sm={12} md={4}>
-        <MobileDeviceComponent variant={store.variant} />
+        <MobileDeviceComponent variant={store.variant} justify="flex-end" />
        </Grid>
       </Grid>
      </CardBody>
