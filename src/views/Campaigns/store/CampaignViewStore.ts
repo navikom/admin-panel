@@ -13,9 +13,9 @@ import {ILaunchStep} from "interfaces/ILaunchStep";
 import {CampaignStore} from "models/Campaign/CampaignStore";
 import {Campaigns} from "models/Campaign/CampaignsStore";
 import {
- AUDIENCE_CAMPAIGN_STEP,
+ AUDIENCE_CAMPAIGN_STEP, CHANNEL_LIST,
  CONTENT_CAMPAIGN_STEP,
- CONVERSION_CAMPAIGN_STEP, LAUNCH_CAMPAIGN_STEP, TEST_CAMPAIGN_STEP,
+ CONVERSION_CAMPAIGN_STEP, EMAIL_CHANNEL, LAUNCH_CAMPAIGN_STEP, TEST_CAMPAIGN_STEP,
  WHEN_TO_SEND_CAMPAIGN_STEP
 } from "models/Constants";
 import {Errors} from "models/Errors";
@@ -50,6 +50,10 @@ class CampaignViewStore extends Errors {
   const steps = [this.audienceStepStore, this.whenToRunStepStore, this.contentStepStore, this.conversionStepStore,
    this.testStepStore, this.launchStepStore];
   return steps[this.activeStep] !== undefined && steps[this.activeStep]!.isValidStep;
+ }
+
+ @computed get channelName() {
+  return CHANNEL_LIST.find((prop) => prop[0] === this.campaign!.channelType)![1];
  }
 
  constructor() {

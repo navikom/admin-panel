@@ -1,4 +1,5 @@
 import {EmailType, InAppType, PushType, SmsType} from "types/commonTypes";
+import {IObservableArray} from "mobx";
 
 export interface ISMSMessage {
   sender: string;
@@ -7,22 +8,27 @@ export interface ISMSMessage {
   update(model: ISMSMessage): void;
 }
 
-export interface IPushMessage {
+export interface IMobileMessage {
+  title: string;
+  message: string;
+  keyValuePairs: IObservableArray<string[]>;
+
+  updateKeyValuePair(index: number, key: string, value: string): void;
+  deleteKeyValue(index: number): void;
+  createKeyValue(): void;
+  clearKeyValuePairs(): void;
+}
+
+export interface IPushMessage extends IMobileMessage {
   layout?: LayoutPushType;
   advancedOptionsAndroid?: IAdvancedOptions | null;
   advancedOptionsIOS?: IAdvancedOptions | null;
-  title: string;
-  message: string;
-  keyValue: string[][] | null;
 
   update(model: IPushMessage): void;
 }
 
-export interface IInAppMessage {
+export interface IInAppMessage extends IMobileMessage {
   layout?: LayoutInAppType;
-  title: string;
-  message: string;
-  keyValue: string[][] | null;
 
   update(model: IInAppMessage): void;
 }
@@ -162,7 +168,6 @@ type LayoutPushType = ITextPushLayout | IBannerPushLayout;
 export interface IPushVariant extends IVariantCommon {
   channel: PushType;
   data: IPushMessage;
-
 }
 
 export type VariantType = IEmailVariant | ISMSVariant | IInAppVariant | IPushVariant;

@@ -1,10 +1,16 @@
 import {action, observable} from "mobx";
+import validate from "validate.js";
+
+// interfaces
 import {ContentNotificationPropsType, ContentSMSPropsType, IContentDevice} from "interfaces/IContentStep";
 import {IAttributesEventsPopper, IPopper} from "interfaces/IPopper";
 import {IInAppVariant, IPushMessage, IPushVariant, ISMSVariant} from "interfaces/IVariant";
+
+// models
 import {EmojiPopperStore} from "models/EmojiPopperStore";
 import {AttributeEventPopperStore} from "models/AttributeEventPopperStore";
-import validate from "validate.js";
+
+// services
 import {Dictionary, DictionaryService} from "services/Dictionary/Dictionary";
 
 export class ContentDeviceViewStore implements IContentDevice {

@@ -165,7 +165,7 @@ export default observer(() => {
             <SegmentDetailsBehavior/>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <ExpansionPanel expanded={true}>
+        <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"

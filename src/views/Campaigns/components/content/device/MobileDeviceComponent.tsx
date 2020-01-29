@@ -17,14 +17,14 @@ import IOSWrapper from "assets/img/device/iphone_6_outer.png";
 
 // components
 import SMSChannelComponent from "views/Campaigns/components/content/device/SMSChannelComponent";
+import InAppChannelComponent from "views/Campaigns/components/content/device/InAppChannelComponent";
+import PushChannelComponent from "views/Campaigns/components/content/device/PushChannelComponent";
 
 // interfaces
 import {MobileVariantType} from "interfaces/IVariant";
 
 // models
 import {PUSH_CHANNEL, SMS_CHANNEL} from "models/Constants";
-import InAppChannelComponent from "views/Campaigns/components/content/device/InAppChannelComponent";
-import PushChannelComponent from "views/Campaigns/components/content/device/PushChannelComponent";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

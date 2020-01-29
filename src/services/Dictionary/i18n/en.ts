@@ -273,6 +273,7 @@ export default {
   "launchCampaign": "Launch Campaign",
   "theme": "Theme",
   "advanced": "Advanced",
+  "keyValuePair": "Key-Value Pair",
   "keyValuePairs": "Key-Value Pairs",
   "variables": "Variables",
   "back": "Back",

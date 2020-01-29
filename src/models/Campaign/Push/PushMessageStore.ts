@@ -1,13 +1,9 @@
-import {action, observable} from "mobx";
+import {action} from "mobx";
 import {IPushMessage} from "interfaces/IVariant";
+import {MobileMessageStore} from "models/Campaign/MobileMessageStore";
 
-export class PushMessageStore implements IPushMessage {
- @observable keyValue: string[][] | null = null;
- @observable message: string = "";
- @observable title: string = "";
-
+export class PushMessageStore extends MobileMessageStore implements IPushMessage {
  @action update(model: IPushMessage): void {
   Object.assign(this, model);
  }
-
 }

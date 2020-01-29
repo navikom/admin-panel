@@ -1,17 +1,24 @@
 import React from "react";
-import {SMSChannelComponentType} from "types/commonTypes";
-import {IPushMessage, MobileVariantType} from "interfaces/IVariant";
-import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
 import classNames from "classnames";
+
+// @material-ui/core
+import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+
+// @material-ui/icons
 import {KeyboardArrowDown, Send, Android, Clear, Apple} from "@material-ui/icons";
+
+// interfaces
+import {IPushMessage, MobileVariantType} from "interfaces/IVariant";
+import {SMSChannelComponentType} from "types/commonTypes";
+
 import {blackOpacity} from "assets/jss/material-dashboard-react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
    root: {
     position: "absolute",
-    top: theme.spacing(7),
+    top: theme.spacing(6),
     padding: theme.spacing(2)
    },
    container: {

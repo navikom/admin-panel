@@ -35,6 +35,7 @@ import {RunType} from "types/commonTypes";
 // view store
 import CampaignViewStore from "views/Campaigns/store/CampaignViewStore";
 import {AudienceStepStore} from "views/Campaigns/store/AudienceStepStore";
+import {IAudienceStep} from "interfaces/IAudienceStep";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -152,7 +153,7 @@ const Reachable = observer(() => {
  return (
    <div className={extraClasses.reachableWrapper}>
     <Typography variant="subtitle2" className={title}>
-     {Dictionary.defValue(DictionaryService.keys.users)} (Email):
+     {Dictionary.defValue(DictionaryService.keys.users)} ({CampaignViewStore.channelName} Channel):
     </Typography>
     <Typography variant="h5" className={centerNote}>
      0

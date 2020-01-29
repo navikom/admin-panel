@@ -31,6 +31,7 @@ import EmojiPopper from "components/Poppers/EmojiPopper";
 import MobileDeviceComponent from "views/Campaigns/components/content/device/MobileDeviceComponent";
 import {insertSubstring} from "utils/string";
 import {ISMSMessage} from "interfaces/IVariant";
+import DeviceMessageComponent from "views/Campaigns/components/content/DeviceMessageComponent";
 
 const extraStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -108,25 +109,16 @@ const SMSComponent = (props: {store: IContentSMSView}) => {
         </Grid>
         <Grid container>
          <Grid container item direction="row" className={extraClasses.container}>
-          <Typography variant="subtitle2" className={centerNote}>
-           {Dictionary.defValue(DictionaryService.keys.message)}
-          </Typography>
-          <Grid item xs={12} sm={12} md={8}>
-           <FormControl fullWidth>
-            <InputWithIcon
-              multiline
-              input={{error: store.hasError("message")}}
-              cursorChange={setCursorIndex}
-              value={store.variant.data.message}
-              onChange={onInput("message")}
-              endAdornments={[
-               {component: <Clear />, onClick: onClear("message")},
-               {component: <InsertEmoticon />, onClick: onEmojiClick("message")},
-               {component: <Person />, onClick: onVariableClick("message")}
-              ]}
-            />
-           </FormControl>
-          </Grid>
+          <DeviceMessageComponent
+            titleStyle={centerNote}
+            message={store.variant.data.message}
+            error={store.hasError("message")}
+            onInput={onInput("message")}
+            onClear={onClear("message")}
+            onEmojiClick={onEmojiClick("message")}
+            onVariableClick={onVariableClick("message")}
+            setCursorIndex={setCursorIndex}
+          />
          </Grid>
         </Grid>
        </Grid>

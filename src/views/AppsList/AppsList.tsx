@@ -89,7 +89,7 @@ function AppList(props: AppsProps) {
           </CardHeader>
           <CardBody>
             <AppTable
-              handleClick={(appId: string) => props.history.push(APP_LIST_ROUTE + "/" + appId)}
+              handleClick={(appId: string) => props.history.push(`${APP_LIST_ROUTE}/${appId}/overview`)}
             />
           </CardBody>
           <CardFooter>

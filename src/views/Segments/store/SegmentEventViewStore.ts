@@ -25,6 +25,7 @@ export class SegmentEventViewStore extends AbstractViewStore implements ISegment
   }
 
   @action setOccurExpression(value: string) {
+    this.clearExpressionData();
     this.currentOccurExpression = value;
     const expressions = SegmentEventViewStore.occurExpressions.get(value);
     if(expressions) {
@@ -48,6 +49,10 @@ export class SegmentEventViewStore extends AbstractViewStore implements ISegment
 
   @action clear() {
     this.currentEventName = undefined;
+    this.clearExpressionData();
+  }
+
+  @action clearExpressionData() {
     this.currentExpression = undefined;
     this.currentOccurExpression = undefined;
     this.expressions = undefined;

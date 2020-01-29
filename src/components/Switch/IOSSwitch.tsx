@@ -14,7 +14,7 @@ const IOSSwitch = withStyles((theme: Theme) =>
   createStyles({
    root: {
     width: theme.typography.pxToRem(42),
-    height: theme.typography.pxToRem(27),
+    height: theme.typography.pxToRem(26),
     padding: 0,
     margin: theme.spacing(1),
    },

@@ -3,6 +3,7 @@ import {ChannelType} from "types/commonTypes";
 import {IAttributesEventsPopper, IPopper} from "interfaces/IPopper";
 import {IAttachment} from "interfaces/IAttachment";
 import {IInAppVariant, IPushVariant, ISMSVariant} from "interfaces/IVariant";
+import {IObservableArray} from "mobx";
 
 export type ContentEmailPropsType = "fromEmail" | "fromName" | "subject";
 export type ContentSMSPropsType = "sender" | "message";
@@ -36,10 +37,23 @@ export interface IContentEmailView extends IRichText {
 export interface IContentDevice extends IRichText {
  variant: ISMSVariant | IPushVariant | IInAppVariant;
  errors: {[key: string]: string};
- keyValue?: string[][] | null;
 
  hasError(key: ContentSMSPropsType | ContentNotificationPropsType): boolean;
  onInput(key: ContentSMSPropsType | ContentNotificationPropsType, value: string): void;
+}
+
+export interface IContentPushOrInApp extends IContentDevice {
+ keyValueEnabled: boolean;
+
+ createKeyValue(): void;
+ updateKeyValuePair(index: number, key: string, value: string): void;
+ updateKey(index: number, key: string): void;
+ updateValue(index: number, value: string): void;
+ deleteKeyValue(index: number): void;
+ clear(): void;
+ switchKeyValueEnabled(): void;
+ setKeyValueEnabled(): void;
+ setKeyValueDisabled(): void;
 }
 
 export interface IContentSMSView extends IContentDevice {
