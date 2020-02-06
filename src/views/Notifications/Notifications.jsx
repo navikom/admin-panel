@@ -5,14 +5,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 import AddAlert from "@material-ui/icons/AddAlert";
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer.tsx";
 import Button from "components/CustomButtons/Button.tsx";
 import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import Card from "components/Card/Card.tsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardBody from "components/Card/CardBody.tsx";
 
 const styles = {
   cardCategoryWhite: {
@@ -67,13 +67,13 @@ class Notifications extends React.Component {
     var x = [];
     x[place] = true;
     this.setState(x);
-    this.alertTimeout = setTimeout(
-      function() {
-        x[place] = false;
-        this.setState(x);
-      }.bind(this),
-      6000
-    );
+    // this.alertTimeout = setTimeout(
+    //   function() {
+    //     x[place] = false;
+    //     this.setState(x);
+    //   }.bind(this),
+    //   6000
+    // );
   }
   render() {
     const { classes } = this.props;

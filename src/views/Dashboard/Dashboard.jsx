@@ -18,17 +18,17 @@ import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
+import GridItem from "components/Grid/GridItem";
+import GridContainer from "components/Grid/GridContainer";
+import Table from "components/Table/Table";
 import Tasks from "components/Tasks/Tasks.jsx";
-import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
+import CustomTabs from "components/CustomTabs/CustomTabs";
 import Danger from "components/Typography/Danger.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import Card from "components/Card/Card.tsx";
+import CardHeader from "components/Card/CardHeader.tsx";
+import CardIcon from "components/Card/CardIcon.tsx";
+import CardBody from "components/Card/CardBody.tsx";
+import CardFooter from "components/Card/CardFooter.tsx";
 
 import { bugs, website, server } from "variables/general.jsx";
 
@@ -38,7 +38,7 @@ import {
   completedTasksChart
 } from "variables/charts.jsx";
 
-import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
+import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle";
 
 class Dashboard extends React.Component {
   state = {

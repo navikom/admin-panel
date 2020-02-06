@@ -3513,7 +3513,7 @@ select.form-control[multiple],
 
 .alert-default a,
 .alert-default .alert-link {
-  color: rgba(0, 0, 0, 0.87);
+  /*color: rgba(0, 0, 0, 0.87);*/
 }
 
 .alert i[data-notify="icon"] {
@@ -3841,7 +3841,7 @@ fieldset[disabled] .form-group.is-focused .radio label {
   display: block;
   position: absolute;
   content: "";
-  background-color: rgba(0, 0, 0, 0.87);
+  /*background-color: rgba(0, 0, 0, 0.87);*/
   left: -18px;
   top: -18px;
   height: 50px;
@@ -5316,7 +5316,7 @@ footer .btn {
   margin: 25px 0;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
   border-radius: 3px;
-  color: rgba(0, 0, 0, 0.87);
+  /*color: rgba(0, 0, 0, 0.87);*/
   background: #fff;
 }
 

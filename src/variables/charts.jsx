@@ -15,10 +15,17 @@ var delays2 = 80,
 // // // Daily Sales
 // #############################
 
+const chartColors = ["#f4c63d", "rgba(255,255,255,.8)", "#f05b4f"];
+const chartWidth = 4;
+let color = 'white';
+
 const dailySalesChart = {
   data: {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
-    series: [[12, 17, 7, 17, 23, 18, 38]]
+    series: [
+      [12, 17, 7, 17, 23, 22, 38],
+      [4, 10, 4, 7, 16, 15, 18],
+      [7, 7, 3, 10, 6, 7, 20]]
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
@@ -37,6 +44,7 @@ const dailySalesChart = {
   animation: {
     draw: function(data) {
       if (data.type === "line" || data.type === "area") {
+        color = chartColors[data.index];
         data.element.animate({
           d: {
             begin: 600,
@@ -50,6 +58,9 @@ const dailySalesChart = {
             easing: Chartist.Svg.Easing.easeOutQuint
           }
         });
+        if (chartColors[data.index]) {
+          data.element._node.setAttribute('style','stroke: ' + color + '; stroke-width: ' + chartWidth + 'px');
+        }
       } else if (data.type === "point") {
         data.element.animate({
           opacity: {
@@ -60,6 +71,10 @@ const dailySalesChart = {
             easing: "ease"
           }
         });
+        // if (chartColors[data.index]) {
+          data.element._node
+            .setAttribute('style','stroke: ' + color);
+        // }
       }
     }
   }

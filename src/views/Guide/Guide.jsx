@@ -5,15 +5,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { lazy } from "utils";
 
 // services
-import { Dictionary } from "services";
+import { Dictionary } from "services/Dictionary/Dictionary";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // core components
-const GridContainer = lazy(() => import("components/Grid/GridContainer.jsx"));
-const GridItem = lazy(() => import("components/Grid/GridItem.jsx"));
-const Card = lazy(() => import("components/Card/Card.jsx"));
-const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
-const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
+const GridContainer = lazy(() => import("components/Grid/GridContainer.tsx"));
+const GridItem = lazy(() => import("components/Grid/GridItem.tsx"));
+const Card = lazy(() => import("components/Card/Card.tsx"));
+const CardHeader = lazy(() => import("components/Card/CardHeader.tsx"));
+const CardBody = lazy(() => import("components/Card/CardBody.tsx"));
 const Button = lazy(() => import("components/CustomButtons/Button.tsx"));
 
 
@@ -98,7 +98,6 @@ class Guide extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <Suspense fallback={"Loading"}>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>{Dictionary.value("guide1")}</h4>
@@ -286,7 +285,6 @@ class Guide extends React.Component {
             <h4>{Dictionary.value("guide22")}</h4>
           </CardBody>
         </Card>
-      </Suspense>
     );
   }
 

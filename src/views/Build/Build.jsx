@@ -6,13 +6,13 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { lazy } from "utils";
 
 // services
-import { Dictionary } from "services";
+import { Dictionary } from "services/Dictionary/Dictionary";
 
 // core components
-const Card = lazy(() => import("components/Card/Card.jsx"));
-const CardHeader = lazy(() => import("components/Card/CardHeader.jsx"));
-const CardBody = lazy(() => import("components/Card/CardBody.jsx"));
-const ProgressButton = lazy(() => import("components/CustomButtons/ProgressButton.jsx"));
+const Card = lazy(() => import("components/Card/Card.tsx"));
+const CardHeader = lazy(() => import("components/Card/CardHeader.tsx"));
+const CardBody = lazy(() => import("components/Card/CardBody.tsx"));
+const ProgressButton = lazy(() => import("components/CustomButtons/ProgressButton"));
 const CustomInput = lazy(() => import("components/CustomInput/CustomInput.tsx"));
 
 const style = {
@@ -152,7 +152,6 @@ class Build extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <Suspense fallback={"Loading"}>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>{Dictionary.value("build")}</h4>
@@ -168,7 +167,6 @@ class Build extends React.Component {
             <ProgressButton loading={true} text="Save name"/>
           </CardBody>
         </Card>
-      </Suspense>
     );
   }
 

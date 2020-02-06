@@ -14,14 +14,14 @@ import styles from "assets/jss/material-dashboard-react/views/singlePageStyle.ts
 interface StartPageProps extends RouteComponentProps, WithStyles<typeof styles> {
 }
 class StartPage extends React.Component<StartPageProps> {
-  render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+  render() {
     const { classes } = this.props;
     return (
       <div>
         <GridContainer justify="center">
           <GridItem xs={6} sm={6} md={4}>
-            <Slide direction="down" in={true}>
-              <Fade in={true}>
+            <Slide direction="down" in={true} mountOnEnter unmountOnExit>
+              <Fade in={true} mountOnEnter unmountOnExit>
                 <h1 className={`${classes.cardTitleWhite} ${classes.titleWhite}`}>Admin Panel</h1>
               </Fade>
             </Slide>

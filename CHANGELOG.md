@@ -11,10 +11,10 @@
 - Almost all styles have been changed due to new components, solved issues or [the prettier command](https://prettier.io/docs/en/install.html)
 ### Major components changes
 - Changes caused by running [the prettier command](https://prettier.io/docs/en/install.html) for *.jsx*, *.js*, *.html* and *.css* files
-- **src/index.tsx**
-- **src/components/CustomTabs/CustomTabs.jsx**
+- **src/index.ts**
+- **src/components/CustomTabs/CustomTabs.tsx**
 - **src/components/Header/Header.jsx**
-- **src/components/Sidebar/Sidebar.jsx**
+- **src/components/Sidebar/Sidebar.tsx**
 - **src/components/Snackbar/Snackbar.jsx**
 - **src/components/Snackbar/SnackbarContent.jsx**
 - **src/components/Tasks/Tasks.jsx**
@@ -22,9 +22,9 @@
 ### New components
 - **src/components/FixedPlugin/FixedPlugin.jsx**(Left menu used by us for customization - due to this, we've had to add a link for the fonts awesome cdn)
 - **src/components/Header/RTLHeaderLinks.jsx**
-- **src/layouts/Admin.tsx** (instead of Dashboard)
+- **src/layouts/Panel.tsx** (instead of Dashboard)
 - **src/layouts/RTL.jsx**
-- **src/views/RTLPage/RTLPage.jsx**
+- **src/views/RTLPage/RTLPage.tsx**
 ### Deleted components
 - **src/layouts/Dashboard/Dashboard.jsx** (renamed to Admin)
 - **src/routes/dashboard.jsx**
@@ -59,7 +59,7 @@
 ### Major style changes
 - `src/assets/jss/material-dashboard-react/components/tasksStyle.jsx`
 - `src/assets/jss/material-dashboard-react/checkboxAdnRadioStyle.jsx`
-- `src/assets/jss/material-dashboard-react/components/customTabsStyle.jsx`
+- `src/assets/jss/material-dashboard-react/components/customTabsStyle.ts`
 - `src/assets/jss/material-dashboard-react/components/snackbarContentStyle.jsx`
 ### Deleted dependencies
 - `@babel/runtime v7.0.0-beta.55`
@@ -83,8 +83,8 @@
   - `https://github.com/creativetimofficial/material-dashboard-react/issues/58`
 - Changed the `GridContainer` component
 ### Major style changes
-- `src/assets/jss/material-dashboard-react/components/footerStyle.jsx`
-- `src/assets/jss/material-dashboard-react/components/headerStyle.jsx`
+- `src/assets/jss/material-dashboard-react/components/footerStyle.ts`
+- `src/assets/jss/material-dashboard-react/components/headerStyle.ts`
 ### Added dependencies
 - `@babel/runtime v7.0.0-beta.55`
 ### Update dependencies
@@ -108,17 +108,17 @@
 - Added styles for `svg`'s, **font-awesome** classes and `.material-icons` class inside
   - `src/assets/jss/material-dashboard-react/views/dashboardStyle.tsx`
   - `src/assets/jss/material-dashboard-react/components/buttonStyle.tsx`
-  - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/components/customTabsStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/components/cardFooterStyle.ts`
+  - `src/assets/jss/material-dashboard-react/components/cardHeaderStyle.ts`
+  - `src/assets/jss/material-dashboard-react/components/headerLinksStyle.ts`
+  - `src/assets/jss/material-dashboard-react/components/customTabsStyle.ts`
 - Others
   - `src/assets/jss/material-dashboard-react/tooltipStyle.jsx`
-  - `src/assets/jss/material-dashboard-react/dropdownStyle.jsx`
+  - `src/assets/jss/material-dashboard-react/dropdownStyle.ts`
 ### Dropped components
 - Dropped popper usage in favour of `@material-ui/core/Popper` (Changes in `src/components/Header/HeaderLinks.jsx`)
 ### Added components
-- `src/components/Grid/GridContainer.jsx` (instead of MUI's `<Grid container...` component)
+- `src/components/Grid/GridContainer.tsx` (instead of MUI's `<Grid container...` component)
 ### Deleted dependencies
 ### Added dependencies
 ### Update dependencies
@@ -134,7 +134,7 @@
 ## [1.3.0] 2018-06-15
 ### Bug Fixing
 - Changed import from `material-ui` to `@material-ui/core`
-- Droped `src/components/index.tsx`, and changed all the imports to separate ones
+- Droped `src/components/index.ts`, and changed all the imports to separate ones
 - Renamed `ItemGrid` to `GridItem`
 ### Major style changes
 - Moved the styles of `src/components/` inside `src/assets/jss/material-dashboard-react/components/`
@@ -155,13 +155,13 @@
   - `src/components/Cards/TasksCard.jsx`
 ### Added components
 - New card components (`src/components/Card/*`) instead of `src/components/Cards/*`
-  - `src/components/Card/Card.jsx`
-  - `src/components/Card/CardAvatar.jsx`
-  - `src/components/Card/CardBody.jsx`
-  - `src/components/Card/CardFooter.jsx`
-  - `src/components/Card/CardHeader.jsx`
-  - `src/components/Card/CardIcon.jsx`
-- `src/components/CustomTabs/CustomTabs.jsx` (instead of `src/components/Cards/TasksCard.jsx`)
+  - `src/components/Card/Card.tsx`
+  - `src/components/Card/CardAvatar.tsx`
+  - `src/components/Card/CardBody.tsx`
+  - `src/components/Card/CardFooter.tsx`
+  - `src/components/Card/CardHeader.tsx`
+  - `src/components/Card/CardIcon.tsx`
+- `src/components/CustomTabs/CustomTabs.tsx` (instead of `src/components/Cards/TasksCard.jsx`)
 ### Deleted dependencies
 - `material-ui@1.0.0-beta.41`
 ### Added dependencies
@@ -183,7 +183,7 @@
 ## [1.2.0] 2018-04-16
 ### Bug Fixing
 - Renamed `src/containers/App/App.jsx` to `src/layouts/Dashboard/Dashboard.jsx`
-- Renamed `src/variables/styles.jsx` to `src/assets/jss/material-dashboard-react.jsx`
+- Renamed `src/variables/styles.jsx` to `src/assets/jss/material-dashboard-react.ts`
 - Moved all the files from `src/variables/styles/` to `src/assets/jss/material-dashboard-react/`
 - Changes caused by the upgrade of `material-ui`
 - Small bug fixing

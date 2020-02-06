@@ -4,7 +4,7 @@ import {
   successColor,
   grayColor,
   defaultFont
-} from "assets/jss/material-dashboard-react.jsx";
+} from "assets/jss/material-dashboard-react.ts";
 import { createStyles } from "@material-ui/core";
 
 const customInputStyle = createStyles({
@@ -16,7 +16,8 @@ const customInputStyle = createStyles({
   underline: {
     "&:hover:not($disabled):before,&:before": {
       borderColor: grayColor[4] + " !important",
-      borderWidth: "1px !important"
+      borderWidth: "1px !important",
+      borderBottom: "1px solid rgba(0, 0, 0, 0.42)"
     },
     "&:after": {
       borderColor: primaryColor[0]
@@ -64,6 +65,9 @@ const customInputStyle = createStyles({
     margin: "27px 0 0 0",
     position: "relative",
     verticalAlign: "unset"
+  },
+  marginNone: {
+    margin: "0"
   }
 });
 

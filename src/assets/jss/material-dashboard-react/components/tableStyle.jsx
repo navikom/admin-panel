@@ -7,9 +7,10 @@ import {
   roseColor,
   grayColor,
   defaultFont
-} from "assets/jss/material-dashboard-react.jsx";
+} from "assets/jss/material-dashboard-react.ts";
+import { createStyles } from "@material-ui/core";
 
-const tableStyle = theme => ({
+const tableStyle = theme => createStyles({
   warningTableHeader: {
     color: warningColor[0]
   },
@@ -52,7 +53,7 @@ const tableStyle = theme => ({
   },
   tableResponsive: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: "auto"
   }
 });
