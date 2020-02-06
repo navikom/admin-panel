@@ -110,7 +110,7 @@ export const AppsItem = (props: AppsItemProps) => {
   console.log("AppsItem=========== ", pageName);
   const app = Apps.getOrCreate({ appId } as IApp) as IApp;
   const dispose = useDisposable(() =>
-    when(() => App.tokenIsReady, async () => {
+    when(() => App.sessionIsReady, async () => {
       await AppDataStore.loadFullData(app);
     }));
 

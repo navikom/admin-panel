@@ -41,7 +41,7 @@ const UserItem = (props: UserItemProps) => {
   UserDetails.bindUser(user);
   user.setFullDataLoaded(false);
   const dispose = useDisposable(() =>
-    when(() => App.tokenIsReady, async () => {
+    when(() => App.sessionIsReady, async () => {
       Users.loadFullData(user);
       Users.fetchReferrals(user);
     })

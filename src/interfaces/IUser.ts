@@ -22,7 +22,6 @@ export interface IUser extends WithPrimaryKey {
   phone?: string;
   birthday?: Date;
   gender?: GenderType;
-  anonymous?: boolean;
   emailVerified?: boolean;
   phoneVerified?: boolean;
   notificationEmail?: boolean;
@@ -33,7 +32,7 @@ export interface IUser extends WithPrimaryKey {
   apps?: IUsersApps[];
   roles: IObservableArray<IUsersRoles>;
   devices?: IUsersDevices[];
-  events?: IUsersEvents;
+  events: IUsersEvents;
   regions?: IUsersRegions[];
   location?: IUsersRegions;
   lastEvent?: Date;
@@ -46,10 +45,8 @@ export interface IUser extends WithPrimaryKey {
 
   update(model: IUser): void;
   updateForm(model: IUser): void;
-  setAnonymous(value: boolean): void;
   setFullDataLoaded(value?: boolean): void;
   hasRole(roleId: number): boolean;
   updateRoles(roles: IUsersRoles[]): void;
   totalTime: string;
-  eventsItems: IUsersEvents;
 }

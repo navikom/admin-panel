@@ -37,7 +37,7 @@ export default (props: RouteComponentProps<CampaignMatch>) => {
   console.log("Campaign Item %d", id, channelRoute);
 
   useDisposable(() =>
-    when(() => App.tokenIsReady, () => {
+    when(() => App.sessionIsReady, () => {
       CampaignViewStore.setCampaign(id, channels[channelRoute]);
     })
   );

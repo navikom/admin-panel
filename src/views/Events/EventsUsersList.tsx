@@ -84,7 +84,7 @@ const UsersTable = observer((props: UsersTableProps) => {
 const EventsUsersList = (props: UsersListProps) => {
 
   useDisposable(() =>
-    when(() => App.tokenIsReady, () => Events.fetchItems()));
+    when(() => App.sessionIsReady, () => Events.fetchItems()));
 
   const { classes } = props;
   return (

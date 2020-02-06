@@ -185,7 +185,7 @@ const UserEventsTab = observer((props: { events: IUsersEvents }) => {
             <ExpansionPanelDetails>
               <Box className={leftContentSpace}/>
               <Box className={content}>
-                <EventInfo data={event.info}/>
+                <EventInfo data={event}/>
               </Box>
             </ExpansionPanelDetails>
           </ExpansionPanel>

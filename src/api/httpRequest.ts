@@ -4,7 +4,7 @@ import { ErrorHandler } from "utils/ErrorHandler";
 export async function request(method: string, url: string, allHeaders: Headers = {}, body?: Body, excludeHeaders?: string[], debug = true) {
   let headers = Object.assign({
     "Accept": "application/json",
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   }, allHeaders);
   if(excludeHeaders) {
     excludeHeaders.forEach((key) => {
@@ -18,14 +18,11 @@ export async function request(method: string, url: string, allHeaders: Headers =
   }
   const response = await fetch(url, object);
   if (debug) {
-    console.log("RESPONSE", url, response);
+    console.log("RESPONSE", url, response, response.headers.get("Content-Type"));
   }
 
-  // if(!response.ok) {
-  //   throw new ErrorHandler(response.statusText);
-  // }
   try {
-    const json = await response.json();
+    const json = response.headers.get("Content-Type")!.includes("text") ? {error:await response.text()} : await response.json();
 
     if (debug) {
       console.log("RESPONSE BODY", url, json);

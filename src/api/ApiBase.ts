@@ -1,8 +1,8 @@
 
 export abstract class ApiBase {
-  token?: string;
+  session: number | null;
 
-  protected constructor(token?: string) {
-    this.token = token;
+  protected constructor(session: number | null) {
+    this.session = session;
   }
 }

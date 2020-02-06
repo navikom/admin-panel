@@ -3,50 +3,50 @@ import { HttpBase } from "api/HttpBase";
 import { ILoginResult } from "interfaces/ILoginResult";
 
 export default class Api extends ApiBase {
-  constructor(token?: string) {
-    super(token);
+  constructor(session: number | null) {
+    super(session);
   }
 
   get user(): User {
-    return new User(this.token);
+    return new User(this.session);
   }
 
   get event(): AEvent {
-    return new AEvent(this.token);
+    return new AEvent(this.session);
   }
 
   get app(): App {
-    return new App(this.token);
+    return new App(this.session);
   }
 
   get setting(): Setting {
-    return new Setting(this.token);
+    return new Setting(this.session);
   }
 
   get pixartPicture(): PixartPicture {
-    return new PixartPicture(this.token);
+    return new PixartPicture(this.session);
   }
 
   get role(): Roles {
-    return new Roles(this.token);
+    return new Roles(this.session);
   }
 
   get segment(): Segments {
-    return new Segments(this.token);
+    return new Segments(this.session);
   }
 
   get campaign(): Campaign {
-    return new Campaign(this.token);
+    return new Campaign(this.session);
   }
 
   get region(): Region {
-    return new Region(this.token);
+    return new Region(this.session);
   }
 }
 
 class User extends HttpBase {
-  constructor(token?: string) {
-    super("users", token);
+  constructor(session: number | null) {
+    super("users", session);
   }
 
   signup(email: string, password: string): Promise<ILoginResult> {
@@ -75,10 +75,9 @@ class User extends HttpBase {
     return this.fetchData("get", "logout");
   }
 
-  refresh(refreshToken: string): Promise<ILoginResult> {
+  refresh(): Promise<ILoginResult> {
     const body = {
-      token: refreshToken,
-      grantType: "refresh_token"
+      grantType: "refresh"
     };
     return this.fetchData("post", "login", body)
   }
@@ -94,14 +93,14 @@ class User extends HttpBase {
 }
 
 class AEvent extends HttpBase {
-  constructor(token?: string) {
-    super("events", token);
+  constructor(session: number | null) {
+    super("events", session);
   }
 }
 
 class App extends HttpBase {
-  constructor(token?: string) {
-    super("apps", token);
+  constructor(session: number | null) {
+    super("apps", session);
   }
 
   update(appId: number, data: any) {
@@ -118,8 +117,8 @@ class App extends HttpBase {
 }
 
 class Setting extends HttpBase {
-  constructor(token?: string) {
-    super("settings", token);
+  constructor(session: number | null) {
+    super("settings", session);
   }
 
   getData() {
@@ -128,8 +127,8 @@ class Setting extends HttpBase {
 }
 
 class PixartPicture extends HttpBase {
-  constructor(token?: string) {
-    super("pixart-pictures", token);
+  constructor(session: number | null) {
+    super("pixart-pictures", session);
   }
 
   save(data: any) {
@@ -138,25 +137,25 @@ class PixartPicture extends HttpBase {
 }
 
 class Roles extends HttpBase {
-  constructor(token?: string) {
-    super("roles", token);
+  constructor(session: number | null) {
+    super("roles", session);
   }
 }
 
 class Segments extends HttpBase {
-  constructor(token?: string) {
-    super("segments", token);
+  constructor(session: number | null) {
+    super("segments", session);
   }
 }
 
 class Campaign extends HttpBase {
-  constructor(token?: string) {
-    super("campaigns", token);
+  constructor(session: number | null) {
+    super("campaigns", session);
   }
 }
 
 class Region extends HttpBase {
-  constructor(token?: string) {
-    super("regions", token);
+  constructor(session: number | null) {
+    super("regions", session);
   }
 }

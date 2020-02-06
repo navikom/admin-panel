@@ -42,7 +42,7 @@ class AppDataLocalStore extends Errors implements IAppDataLocal {
   disposer?: IReactionDisposer;
 
   @computed get isChanged() {
-    return this.app !== null && this.app.description !== this.description || this.files !== undefined && this.files.length;
+    return this.app !== null && this.app.description !== this.description || (this.files !== undefined && this.files.length);
   };
 
   @computed get isDisabled() {
@@ -87,6 +87,7 @@ class AppDataLocalStore extends Errors implements IAppDataLocal {
       this.app!.update(data);
       this.setSuccessRequest(true);
       this.setTimeOut(() => this.setSuccessRequest(false), 5000);
+      this.setFiles(undefined);
     } catch (e) {
       this.setError(e.message);
       this.setTimeOut(() => this.setError(null), 10000);

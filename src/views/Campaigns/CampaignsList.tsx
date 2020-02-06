@@ -89,7 +89,7 @@ export default (props: RouteComponentProps) => {
 
   Campaigns.bindCurrentStore(props.match.url);
   useDisposable(() =>
-    when(() => App.tokenIsReady, () => Campaigns.fetchItems(props.match.url))
+    when(() => App.sessionIsReady, () => Campaigns.fetchItems(props.match.url))
   );
 
   const newCampaign = () => {

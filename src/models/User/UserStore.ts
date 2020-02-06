@@ -50,8 +50,7 @@ export class UserStore implements IUser {
   @observable notificationSms: boolean = false;
   @observable phoneVerified: boolean = false;
   @observable subscription: boolean = false;
-  @observable events?: IUsersEvents;
-  @observable anonymous: boolean = true;
+  @observable events: IUsersEvents;
   @observable eventsCount: number = 1;
   @observable lastLogin!: number;
   @observable fullDataLoaded: boolean = false;
@@ -60,10 +59,6 @@ export class UserStore implements IUser {
   @observable referrals: IPagination<IUser>;
   readonly roles: IObservableArray<IUsersRoles> = observable<IUsersRoles>([]);
 
-  @computed
-  get eventsItems() {
-    return this.events || new UserEventsStore(this.userId);
-  }
 
   @computed
   get fullName(): string {
@@ -73,7 +68,7 @@ export class UserStore implements IUser {
 
   @computed
   get anonymousString(): string {
-    return this.anonymous ? Dictionary.defValue(DictionaryService.keys.anonymous)
+    return true ? Dictionary.defValue(DictionaryService.keys.anonymous)
       : Dictionary.defValue(DictionaryService.keys.loggedIn);
   }
 
@@ -102,11 +97,6 @@ export class UserStore implements IUser {
     this.referrals = new UserReferralsStore(userId);
     this.userId = userId;
     this.events = new UserEventsStore(userId);
-  }
-
-  @action
-  setAnonymous(value: boolean) {
-    this.anonymous = value;
   }
 
   @action setFullDataLoaded(value: boolean = true) {
@@ -139,7 +129,6 @@ export class UserStore implements IUser {
     model.subscription !== undefined && (this.subscription = model.subscription);
     model.referrer && (this.referrer = model.referrer);
     model.lastEvent && (this.lastEvent = model.lastEvent);
-    model.anonymous !== undefined && (this.anonymous = model.anonymous);
     model.roles && this.updateRoles(model.roles);
   }
 

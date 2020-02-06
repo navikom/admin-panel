@@ -69,7 +69,7 @@ function AppList(props: AppsProps) {
   const classes = useStyles();
 
   const dispose = useDisposable(() =>
-    when(() => App.tokenIsReady, () => Apps.fetchItems()));
+    when(() => App.sessionIsReady, () => Apps.fetchItems()));
 
   useEffect(() => {
     return () => {

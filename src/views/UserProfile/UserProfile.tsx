@@ -101,7 +101,7 @@ const Profile = observer(() => {
 const UserProfile = (props: UserProfileProps) => {
 
   const dispose = useDisposable(() =>
-    when(() => App.tokenIsReady, async () => {
+    when(() => App.sessionIsReady, async () => {
       const user = App.user as IUser;
       UserDetails.bindUser(user);
       Users.loadFullData(user);

@@ -7,6 +7,7 @@ import { EventStore } from "models/Event/EventStore";
 // interfaces
 import { IUsersEvents } from "interfaces/IUsersEvents";
 import { IEvent } from "interfaces/IEvent";
+import {ErrorHandler} from "utils/ErrorHandler";
 
 export class UserEventsStore extends Pagination<IEvent> implements IUsersEvents {
   constructor(userId: number) {
@@ -14,7 +15,7 @@ export class UserEventsStore extends Pagination<IEvent> implements IUsersEvents 
       `/user/${userId}`);
   }
 
-  async fetchItems(): Promise<boolean> {
+  @action async fetchItems(): Promise<boolean> {
     try {
       await super.fetchItems();
     } catch (err) {
@@ -24,6 +25,7 @@ export class UserEventsStore extends Pagination<IEvent> implements IUsersEvents 
   }
 
   @action push(data: IEvent[]) {
+
     let l = data.length, i = 0;
     while (l--) {
       const item = data[i++];
@@ -31,5 +33,6 @@ export class UserEventsStore extends Pagination<IEvent> implements IUsersEvents 
         this.items.push(EventStore.from(item));
       }
     }
+
   }
 }

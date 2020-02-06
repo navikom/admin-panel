@@ -28,11 +28,12 @@ export class EventStore implements IEvent {
   static from(model: IEvent) {
     parseModel(model);
     const userData = model.user;
-    model.user = Users.getOrCreate({...model.user, userId: model.userId}) as IUser;
-    model.user.update(userData);
-    model.device = DeviceStore.from(model.device);
-    model.region = RegionStore.from(model.region);
+    model.user = Users.getOrCreate({...(model.user || {}), userId: model.userId}) as IUser;
+    userData && model.user.update(userData);
+    model.device && (model.device = DeviceStore.from(model.device));
+    model.region && (model.region = RegionStore.from(model.region));
     model.app = model.app ? AppStore.from(model.app) : null;
+
     return new EventStore(model);
   }
 }

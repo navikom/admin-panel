@@ -1,5 +1,6 @@
 import { IDevice } from "interfaces/IDevice";
 import { IDeviceInfo } from "interfaces/IDeviceInfo";
+import {ANDROID, IOS} from "models/Constants";
 
 export class DeviceStore implements IDevice {
   createdAt: Date;
@@ -9,14 +10,23 @@ export class DeviceStore implements IDevice {
     const data = [
       ["OS", `${this.info.OS.name}, ${this.info.OS.version}`],
     ];
-    this.info.BROWSER && data.push(["BROWSER", `${this.info.BROWSER.name}, ${this.info.BROWSER.version}`]);
-    this.info.headers && this.info.headers[0] && data.push(["OTHERS", this.info.headers[0]]);
+    if ([ANDROID, IOS].includes(this.info.OS.name)) {
+      Object.keys(this.info.params).forEach((key: string) => data.push([key, this.info.params[key]]));
+    } else {
+      this.info.headers && data.push(["OTHERS", this.info.headers]);
+    }
+
     return data;
   }
 
   constructor(model:IDevice) {
-    this.info = model.info;
+    let params = {};
+    try {
+      params = JSON.parse(model.info.headers);
+    } catch (e) {}
+    this.info = Object.assign({}, model.info, {params});
     this.createdAt = model.createdAt;
+
   }
 
   static from (model: IDevice) {

@@ -140,7 +140,7 @@ const PPictures = observer(() => {
   const classes = useStyles();
   PixartStore.setMainAppStore(AppDataStore);
   useDisposable(() =>
-    when(() => App.tokenIsReady, () => PixartStore.pictures.fetchItems()));
+    when(() => App.sessionIsReady, () => PixartStore.pictures.fetchItems()));
   return (
     <Grid container>
       <Card className={classes.card}>

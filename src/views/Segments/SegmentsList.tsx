@@ -86,7 +86,7 @@ const SegmentsTable = observer((props: {onBtnClick: () => void}) => {
 export default (props: RouteComponentProps) => {
 
   useDisposable(() =>
-    when(() => App.tokenIsReady, () => {
+    when(() => App.sessionIsReady, () => {
       Segments.fetchItems();
     })
   );

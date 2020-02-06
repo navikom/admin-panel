@@ -48,7 +48,7 @@ const EventsUsersItem = (props: UsersItemProps) => {
   const [user, setUser] = useState({ userId } as IUser);
   let fullDataDispose: IReactionDisposer;
   const dispose = useDisposable(() =>
-    when(() => App.tokenIsReady, () => {
+    when(() => App.sessionIsReady, () => {
       const u = Users.getByIdFullData(userId);
       u.events!.fetchItems();
       fullDataDispose = when(() => u.fullDataLoaded, () => {
@@ -88,7 +88,7 @@ const EventsUsersItem = (props: UsersItemProps) => {
             {
               tabName: Dictionary.defValue(DictionaryService.keys.events),
               tabIcon: SubtitlesOutlined,
-              tabContent: (<UserEventsTab events={user.eventsItems}/>)
+              tabContent: (<UserEventsTab events={user.events}/>)
             }
           ]}
         />

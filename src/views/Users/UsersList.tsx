@@ -27,7 +27,7 @@ import useStyle from "assets/jss/material-dashboard-react/components/listStyle";
 
 export default observer((props: RouteComponentProps) => {
   useDisposable(() =>
-    when(() => App.tokenIsReady, () => Users.fetchItems())
+    when(() => App.sessionIsReady, () => Users.fetchItems())
   );
 
   const classes = useStyle();

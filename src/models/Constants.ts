@@ -72,6 +72,8 @@ export const APP_TIME_ZONE = "App Time Zone";
 //********** Others ************//
 export const ALL = "All";
 export const VARIABLES = "VARIABLES";
+export const ANDROID = "Android";
+export const IOS = "IOS";
 
 //********** Expressions *********//
 export const AND = "and";

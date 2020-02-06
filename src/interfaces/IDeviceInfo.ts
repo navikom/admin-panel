@@ -8,5 +8,6 @@ export interface IDeviceInfoData {
 export interface IDeviceInfo {
   BROWSER: IDeviceInfoData,
   OS: IDeviceInfoData,
-  headers: string[];
+  headers: string;
+  params: {[key: string]: string};
 }
